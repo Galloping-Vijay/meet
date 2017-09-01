@@ -6,3 +6,4 @@
 /.user.ini
 app/database.php
 data/runtime/
+/404.html

@@ -1,7 +1,8 @@
 %SystemDrive%/
 .idea/
-MP_verify_N1UY5iYAbmryA6Od.txt
+/MP_verify_N1UY5iYAbmryA6Od.txt
 .htaccess
-web.config
-.user.ini
+/web.config
+/.user.ini
 app/database.php
+data/runtime/

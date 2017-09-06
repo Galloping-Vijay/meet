@@ -22,4 +22,16 @@ class Effects extends Base
     {
         return $this->view->fetch('effect:fall');
     }
+
+    //画板
+    public function palette()
+    {
+        return $this->view->fetch('effect:palette');
+    }
+
+    //抽奖
+    public function Lottery()
+    {
+        return $this->view->fetch('effect:Lottery');
+    }
 }

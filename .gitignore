@@ -6,6 +6,7 @@
 /.user.ini
 app/database.php
 data/runtime/
+data/upload/
 *.htaccess
 *.ini
 *.config

@@ -11,4 +11,3 @@ data/upload/
 *.ini
 *.config
 /wjf19940211.pem
-!data/upload/default/

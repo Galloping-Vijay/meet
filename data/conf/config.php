@@ -4,15 +4,15 @@ return array (
   'update_check' => false,
   'think_sdk_qq' => 
   array (
-    'app_key' => '1106069934',
-    'app_secret' => '7aYz2ABPT8QDi81M',
+    'app_key' => '101429302',
+    'app_secret' => 'cd56c21baa405e40c206d34cf247e672',
     'display' => true,
     'callback' => 'http://www.meetoyou.com/home/oauth/callback/type/qq.html',
   ),
   'think_sdk_sina' => 
   array (
-    'app_key' => '602735229',
-    'app_secret' => '66781cbeab9fdb9b014a387ab6e943fe',
+    'app_key' => '2822290118',
+    'app_secret' => '79db943f2fe6e05b525b34a688ca228e',
     'display' => true,
     'callback' => 'http://www.meetoyou.com/home/oauth/callback/type/sina.html',
   ),
@@ -62,8 +62,8 @@ return array (
   'geetest' => 
   array (
     'geetest_on' => false,
-    'captcha_id' => '',
-    'private_key' => '',
+    'captcha_id' => 'root',
+    'private_key' => 'root12345',
   ),
   'log' => 
   array (
@@ -103,8 +103,8 @@ return array (
   'url_route_mode' => '2',
   'think_sdk_facebook' => 
   array (
-    'app_key' => '',
-    'app_secret' => '',
+    'app_key' => 'root',
+    'app_secret' => 'root12345',
     'display' => false,
     'callback' => 'http://www.meetoyou.com/home/oauth/callback/type/facebook.html',
   ),
@@ -177,22 +177,22 @@ return array (
   ),
   'think_sdk_weixin' => 
   array (
-    'app_key' => '',
-    'app_secret' => '',
+    'app_key' => 'wxaa437cc73d161a64',
+    'app_secret' => 'wxaa437cc73d161a64',
     'display' => false,
     'callback' => 'http://www.meetoyou.com/home/oauth/callback/type/weixin.html',
   ),
   'think_sdk_wechat' => 
   array (
-    'app_key' => 'wxf31792477fe34e63',
-    'app_secret' => 'daf5b015a1d08f88d4daba57a63b0054',
-    'display' => true,
+    'app_key' => 'root',
+    'app_secret' => 'root12345',
+    'display' => false,
     'callback' => 'http://www.meetoyou.com/home/oauth/callback/type/wechat.html',
   ),
   'think_sdk_google' => 
   array (
-    'app_key' => '',
-    'app_secret' => '',
+    'app_key' => 'root',
+    'app_secret' => 'root12345',
     'display' => false,
     'callback' => 'http://www.meetoyou.com/home/oauth/callback/type/google.html',
   ),

@@ -34,4 +34,10 @@ class Effects extends Base
     {
         return $this->view->fetch('effect:Lottery');
     }
+
+    //视频vip
+    public function vip()
+    {
+        return $this->view->fetch('effect:vip');
+    }
 }

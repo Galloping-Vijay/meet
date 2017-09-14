@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<!--[if IE 8]>
+<html class="ie ie8"> <![endif]-->
+<!--[if IE 9]>
+<html class="ie ie9"> <![endif]-->
+<!--[if gt IE 9]><!-->
+<html> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <title>{$site_seo_title} {$site_name}</title>
+    <meta name="keywords" content="{$site_seo_keywords}"/>
+    <meta name="description" content="{$site_seo_description}">
+    {include file="public:head" /}
+    <link rel="stylesheet" href="{$yf_theme_path}effect/public/css/vip.css">
+    <script src="{$yf_theme_path}effect/public/js/vip.js"></script>
+</head>
+<body class="home">
+<div class="wrap">
+    {include file="public:nav" /}
+    <div class="container"  onkeydown="Keytest(event)" & onkeyup="keyup()">
+        <div class="vip">
+            <input class="input_box" type="text" id="link"/>
+            <input class="input_close" type="submit" value="关闭视频" onclick="Clo()"/>
+            <input class="input_post" type="submit" value="提交视频地址" onclick="Tip()"/>
+            <input class="input_explain" value="在上方输入视频地址后按Alt+数字1-6选择解析接口后即可观看。    VIP视频支持爱奇艺，芒果TV，优酷，腾讯，乐视等"/>
+        </div>
+        <div class="video_hidden">
+            <iframe id="video_iframe" src=" " >
+            </iframe>
+        </div>
+    </div>
+</div>
+{include file="public:footer"/}
+</div>
+{include file="public:scripts"/}
+</body>
+</html>

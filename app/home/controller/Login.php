@@ -165,7 +165,7 @@ class Login extends Base
 								<a href="http://#link#">http://#link#</a>
 hello;
 					$content = str_replace(array('http://#link#','#username#'), array($url,$member_list_username),$template);
-					$send_result=sendMail($member_list_email, 'YFCMF '.lang('pwd reset'), $content);
+					$send_result=sendMail($member_list_email, 'WJFCMS '.lang('pwd reset'), $content);
 					if($send_result['error']){
 						$this->error(lang('send pwd reset email failed'));
 					}else{

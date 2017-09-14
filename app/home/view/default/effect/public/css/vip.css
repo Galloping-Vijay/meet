@@ -1,0 +1,9 @@
+.container{margin-top:20px;}
+.vip{overflow:hidden; margin: 0 auto; width:800px;padding:10px}
+.vip input{border: 1px solid #00a0e9;}
+.input_box{width: 550px;line-height: 30px;padding: 6px;float: left;}
+.input_close{width: 100px;line-height: 40px;display: block;float: right;font-weight: bold;}
+.input_post{width: 100px;line-height: 40px;float: right;position: absolute;margin-left: 15px;font-weight: bold;}
+.input_explain{width: 780px;line-height: 30px;display: block;float: right;font-weight: bold;margin: 15px 0 3px 0;}
+.video_hidden{overflow:hidden; margin: 0 auto; width:800px;}
+.video_hidden iframe{height:500px;width:800px;frameborder:0;marginheight:0px;marginwidth:0px;background:#000000;border:2px solid #00a0e9}

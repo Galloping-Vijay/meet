@@ -1,80 +1,37 @@
-<html>
-
+<!DOCTYPE html>
+<!--[if IE 8]>
+<html class="ie ie8"> <![endif]-->
+<!--[if IE 9]>
+<html class="ie ie9"> <![endif]-->
+<!--[if gt IE 9]><!-->
+<html> <!--<![endif]-->
 <head>
-    <script>
-        var num = 0;
-        var api = {
-            "jiekou1":"http://www.wmxz.wang/video.php?url=",
-        }
-
-        function Clo() {
-            document.getElementById("video_iframe").src = "http://ww3.sinaimg.cn/large/006Bo8Q9jw1fadd8rydyrj30m80dwgv9.jpg";
-        }
-
-        function Tip() {
-            alert("提交视频地址后，按All+数字1-6选择解析接口")
-        }
-
-        function Keytest(event) {
-            if (event.keyCode == 13) {
-                alert("提交视频地址后，按Alt+数字1-6选择解析接口")
-            };
-            if (event.keyCode == 18) {
-                num = 1
-            };
-            if (num == 1) {
-                if (event.keyCode == 49 | event.keyCode == 97) {
-                    var link = document.getElementById('link').value;
-                    document.getElementById("video_iframe").src = 'http://www.wmxz.wang/video.php?url=' + link;
-                    num = 0;
-                }
-
-                if (event.keyCode == 50 | event.keyCode == 98) {
-                    var link = document.getElementById('link').value;
-                    document.getElementById("video_iframe").src = 'http://mt2t.com/yun?url=' + link;
-                    num = 0;
-                }
-
-                if (event.keyCode == 51 | event.keyCode == 99) {
-                    var link = document.getElementById('link').value;
-                    document.getElementById("video_iframe").src = 'http://vip.sdyhy.cn/ckflv/?url=' + link;
-                    num = 0;
-                }
-
-                if (event.keyCode == 52 | event.keyCode == 100) {
-                    var link = document.getElementById('link').value;
-                    document.getElementById("video_iframe").src = 'http://player.gakui.top/?url=' + link;
-                    num = 0;
-                }
-
-                if (event.keyCode == 53 | event.keyCode == 101) {
-                    var link = document.getElementById('link').value;
-                    document.getElementById("video_iframe").src = 'http://www.vipjiexi.com/yun.php?url=' + link;
-                    num = 0;
-                }
-
-                if (event.keyCode == 54 | event.keyCode == 102) {
-                    var link = document.getElementById('link').value;
-                    document.getElementById("video_iframe").src = 'http://www.xiguaso.com/api/index.php?url=' + link;
-                    num = 0;
-                }
-            }
-
-        }
-    </script>
+    <meta charset="utf-8">
+    <title>{$site_seo_title} {$site_name}</title>
+    <meta name="keywords" content="{$site_seo_keywords}"/>
+    <meta name="description" content="{$site_seo_description}">
+    {include file="public:head" /}
+    <link rel="stylesheet" href="{$yf_theme_path}effect/public/css/vip.css">
+    <script src="{$yf_theme_path}effect/public/js/vip.js"></script>
 </head>
-
-<body onkeydown="Keytest(event)" & onkeyup="keyup()">
-<div style="overflow:hidden; margin: 0 auto; width:800px;padding:10px">
-    <input type="text" id="link" style="border:1px solid #00a0e9; width:600px; line-height:30px; padding:6px; display:block; float:left;" />
-    <input type="submit" style="width:100px; line-height:40px; background-color:#00a0e9; border:1px solid #FFF; display:block; float:right; color:#fff;" value="关闭视频" onclick="Clo()" />
-    <input type="submit" style="width:100px; line-height:40px; background-color:#00a0e9; border:1px solid #FFF; display:block; float:right; color:#fff;" value="提交视频地址" onclick="Tip()" />
-    <input style="width:800px; line-height:30px; background-color:#63b3ff; border:5px solid #FFF; display:block; float:right; color:#fff;" value="    在上方输入视频地址后按Alt+数字1-6选择解析接口后即可观看。    VIP视频支持爱奇艺，芒果TV，优酷，腾讯，乐视等" />
+<body class="home">
+<div class="wrap">
+    {include file="public:nav" /}
+    <div class="container"  onkeydown="Keytest(event)" & onkeyup="keyup()">
+        <div class="vip">
+            <input class="input_box" type="text" id="link"/>
+            <input class="input_close" type="submit" value="关闭视频" onclick="Clo()"/>
+            <input class="input_post" type="submit" value="提交视频地址" onclick="Tip()"/>
+            <input class="input_explain" value="在上方输入视频地址后按Alt+数字1-6选择解析接口后即可观看。    VIP视频支持爱奇艺，芒果TV，优酷，腾讯，乐视等"/>
+        </div>
+        <div class="video_hidden">
+            <iframe id="video_iframe" src=" " >
+            </iframe>
+        </div>
+    </div>
 </div>
-<div style="overflow:hidden; margin: 0 auto; width:800px;">
-    <iframe id="video_iframe" src="" style="height:500px;width:800px;frameborder:0;marginheight:0px;marginwidth:0px;background:#000000;border:2px solid #00a0e9">
-    </iframe>
+{include file="public:footer"/}
 </div>
+{include file="public:scripts"/}
 </body>
-
 </html>

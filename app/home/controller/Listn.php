@@ -23,8 +23,8 @@ class Listn extends Base
 		if(empty($menu)){
 			$this->error(lang('operation not valid'));
 		}
-		$tplname=$menu['menu_listtpl'];
-		$tplname=$tplname?:'list';
+		$tplname=$menu['menu_listtpl'];//列表页模板
+		$tplname=$tplname?:'list';//单文章页模板
 		if($tplname=="photo_list") $pagesize=4;//相册格式
 		$model=Db::name('model')->find($menu['menu_modelid']);
 		if($model){

@@ -164,7 +164,7 @@ class Sys extends Base
 	{
 		if (!request()->isAjax()){
 			$this->error('提交方式不正确',url('admin/Sys/urlsetsys'));
-		}		
+		}
         Db::name('route')->insert(input('post.'));
         $p=input('p',1,'intval');
         if(config('url_route_mode')=='2') Cache::rm('routes');
@@ -184,6 +184,7 @@ class Sys extends Base
         $sl_data=array(
             'id'=>input('id'),
             'full_url'=>input('full_url'),
+            'remark'=>input('remark'),
             'url'=>input('url'),
             'status'=>input('status'),
             'listorder'=>input('listorder'),

@@ -514,6 +514,7 @@ $(function () {
                 $("#editroute_id").val(data.id);
                 $("#editroute_full_url").val(data.full_url);
                 $("#editroute_url").val(data.url);
+                $("#editroute_remark").val(data.remark);
                 if (data.status == 1) {
                     $("#editroute_status").prop("checked",true);
                 } else {

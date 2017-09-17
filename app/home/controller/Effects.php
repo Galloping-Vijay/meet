@@ -38,6 +38,15 @@ class Effects extends Base
     //视频vip
     public function vip()
     {
+        $menu = [
+            'menu_seo_title' => 'vip视频播放器!',
+            'menu_seo_key' => 'vip视频播放器!',
+            'menu_seo_des' => 'vip视频播放器!',
+        ];
+        $this->view->assign('menu', $menu);
+        if (request()->isMobile()) {
+            return $this->view->fetch('effect:m_vip');
+        }
         return $this->view->fetch('effect:vip');
     }
 }

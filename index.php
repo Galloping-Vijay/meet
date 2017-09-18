@@ -13,6 +13,7 @@
 
 // 定义应用目录
 define('APP_PATH', __DIR__ . '/app/');
-define("RUNTIME_PATH", __DIR__ .'/data/runtime/');
+define("RUNTIME_PATH", __DIR__ . '/data/runtime/');
+defined('NOW_TIME') or define('NOW_TIME', $_SERVER['REQUEST_TIME']);
 // 加载框架引导文件
 require __DIR__ . '/thinkphp/start.php';

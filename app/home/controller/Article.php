@@ -10,9 +10,16 @@
 namespace app\home\controller;
 
 use think\Db;
+use \app\home\model\News;
 
 class Article extends Base
 {
+    public function index()
+    {
+        $art = News::get(41);
+        echo $art->menu->menu_name;
+    }
+
     public function newsAdd()
     {
         if (empty(session('user'))) {
@@ -122,7 +129,7 @@ class Article extends Base
             'news_open' => input('news_open', 0),
             'news_scontent' => input('news_scontent', ''),
             'news_content' => htmlspecialchars_decode(input('news_content')),
-            'news_auto' => session('user.member_list_nickname'),
+            'news_auto' => session('user.member_list_id'),
             'news_time' => time(),
         );
         //根据栏目id,获取语言

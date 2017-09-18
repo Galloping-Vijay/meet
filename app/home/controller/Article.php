@@ -11,6 +11,7 @@ namespace app\home\controller;
 
 use think\Db;
 use \app\home\model\News;
+use think\Validate;
 
 class Article extends Base
 {
@@ -31,6 +32,7 @@ class Article extends Base
         $source = Db::name('source')->select();
         $this->assign('news_columnid', $news_columnid);
         $this->assign('source', $source);
+
         return $this->fetch('article/news_add');
     }
 
@@ -77,7 +79,7 @@ class Article extends Base
                         }
                     }
                 } else {
-                    $this->error($error, url('admin/News/news_list'));//否则就是上传错误，显示错误原因
+                    $this->error($error, url('/newsAdd'));//否则就是上传错误，显示错误原因
                 }
             } else {
                 $validate = config('upload_validate');
@@ -93,7 +95,7 @@ class Article extends Base
                         Db::name('plug_files')->insert($data);
                         $img_one = $img_url;
                     } else {
-                        $this->error($file->getError(), url('admin/News/news_list'));//否则就是上传错误，显示错误原因
+                        $this->error($file->getError(), url('newsAdd'));//否则就是上传错误，显示错误原因
                     }
                 }
                 //多图
@@ -109,29 +111,41 @@ class Article extends Base
                             Db::name('plug_files')->insert($data);
                             $picall_url = $img_url . ',' . $picall_url;
                         } else {
-                            $this->error($file->getError(), url('admin/News/news_list'));//否则就是上传错误，显示错误原因
+                            $this->error($file->getError(), url('newsAdd'));//否则就是上传错误，显示错误原因
                         }
                     }
                 }
             }
         }
-
         $sl_data = array(
-            'news_title' => input('news_title'),
-            'news_columnid' => input('news_columnid'),
-            'news_key' => input('news_key', ''),
-            'news_tag' => input('news_tag', ''),
-            'news_source' => input('news_source', ''),
-            'news_pic_type' => input('news_pic_type'),
-            'news_pic_content' => input('news_pic_content', ''),
+            'news_title' => input('news_title', '', 'trim'),
+            'news_columnid' => input('news_columnid', 0, 'intval'),
+            'news_key' => input('news_key', '', 'trim'),
+            'news_tag' => input('news_tag', '', 'trim'),
+            'news_source' => input('news_source', '', 'trim'),
+            'news_pic_type' => input('news_pic_type', 0, 'intval'),
+            'news_pic_content' => input('news_pic_content', '', 'trim'),
             'news_pic_allurl' => $picall_url,//多图路径
             'news_img' => $img_one,//封面图片路径
             'news_open' => input('news_open', 0),
-            'news_scontent' => input('news_scontent', ''),
+            'news_scontent' => input('news_scontent', '', 'trim'),
             'news_content' => htmlspecialchars_decode(input('news_content')),
             'news_auto' => session('user.member_list_id'),
             'news_time' => time(),
         );
+        //验证开始
+        $validate = new Validate(
+            [
+                ['news_title|文章标题', ['require']],
+                ['news_columnid|所属栏目', ['require', 'egt:16']],
+                ['news_open|审核状态', ['eq:0']],
+                ['news_content|文章内容', ['require']],
+                ['news_auto|用户信息', ['require', 'integer']],
+            ]
+        );
+        if (true !== $validate->check($sl_data)) {
+            return json(['code' => 0, 'msg' => $validate->getError()]);
+        }
         //根据栏目id,获取语言
         $news_l = Db::name('menu')->where('id', input('news_columnid'))->value('menu_l');
         $sl_data['news_l'] = $news_l;
@@ -139,13 +153,13 @@ class Article extends Base
         $showtime = input('showdate', '');
         $news_extra['showdate'] = ($showtime == '') ? time() : strtotime($showtime);
         $sl_data['news_extra'] = json_encode($news_extra);
-        //改到这里 下面的模型要建一个在home
-        \app\admin\model\News::create($sl_data);
+
+        News::create($sl_data);
         $continue = input('continue', 0, 'intval');
         if ($continue) {
-            $this->success('文章添加成功,继续发布', url('admin/News/news_add', ['news_columnid' => input('news_columnid')]));
+            $this->success('文章添加成功,待后台审核', url('/newsAdd', ['news_columnid' => input('news_columnid')]));
         } else {
-            $this->success('文章添加成功,返回列表页', url('admin/News/news_list'));
+            $this->success('文章添加成功,待后台审核,返回列表页', url('/newsAdd'));
         }
     }
 

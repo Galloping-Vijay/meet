@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<!--[if IE 8]>
+<html class="ie ie8"> <![endif]-->
+<!--[if IE 9]>
+<html class="ie ie9"> <![endif]-->
+<!--[if gt IE 9]><!-->
+<html> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <title>{$menu.menu_seo_title|default=$site_seo_title} {$site_name}</title>
+    <meta name="keywords" content="{$menu.menu_seo_key|default=$site_seo_keywords}"/>
+    <meta name="description" content="{$menu.menu_seo_des|default=$site_seo_description}">
+    {include file="public:head" /}
+    <script src="__PUBLIC__/others/jquery.min-1.12.1.js"></script>
+    <script src="__PUBLIC__/layer/layer_<?php echo $lang; ?>.js"></script>
+</head>
+<body class="about page">
+<div class="wrap">
+    {include file="public:nav" /}
+</div>
+{include file="public:footer"/}
+</div>
+{include file="public:scripts"/}
+<script>
+    var massage = "WJFCMS提示: <br/><strong>{:strip_tags($msg)}</strong>";
+    var code = "{:$code}";
+    var wait = "{:$wait}";
+    var url = "{:$url}";
+    layer.msg(massage, {
+        icon: code,
+        time: wait + '000' //2秒关闭（如果不配置，默认是3秒）
+    }, function () {
+        self.location = url;
+    });
+</script>
+</body>
+</html>

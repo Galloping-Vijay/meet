@@ -149,8 +149,9 @@ $configs= [
         '__UPLOAD__'=> $basename . '/data/upload',
     ],
   // 默认跳转页面对应的模板文件
-    'dispatch_success_tmpl'  => THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl',
-    'dispatch_error_tmpl'    => ROOT_PATH . 'public/yfcmf/dispatch_jump.html',
+   /* 'dispatch_success_tmpl'  => THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl',
+    'dispatch_error_tmpl'    => ROOT_PATH . 'public/yfcmf/dispatch_jump.html',*/
+    'dispatch_success_tmpl'=> ROOT_PATH . 'public/default_jump/jump.html','dispatch_error_tmpl'=> ROOT_PATH . 'public/default_jump/jump.html',
 
   // +----------------------------------------------------------------------
   // | 异常及错误设置
@@ -265,10 +266,15 @@ $configs= [
 if(file_exists($file=ROOT_PATH."data/conf/config.php")){
   $configs=array_merge($configs,include ($file));
 }
-//调试模式,错误模板保持TP默认
-if($configs['app_debug']){
+//调试模式,错误模板保持TP默认public/default_jump/jump
+/*if($configs['app_debug']){
     $configs['dispatch_success_tmpl']= THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl';
     $configs['dispatch_error_tmpl']= THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl';
+    $configs['exception_tmpl']= THINK_PATH . 'tpl' . DS . 'think_exception.tpl';
+}*/
+if($configs['app_debug']){
+    $configs['dispatch_success_tmpl']= ROOT_PATH . 'public/default_jump/jump.html';
+    $configs['dispatch_error_tmpl']= ROOT_PATH . 'public/default_jump/jump.html';
     $configs['exception_tmpl']= THINK_PATH . 'tpl' . DS . 'think_exception.tpl';
 }
 return  $configs;

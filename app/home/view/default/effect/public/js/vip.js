@@ -11,18 +11,19 @@ function Clo() {
 }
 
 function Tip() {
-    alert("提交视频地址后，按All+数字1-6选择解析接口")
+    //alert("提交视频地址后，按All+数字1-6选择解析接口");
+    document.getElementById('link').focus();
 }
 
 function Keytest(event) {
     if (event.keyCode == 13) {
-        alert("提交视频地址后，按Alt+数字1-6选择解析接口")
+        //alert("提交视频地址后，按Alt+数字1-6选择解析接口");
+        document.getElementById('link').focus();
     }
-    ;
     if (event.keyCode == 18) {
         num = 1
     }
-    ;
+
     if (num == 1) {
         if (event.keyCode == 49 | event.keyCode == 97) {
             var link = document.getElementById('link').value;

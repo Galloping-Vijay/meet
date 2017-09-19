@@ -1652,6 +1652,32 @@ function menu_text($lang = 'zh-cn')
 }
 
 /**
+ * 返回前台news相关菜单层级text数组
+ * @param string $lang
+ * @param bool $isCache
+ * @return bool|false|mixed|PDOStatement|string|\think\Collection
+ */
+function user_news($lang = 'zh-cn', $isCache = true)
+{
+    $user_news = cache('user_news');
+    if (empty($user_news) || $isCache == false) {
+        //默认中文的分类id
+        $map['parentid'] = 16;
+        if (!config('lang_switch_on')) {
+            //暂时只有中文的,别的语言待开发
+            if (!$lang == 'zh-cn') {
+                //$map['parentid'] = '?';
+                return false;
+            }
+            $map['menu_l'] = $lang;
+        }
+        $user_news = Db::name('menu')->where($map)->select();
+        cache('user_news', $user_news);
+    }
+    return $user_news;
+}
+
+/**
  * 数据签名
  * @param array $data 被认证的数据
  * @return string 签名

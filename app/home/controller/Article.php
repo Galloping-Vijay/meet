@@ -27,7 +27,7 @@ class Article extends Base
             $this->error('请先登录!', url('/'));
         }
         $news_columnid = input('news_columnid', 0, 'intval');
-        $menu_text = Db::name('menu')->where('parentid', 16)->cache(3600)->select();
+        $menu_text = user_news($this->lang);
         $this->assign('menu', $menu_text);
         $source = Db::name('source')->select();
         $this->assign('news_columnid', $news_columnid);
@@ -48,75 +48,9 @@ class Article extends Base
             $this->error('提交方式不正确', url('/newsAdd'));
         }
         //上传图片部分
-        $img_one = '';
-        $picall_url = '';
         $file = request()->file('pic_one');
         $files = request()->file('pic_all');
-        if ($file || $files) {
-            if (config('storage.storage_open')) {
-                //七牛
-                $upload = \Qiniu::instance();
-                $info = $upload->upload();
-                $error = $upload->getError();
-                if ($info) {
-                    if ($file && $files) {
-                        //有单图、多图
-                        if (!empty($info['pic_one'])) $img_one = config('storage.domain') . $info['pic_one'][0]['key'];
-                        if (!empty($info['pic_all'])) {
-                            foreach ($info['pic_all'] as $file) {
-                                $img_url = config('storage.domain') . $file['key'];
-                                $picall_url = $img_url . ',' . $picall_url;
-                            }
-                        }
-                    } elseif ($file) {
-                        //单图
-                        $img_one = config('storage.domain') . $info[0]['key'];
-                    } else {
-                        //多图
-                        foreach ($info as $file) {
-                            $img_url = config('storage.domain') . $file['key'];
-                            $picall_url = $img_url . ',' . $picall_url;
-                        }
-                    }
-                } else {
-                    $this->error($error, url('/newsAdd'));//否则就是上传错误，显示错误原因
-                }
-            } else {
-                $validate = config('upload_validate');
-                //单图
-                if ($file) {
-                    $info = $file[0]->validate($validate)->rule('uniqid')->move(ROOT_PATH . config('upload_path') . DS . date('Y-m-d'));
-                    if ($info) {
-                        $img_url = config('upload_path') . '/' . date('Y-m-d') . '/' . $info->getFilename();
-                        //写入数据库
-                        $data['uptime'] = time();
-                        $data['filesize'] = $info->getSize();
-                        $data['path'] = $img_url;
-                        Db::name('plug_files')->insert($data);
-                        $img_one = $img_url;
-                    } else {
-                        $this->error($file->getError(), url('newsAdd'));//否则就是上传错误，显示错误原因
-                    }
-                }
-                //多图
-                if ($files) {
-                    foreach ($files as $file) {
-                        $info = $file->validate($validate)->rule('uniqid')->move(ROOT_PATH . config('upload_path') . DS . date('Y-m-d'));
-                        if ($info) {
-                            $img_url = config('upload_path') . '/' . date('Y-m-d') . '/' . $info->getFilename();
-                            //写入数据库
-                            $data['uptime'] = time();
-                            $data['filesize'] = $info->getSize();
-                            $data['path'] = $img_url;
-                            Db::name('plug_files')->insert($data);
-                            $picall_url = $img_url . ',' . $picall_url;
-                        } else {
-                            $this->error($file->getError(), url('newsAdd'));//否则就是上传错误，显示错误原因
-                        }
-                    }
-                }
-            }
-        }
+        $imgInfo = $this->fileUpload($file, $files, '/newsAdd');
         $sl_data = array(
             'news_title' => input('news_title', '', 'trim'),
             'news_columnid' => input('news_columnid', 0, 'intval'),
@@ -125,8 +59,8 @@ class Article extends Base
             'news_source' => input('news_source', '', 'trim'),
             'news_pic_type' => input('news_pic_type', 0, 'intval'),
             'news_pic_content' => input('news_pic_content', '', 'trim'),
-            'news_pic_allurl' => $picall_url,//多图路径
-            'news_img' => $img_one,//封面图片路径
+            'news_pic_allurl' => $imgInfo['picall_url'],//多图路径
+            'news_img' => $imgInfo['img_one'],//封面图片路径
             'news_open' => input('news_open', 0),
             'news_scontent' => input('news_scontent', '', 'trim'),
             'news_content' => htmlspecialchars_decode(input('news_content')),
@@ -166,13 +100,16 @@ class Article extends Base
     /**
      * 编辑显示
      */
-    public function news_edit()
+    public function newsEdit()
     {
+        if (empty(session('user'))) {
+            $this->error('请先登录!', url('/'));
+        }
         $n_id = input('n_id');
         if (empty($n_id)) {
-            $this->error('参数错误', url('admin/News/news_list'));
+            $this->error('参数错误');
         }
-        $news_list = NewsModel::get($n_id);
+        $news_list = News::get($n_id);
         $news_extra = json_decode($news_list['news_extra'], true);
         $news_extra['showdate'] = ($news_extra['showdate'] == '') ? $news_list['news_time'] : $news_extra['showdate'];
         //多图字符串转换成数组
@@ -180,15 +117,13 @@ class Article extends Base
         $pic_list = array_filter(explode(",", $text));
         $this->assign('pic_list', $pic_list);
         //栏目数据
-        $menu_text = menu_text($this->lang);
+        $menu_text = user_news($this->lang);
         $this->assign('menu', $menu_text);
-        $diyflag = Db::name('diyflag')->select();
         $source = Db::name('source')->select();//来源
         $this->assign('source', $source);
         $this->assign('news_extra', $news_extra);
-        $this->assign('diyflag', $diyflag);
         $this->assign('news_list', $news_list);
-        return $this->fetch();
+        return $this->fetch('article/news_edit');
     }
 
     /**
@@ -196,12 +131,20 @@ class Article extends Base
      */
     public function news_runedit()
     {
+        if (empty(session('user'))) {
+            $this->error('请先登录!', url('/'));
+        }
         if (!request()->isAjax()) {
-            $this->error('提交方式不正确', url('admin/News/news_list'));
+            $this->error('提交方式不正确');
         }
         //获取图片上传后路径
         $pic_oldlist = input('pic_oldlist');//老多图字符串
-        $img_one = '';
+        $file = request()->file('pic_one');
+        $files = request()->file('pic_all');
+        $imgInfo = $this->fileUpload($file, $files, '/newsEdit');
+        $img_one = $imgInfo['img_one'];
+        $picall_url = $imgInfo['picall_url'];
+        /*$img_one = '';
         $picall_url = '';
         $file = request()->file('pic_one');
         $files = request()->file('pic_all');
@@ -233,7 +176,7 @@ class Article extends Base
                         }
                     }
                 } else {
-                    $this->error($error, url('admin/News/news_list'));//否则就是上传错误，显示错误原因
+                    $this->error($error, url('/newsEdit'));//否则就是上传错误，显示错误原因
                 }
             } else {
                 $validate = config('upload_validate');
@@ -249,7 +192,7 @@ class Article extends Base
                         Db::name('plug_files')->insert($data);
                         $img_one = $img_url;
                     } else {
-                        $this->error($file->getError(), url('admin/News/news_list'));//否则就是上传错误，显示错误原因
+                        $this->error($file->getError(), url('/newsEdit'));//否则就是上传错误，显示错误原因
                     }
                 }
                 //多图
@@ -265,38 +208,42 @@ class Article extends Base
                             Db::name('plug_files')->insert($data);
                             $picall_url = $img_url . ',' . $picall_url;
                         } else {
-                            $this->error($file->getError(), url('admin/News/news_list'));//否则就是上传错误，显示错误原因
+                            $this->error($file->getError(), url('/newsEdit'));//否则就是上传错误，显示错误原因
                         }
                     }
                 }
             }
-        }
-        //获取文章属性
-        $news_flag = input('post.news_flag/a');
-        $flag = array();
-        if (!empty($news_flag)) {
-            foreach ($news_flag as $v) {
-                $flag[] = $v;
-            }
-        }
-        $flagdata = implode(',', $flag);
+        }*/
+
         $sl_data = array(
             'n_id' => input('n_id'),
-            'news_title' => input('news_title'),
-            'news_titleshort' => input('news_titleshort', ''),
-            'news_columnid' => input('news_columnid'),
-            'news_flag' => $flagdata,
-            'news_zaddress' => input('news_zaddress', ''),
-            'news_key' => input('news_key', ''),
-            'news_tag' => input('news_tag', ''),
-            'news_source' => input('news_source', ''),
-            'news_pic_type' => input('news_pic_type'),
-            'news_pic_content' => input('news_pic_content', ''),
+            'news_title' => input('news_title', '', 'trim'),
+            'news_columnid' => input('news_columnid', 0, 'intval'),
+            'news_key' => input('news_key', '', 'trim'),
+            'news_tag' => input('news_tag', '', 'trim'),
+            'news_source' => input('news_source', '', 'trim'),
+            'news_pic_type' => input('news_pic_type', 0, 'intval'),
+            'news_pic_content' => input('news_pic_content', '', 'trim'),
+            'news_pic_allurl' => $imgInfo['picall_url'],//多图路径
+            'news_img' => $imgInfo['img_one'],//封面图片路径
             'news_open' => input('news_open', 0),
-            'news_scontent' => input('news_scontent', ''),
+            'news_scontent' => input('news_scontent', '', 'trim'),
             'news_content' => htmlspecialchars_decode(input('news_content')),
-            'listorder' => input('listorder', 50, 'intval'),
+            'news_auto' => session('user.member_list_id'),
         );
+        //验证开始
+        $validate = new Validate(
+            [
+                ['news_title|文章标题', ['require']],
+                ['news_columnid|所属栏目', ['require', 'egt:16']],
+                ['news_open|审核状态', ['eq:0']],
+                ['news_content|文章内容', ['require']],
+                ['news_auto|用户信息', ['require', 'integer']],
+            ]
+        );
+        if (true !== $validate->check($sl_data)) {
+            return json(['code' => 0, 'msg' => $validate->getError()]);
+        }
         //图片字段处理
         if (!empty($img_one)) {
             $sl_data['news_img'] = $img_one;
@@ -309,11 +256,28 @@ class Article extends Base
         $showtime = input('showdate', '');
         $news_extra['showdate'] = ($showtime == '') ? time() : strtotime($showtime);
         $sl_data['news_extra'] = json_encode($news_extra);
-        $rst = \app\admin\model\News::update($sl_data);
+        $rst = News::update($sl_data);
         if ($rst !== false) {
-            $this->success('文章修改成功,返回列表页', url('admin/News/news_list'));
+            $this->success('文章修改成功,返回列表页');
         } else {
-            $this->error('文章修改失败', url('admin/News/news_list'));
+            $this->error('文章修改失败');
+        }
+    }
+
+    /**
+     * 作者删除文章
+     */
+    public function news_del()
+    {
+        if (empty(session('user'))) {
+            $this->error('您没有权限删除文章!', url('/'));
+        }
+        $id = input("id", 0, "intval");
+        $result = News::destroy($id);
+        if ($result) {
+            $this->success('删除成功!');
+        } else {
+            $this->error('删除失败');
         }
     }
 }

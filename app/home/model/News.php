@@ -9,6 +9,8 @@
 
 namespace app\home\model;
 
+use think\Db;
+
 class News extends Base
 {
     //主键
@@ -60,5 +62,17 @@ class News extends Base
     public function menu()
     {
         return $this->belongsTo('Menu', 'news_columnid', 'id');
+    }
+
+    /**
+     * 获取文章审核状态
+     * @param $value
+     * @param $data
+     * @return mixed
+     */
+    public function getNewsOpenNameAttr($value, $data)
+    {
+        $news_open = [0 => '×', 1 => '√', 2 => '?'];
+        return $news_open[$data['news_open']];
     }
 }

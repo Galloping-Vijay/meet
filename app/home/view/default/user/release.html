@@ -25,7 +25,7 @@
 								<li>{:lang('current location')}:</li>
 								<li><a href="__ROOT__/">{:lang('home')}</a></li>
 								<li><a href="{:url('home/Center/index')}">{:lang('personal center')}</a></li>
-								<li>{:lang('my favorites')}</li>
+								<li>{:lang('my release')}</li>
 							</ul>
 						</div>
 					</div>
@@ -46,17 +46,30 @@
 									<tr>
 										<th>#</th>
 										<th>{:lang('title')}</th>
+										<th>{:lang('audit')}</th>
 										<th>{:lang('description')}</th>
 										<th>{:lang('operation')}</th>
 									</tr>
 									</thead>
 									<tbody>
-									{foreach name="favorites" item="vo"}
+									{foreach name="article" item="vo"}
 										<tr>
-											<td>{$vo.id}</td>
+											<td>{$vo.n_id}</td>
 											<td>{$vo.news_title}</td>
+											<th>{$vo.news_open_name}</th>
 											<td>{$vo.news_scontent|msubstr=0,20}</td>
-											<td><a href="{:url('home/News/index',array('id'=>$vo['t_id']))}" target="_blank">{:lang('see')}</a> | <a class="js-delete-btn" href="{:url('home/Center/delete_favorite',array('id'=>$vo['id'],'p'=>input('p',1)))}">{:lang('delete')}</a></td>
+											<td>
+												{if $vo.news_open == 1}
+												<a href="{:url('home/News/index',array('id'=>$vo['n_id']))}" target="_blank">{:lang('see')}</a>
+												{else/}
+												{:lang('see')}
+												{/if}
+												|
+												<a href="{:url('/newsEdit',array('n_id'=>$vo['n_id']))}" target="_blank">{:lang('edit')}</a>
+												|
+												<a class="js-delete-btn" href="{:url('home/Article/news_del',array('id'=>$vo['n_id']))}">{:lang('delete')}</a>
+
+											</td>
 										</tr>
 									{/foreach}
                                     <tr>

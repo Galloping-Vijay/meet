@@ -129,7 +129,7 @@ class Center extends Base
         $this->assign("oauths", $new_oauths);
         return $this->view->fetch('user:bang');
     }
-
+    //我的收藏
     public function fav()
     {
         $favorites_model = Db::name("favorites");
@@ -148,13 +148,13 @@ class Center extends Base
         }
         $userId = session('user.member_list_id');
         $articleModel = new News();
-        $article = $articleModel->where('news_auto',$userId)->cache(300)->select();
+        $article = $articleModel->where('news_auto',$userId)->order('n_id desc')->paginate(config('paginate.list_rows'));
         $show = $article->render();
         $this->assign('page', $show);
-        $this->assign("favorites", $article);
+        $this->assign("article", $article);
         return $this->view->fetch('user:release');
     }
-
+    //删除收藏
     public function delete_favorite()
     {
         $id = input("id", 0, "intval");

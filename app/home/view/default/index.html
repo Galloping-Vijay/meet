@@ -239,8 +239,12 @@
                      </div>
                      <div class="blog-showcase-extra-info col-lg-4">
                         <i class="fa fa-clock-o">{$vo.news_time|date="Y-m-d H:i:s",###}</i>
-                        <h5><a href="{:url('home/News/index',array('id'=>$vo['n_id']))}" class="title">{$vo.news_title}</a></h5>
-                        <p>{:msubstr($vo['news_scontent'],0,45)}</p>
+                        <h5>
+                           <a href="{:url('home/News/index',array('id'=>$vo['n_id']))}" class="title">
+                           {$vo.news_title |html_trim ='11'}
+                        </a>
+                        </h5>
+                        <p>{$vo.news_scontent |html_trim ='11'}</p>
                         <a href="{:url('home/News/index',array('id'=>$vo['n_id']))}">{:lang('see')} <i class="fa fa-angle-double-right"></i></a>
                      </div>
                      </li>
@@ -307,13 +311,13 @@
                                     <div {if condition="$k eq 0"}class="item active"{else /}class="item"{/if}>
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                        <div class="testimonial item">
-                                          <p>{$vo.news_scontent}</p>
+                                          <p>{$vo.news_scontent|msubstr=0,30}</p>
                                           <div class="testimonials-arrow">
                                           </div>
                                           <div class="author">
                                              <div class="testimonial-image "><img alt="" src="{$vo['news_img']|get_imgurl}"></div>
                                              <div class="testimonial-author-info">
-                                                <a href="{:url('home/News/index',array('id'=>$vo['n_id']))}"><span class="color">{$vo.news_title}</span></a>{$vo.news_source}
+                                                <a href="{:url('home/News/index',array('id'=>$vo['n_id']))}"><span class="color">{$vo.news_title|msubstr=0,10}</span></a>{$vo.news_source}
                                              </div>
                                           </div>
                                        </div>

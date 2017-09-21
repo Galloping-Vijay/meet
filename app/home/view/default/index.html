@@ -227,12 +227,14 @@
                <div class="clearfix"></div>
                <div class="blog-showcase col-lg-12 col-md-12 col-sm-12 col-xs-12 animate_afb d1">
                   <ul>
-                     {yf:news name="lastnews" cid="$portal_index_lastnews" field="news_title,news_hits,news_scontent,n_id,news_img,news_columnid,news_time" order="news_time desc" limit="3" /}
+                     {yf:news name="lastnews" field="news_title,news_hits,news_scontent,n_id,news_img,news_columnid,news_time" order="news_time desc" limit="3" /}
                      {foreach name="lastnews" item="vo" key="k"}
                      <li {if condition="$k eq 2"}class="blog-first-el"{/if}>
                      <div class="blog-showcase-thumb col-lg-4">
                         <div class="post-body">
-                           <a class="post-item-link" href="{:url('home/News/index',array('id'=>$vo['n_id']))}"><img alt="" src="{$vo['news_img']|get_imgurl}"></a>
+                           <a class="post-item-link" href="{:url('home/News/index',array('id'=>$vo['n_id']))}">
+                              <img alt="" src="{$vo['news_img']|get_imgurl}">
+                           </a>
                         </div>
                      </div>
                      <div class="blog-showcase-extra-info col-lg-4">

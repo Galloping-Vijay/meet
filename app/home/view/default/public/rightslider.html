@@ -21,7 +21,7 @@
             <div class="contents">
                 <div class="tabscontent" id="content1" style="display: block;">
                     <ul class="posts">
-						{yf:news name="hot_articles" cid="$portal_hot_articles" field="news_title,news_time,news_scontent,n_id,news_img" limit="5" order="news_hits desc" /}
+						{yf:news name="hot_articles" field="news_title,news_time,news_scontent,n_id,news_img" limit="5" order="news_hits desc" /}
 						{foreach name="hot_articles" item="vo"}
                         <li>
                             <a href="{:url('home/News/index',array('id'=>$vo['n_id']))}"><img class="img-thumbnail recent-post-img" alt="" src="{$vo['news_img']|get_imgurl}"></a>
@@ -33,7 +33,7 @@
                 </div>
                 <div class="tabscontent" id="content2">
                     <ul class="posts">
-						{yf:news name="last_post" cid="$portal_last_post" field="news_title,news_time,news_scontent,n_id,news_img" limit="5" order="news_time desc" /}
+						{yf:news name="last_post" field="news_title,news_time,news_scontent,n_id,news_img" limit="5" order="news_time desc" /}
 						{foreach name="last_post" item="vo"}
                         <li>
                             <a href="{:url('home/News/index',array('id'=>$vo['n_id']))}"><img class="img-thumbnail recent-post-img" alt="" src="{$vo['news_img']|get_imgurl}"></a>
@@ -64,20 +64,15 @@
     <div class="widget ads">
         <h3 class="title">{:lang('ads contribution')}</h3>
         <div class="ads-img row">
+            {yf:ads name="ad_sponsor" cid="$ad_sponsor_id" /}
+            {foreach name="ad_sponsor" item="vo"}
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                <img class="img-thumbnail" alt="" src="{$yf_theme_path}public/images/ads-small.jpg">
+                <a href="{$vo.plug_ad_url}" target="_blank">
+                    <img class="img-thumbnail" alt="" src="{$vo.plug_ad_pic|default='__PUBLIC__/img/ads-small.jpg'}">
+                    <em>{$vo.plug_ad_name}</em>
+                </a>
             </div>
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                <img class="img-thumbnail" alt="" src="{$yf_theme_path}public/images/ads-small.jpg">
-            </div>
-        </div>
-        <div class="ads-img row">
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                <img class="img-thumbnail" alt="" src="{$yf_theme_path}public/images/ads-small.jpg">
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                <img class="img-thumbnail" alt="" src="{$yf_theme_path}public/images/ads-small.jpg">
-            </div>
+            {/foreach}
         </div>
     </div>
 </div>

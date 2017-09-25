@@ -53,7 +53,6 @@ class Text extends AbstractMessage
 
     public function reply($content = '')
     {
-        $this->info = input('content');
         $config = [
             'userid' => $this->userid,
             'info' => $content
@@ -63,8 +62,10 @@ class Text extends AbstractMessage
 
         $curl = new Curl();
         $data = $curl->post($tuling->app_url(), $conf);
+
         if ($data) {
-            return $data->text;
+            $data = json_decode($data, true);
+            return $data['text'];
         } else {
             return '亲，不明白您说什么';
         }

@@ -11,16 +11,17 @@ namespace app\home\controller;
 
 
 use app\common\lib\Curl;
+use EasyWeChat\Message\Text;
 use tuling\Tuling;
 
 class Test extends Base
 {
     public $userid = '123456';
-    public  $info = '';
+    public $info = '';
 
     public function index()
     {
-        if($this->request->isPost()) {
+        if ($this->request->isPost()) {
             $this->info = input('content');
             $config = [
                 'userid' => $this->userid,
@@ -30,10 +31,17 @@ class Test extends Base
             $conf = $tuling->config($config);
 
             $curl = new Curl();
-            $data = $curl->post($tuling->app_url(),$conf);
+            $data = $curl->post($tuling->app_url(), $conf);
             $json = json_decode($data, true);
             pr($json);
         }
         return $this->fetch('test/index');
+    }
+
+    public function ceshi()
+    {
+       $text = new Text();
+       $data = $text->reply('测试一下');
+        pr($data);
     }
 }

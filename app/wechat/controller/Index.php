@@ -62,8 +62,8 @@ class Index extends WeBase
                                         return $new;
                                         break;
                                     default:
-                                        $text = new Text();
-                                        return $text->reply($message->Content);
+                                        $text = new Text(['content' => '亲，不明白您想说什么']);
+                                        return $text;
                                         break;
                                 }
                             }

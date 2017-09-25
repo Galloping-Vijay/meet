@@ -51,6 +51,7 @@ class Text extends AbstractMessage
      */
     protected $userid = '123456789';
 
+    //自动回复功能
     public function reply($content = '')
     {
         $config = [

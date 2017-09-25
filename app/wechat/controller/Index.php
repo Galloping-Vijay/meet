@@ -62,8 +62,8 @@ class Index extends WeBase
                                         return $new;
                                         break;
                                     default:
-                                        $text = new Text(['content' => '亲，不明白您想说什么']);
-                                        return $text;
+                                        $text = new Text();
+                                        return $text->reply($message->Content);
                                         break;
                                 }
                             }
@@ -92,8 +92,6 @@ class Index extends WeBase
                     # 文字消息...
                     $we_reply_list=Db::name('we_reply')->where('we_reply_key','like','%'.$message->Content.'%')->find();
                     if (empty($we_reply_list)){
-                       /* $text = new Text(['content' => '亲，不明白您想说什么']);
-                        return $text;*/
                         $text = new Text();
                         return $text->reply($message->Content);
                     }else{
@@ -116,8 +114,6 @@ class Index extends WeBase
                                 return $new;
                                 break;
                             default:
-                                /*$text = new Text(['content' => '亲，不明白您想说什么']);
-                                return $text;*/
                                 $text = new Text();
                                 return $text->reply($message->Content);
                                 break;

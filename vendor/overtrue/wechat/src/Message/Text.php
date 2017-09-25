@@ -21,6 +21,9 @@
 
 namespace EasyWeChat\Message;
 
+use app\common\lib\Curl;
+use tuling\Tuling;
+
 /**
  * Class Text.
  *
@@ -41,4 +44,30 @@ class Text extends AbstractMessage
      * @var array
      */
     protected $properties = ['content'];
+
+    /**
+     * 用户id
+     * @var string
+     */
+    protected $userid = '123456789';
+
+    public function reply($content = '')
+    {
+        $this->info = input('content');
+        $config = [
+            'userid' => $this->userid,
+            'info' => $content
+        ];
+        $tuling = new Tuling();
+        $conf = $tuling->config($config);
+
+        $curl = new Curl();
+        $data = $curl->post($tuling->app_url(), $conf);
+        if ($data) {
+            return $data->text;
+        } else {
+            return '亲，不明白您说什么';
+        }
+
+    }
 }

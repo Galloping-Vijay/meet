@@ -43,6 +43,11 @@ class We extends WeBase
 			}
 		}
 	}
+
+    /**
+     * 微信菜单管理
+     * @return mixed
+     */
     public function menu_list()
     {
         $menu=Db::name('we_menu')->order('we_menu_order')->select();

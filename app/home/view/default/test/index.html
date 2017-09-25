@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!--[if IE 8]>			<html class="ie ie8"> <![endif]-->
+<!--[if IE 9]>			<html class="ie ie9"> <![endif]-->
+<!--[if gt IE 9]><!-->	<html> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <title>{:lang('contact us')} {$site_name}</title>
+    <meta name="keywords" content="{$menu.menu_seo_key|default=$site_seo_keywords}" />
+    <meta name="description" content="{$menu.menu_seo_des|default=$site_seo_description}">
+    {include file="public:head" /}
+</head>
+<body class="blog">
+{include file="public:nav" /}
+<div class="container" style="margin-top:20px;">
+    <div class="row">
+        <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12">
+            <h3 class="title">测试提交</h3>
+            <form class="form-horizontal" method="post" action="{:url('home/test/index')}">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label>{:lang('content')}: <span>*</span></label>
+                            <textarea class="form-control" id="message" placeholder="Write you message here..." style="height: 100px;" name="content" required></textarea>
+                        </div>
+                    </div>
+                <div style="height:10px;"></div>
+                <button type="submit" class="btn btn-primary" data-wait="1500">提交</button>
+                <div class="clearfix"></div>
+            </form>
+        </div>
+    </div>
+    <div class="divider"></div>
+</div>
+{include file="public:footer" /}
+{include file="public:scripts" /}
+</body>
+</html>

@@ -7,7 +7,7 @@
 // | Author: wjf <admin@abc3210.com> 2017/9/25
 // +----------------------------------------------------------------------
 
-namespace tuling;
+namespace program\tuling;
 
 class Tuling
 {

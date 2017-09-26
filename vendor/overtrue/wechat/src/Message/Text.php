@@ -22,7 +22,7 @@
 namespace EasyWeChat\Message;
 
 use app\common\lib\Curl;
-use tuling\Tuling;
+use program\tuling\Tuling;
 
 /**
  * Class Text.

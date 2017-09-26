@@ -1,7 +1,6 @@
 <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 <script>
-    wx.config(
-        "<?php echo $js->config(array('onMenuShareTimeline','onMenuShareAppMessage,onMenuShareQQ,onMenuShareQZone'),true,false,true);?>"
+    wx.config(<?php echo $js->config(array('onMenuShareAppMessage','onMenuShareTimeline','onMenuShareQQ', 'onMenuShareWeibo'), true) ?>);
     );
     wx.ready(function () {
 

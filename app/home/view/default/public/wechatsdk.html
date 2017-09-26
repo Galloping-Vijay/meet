@@ -39,10 +39,10 @@
 
 //获取“分享给朋友”按钮点击状态及自定义分享内容接口
         wx.onMenuShareAppMessage({
-            title: "<?php echo $news['Title'];?>",
-            desc: "<?php echo $news['Description'];?>",
-            link: "<?php echo $news['Url'];?>",
-            imgUrl: "<?php echo $news['PicUrl'];?>",
+            title: "",
+            desc: "",
+            link: "",
+            imgUrl: "",
             trigger: function (res) {
                 // 不要尝试在trigger中使用ajax异步请求修改本次分享的内容，因为客户端分享操作是一个同步操作，这时候使用ajax的回包会还没有返回
                 // alert('用户点击发送给朋友');
@@ -323,8 +323,8 @@
     //发起一个微信支付请求
     function chooseWXPay() {
         wx.chooseWXPay({
-            timestamp: "<?php echo $signPackage['timestamp'];?>",
-        nonceStr: "<?php echo $signPackage['nonceStr'];?>",
+            timestamp: "",
+        nonceStr: "",
             package: '', // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=***）
             signType: 'MD5', // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
             paySign: '', // 支付签名

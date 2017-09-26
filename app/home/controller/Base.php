@@ -193,9 +193,9 @@ class Base extends Common
         if(!empty($config)) $this->options=array_merge($this->options,$config);
         $app = new Application($this->options);
         $js = $app->js;
-
+        $wxconfig = $js->config($this->jsApiList, $debug = true, $beta = false, $json = true);
         $this->user['address'] = $address;
-        $this->assign('js',$js);
+        $this->assign('wxconfig',$wxconfig);
         $this->assign("user", $this->user);
         $this->assign("is_admin", $is_admin);
     }

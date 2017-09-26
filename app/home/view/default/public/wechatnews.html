@@ -5,12 +5,12 @@
 
         //获取“分享到朋友圈”按钮点击状态及自定义分享内容接口
         wx.onMenuShareTimeline({
-            title: '<?php echo $news_title;?>',
-            link: '<?php echo $this->url->getStaticBaseUri().$this->url->getBaseUri()."article/index?id=".$n_id."&sid=".$this->session->get("user")->id;?>',
-            imgUrl: '<?php echo $this->url->getStaticBaseUri().$this->url->getBaseUri().$article->image;?>',
+            title: "<?php echo $news_title;?>",
+            link: "<?php echo request()->url(true);?>",
+            imgUrl: "<?php echo $news_img?$news_img:get_imgurl ?>",
             success: function () {
                 $.ajax({
-                    url:'<?=$this->url->getStaticBaseUri().$this->url->getBaseUri()?>user/share?id=<?=$article->id?>',
+                    url:"<?php echo request()->url(true);?>",
                     success:function(){
                         alert('分享成功');
                     }});
@@ -18,13 +18,13 @@
         });
         // 获取“分享给朋友”按钮点击状态及自定义分享内容接口
         wx.onMenuShareAppMessage({
-            title: '<?php echo $article->title;?>',
-            desc: '<?php echo $article->description;?>',
-            link: '<?php echo $this->url->getStaticBaseUri().$this->url->getBaseUri()."article/index?id=".$article->id."&sid=".$this->session->get("user")->id;?>',
-            imgUrl: '<?php echo $this->url->getStaticBaseUri().$this->url->getBaseUri().$article->image;?>',
+            title: "<?php echo $news_title;?>",
+            desc: "<?php echo $news_scontent;?>",
+            link: "<?php echo request()->url(true);?>",
+            imgUrl: "<?php echo $news_img?$news_img:get_imgurl ?>",
             success: function (res) {
                 $.ajax({
-                    url:'<?=$this->url->getStaticBaseUri().$this->url->getBaseUri()?>user/share?id=<?=$article->id?>',
+                    url:"<?php echo request()->url(true);?>",
                     success:function(){
                         alert('分享成功');
                     }});
@@ -34,33 +34,33 @@
 
         //获取“分享到QQ”按钮点击状态及自定义分享内容接口
         wx.onMenuShareQQ({
-            title: '<?php echo $article->title;?>',
-            desc: '<?php echo $article->description;?>',
-            link: '<?php echo $this->url->getStaticBaseUri().$this->url->getBaseUri()."/article/index?id=".$article->id."&sid=".$this->session->get("user")->id;?>',
-            imgUrl: '<?php echo $this->url->getStaticBaseUri().$this->url->getBaseUri().$article->image;?>',
+            title: "<?php echo $news_title;?>",
+            desc: "<?php echo $news_scontent;?>",
+            link: "<?php echo request()->url(true);?>",
+            imgUrl: "<?php echo $news_img?$news_img:get_imgurl ?>",
             success: function () {
                 // 用户确认分享后执行的回调函数
-            }
-        });
-
-        //获取“分享到腾讯微博”按钮点击状态及自定义分享内容接口
-        wx.onMenuShareWeibo({
-            title: '<?php echo $article->title;?>',
-            desc: '<?php echo $article->description;?>',
-            link: '<?php echo $this->url->getStaticBaseUri().$this->url->getBaseUri()."/article/index?id=".$article->id."&sid=".$this->session->get("user")->id;?>',
-            imgUrl: '<?php echo $this->url->getStaticBaseUri().$this->url->getBaseUri().$article->image;?>',
-            success: function () {
-                // 用户确认分享后执行的回调函数
+                $.ajax({
+                    url:"<?php echo request()->url(true);?>",
+                    success:function(){
+                        alert('分享成功');
+                    }});
             }
         });
         //获取“分享到QQ空间”按钮点击状态及自定义分享内容接口
         wx.onMenuShareQZone({
-            title: '<?php echo $article->title;?>',
-            desc: '<?php echo $article->description;?>',
-            link: '<?php echo $this->url->getStaticBaseUri().$this->url->getBaseUri()."/article/index?id=".$article->id."&sid=".$this->session->get("user")->id;?>',
-            imgUrl: '<?php echo $this->url->getStaticBaseUri().$this->url->getBaseUri().$article->image;?>',
+            title: "<?php echo $news_title;?>",
+            desc: "<?php echo $news_scontent;?>",
+            link: "<?php echo request()->url(true);?>",
+            imgUrl: "<?php echo $news_img?$news_img:get_imgurl ?>",
             success: function () {
                 // 用户确认分享后执行的回调函数
+                // 用户确认分享后执行的回调函数
+                $.ajax({
+                    url:"<?php echo request()->url(true);?>",
+                    success:function(){
+                        alert('分享成功');
+                    }});
             }
         });
     });

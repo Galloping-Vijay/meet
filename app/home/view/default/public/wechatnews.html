@@ -30,8 +30,8 @@
         });
         // 获取“分享给朋友”按钮点击状态及自定义分享内容接口
         wx.onMenuShareAppMessage({
-            title: "试着分享",
-            desc: "试着分享啊啊啊",
+            title: "<?php echo $news_title;?>",
+            desc: "<?php echo $news_scontent;?>",
             link: "<?php echo request()->url(true);?>",
             imgUrl: "<?php echo request()->domain().get_imgurl($news_img);?>",
             success: function (res) {

@@ -1,6 +1,17 @@
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script>
-    wx.config("<?php echo $js->config(array('onMenuShareTimeline', 'onMenuShareAppMessage,onMenuShareQQ,onMenuShareQZone'), true);?>");
+    wx.config(
+        "<?php echo " +
+            "$js->config(" +
+            "array(" +
+                "'onMenuShareTimeline', " +
+                "'onMenuShareAppMessage," +
+                "onMenuShareQQ," +
+                "onMenuShareQZone'" +
+                ")," +
+            " true);" +
+        "?>"
+    );
     wx.ready(function () {
 
         //获取“分享到朋友圈”按钮点击状态及自定义分享内容接口
@@ -28,19 +39,12 @@
         });
         // 获取“分享给朋友”按钮点击状态及自定义分享内容接口
         wx.onMenuShareAppMessage({
-            title: "<?php echo $news_title;?>",
-            desc: "<?php echo $news_scontent;?>",
+            title: "试着分享",
+            desc: "试着分享啊啊啊",
             link: "<?php echo request()->url(true);?>",
             imgUrl: "<?php echo request()->domain().get_imgurl($news_img);?>",
             success: function (res) {
-                $.ajax({
-                    url:"<?php echo request()->url(true);?>",
-                    success:function(){
-                        alert('分享成功');
-                    },
-                    error :function () {
-                        console.log('失败');
-                    }});
+                alert('分享成功');
             },
             cancel: function (res) {
                 // alert('已取消');

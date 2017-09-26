@@ -11,6 +11,7 @@ namespace app\home\controller;
 
 
 use app\common\lib\Curl;
+use EasyWeChat\Foundation\Application;
 use EasyWeChat\Message\Text;
 use tuling\Tuling;
 
@@ -21,21 +22,14 @@ class Test extends Base
 
     public function index()
     {
-        if ($this->request->isPost()) {
-            $this->info = input('content');
-            $config = [
-                'userid' => $this->userid,
-                'info' => $this->info
-            ];
-            $tuling = new Tuling();
-            $conf = $tuling->config($config);
-
-            $curl = new Curl();
-            $data = $curl->post($tuling->app_url(), $conf);
-            $json = json_decode($data, true);
-            pr($json);
-        }
-        return $this->fetch('test/index');
+        $APIs = $this->jsApiList;
+        //微信平台
+        $config=config('we_options');
+        if(!empty($config)) $this->options=array_merge($this->options,$config);
+       $app = new Application($this->options);
+       $js = $app->js;
+       $wxconfig = $js->config($APIs, $debug = true, $beta = false, $json = false);
+       pr($wxconfig);
     }
 
     public function ceshi()

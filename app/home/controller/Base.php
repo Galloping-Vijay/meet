@@ -10,6 +10,7 @@ namespace app\home\controller;
 
 use app\common\controller\Common;
 use app\admin\model\Options;
+use EasyWeChat\Foundation\Application;
 use think\Db;
 
 class Base extends Common
@@ -17,6 +18,112 @@ class Base extends Common
     protected $view;
     protected $user;
     protected $yf_theme_path;
+    //微信平台
+    protected $options=[
+        /**
+         * Debug 模式，bool 值：true/false
+         *
+         * 当值为 false 时，所有的日志都不会记录
+         */
+        'debug'  => true,
+        /**
+         * 账号基本信息，请从微信公众平台/开放平台获取
+         */
+        'app_id' => '',
+        'secret' => '',
+        'token'  => '',
+        'aes_key' => '',
+        'we_name'=>'',
+        'we_id'=>'',
+        'we_number'=>'',
+        'we_type'=>1,
+        /**
+         * 日志配置
+         *
+         * level: 日志级别, 可选为：
+         *         debug/info/notice/warning/error/critical/alert/emergency
+         * permission：日志文件权限(可选)，默认为null（若为null值,monolog会取0644）
+         * file：日志文件位置(绝对路径!!!)，要求可写权限
+         */
+        'log' => [
+            'level'      => 'debug',
+            'permission' => 0777,
+            'file'       => './data/runtime/temp/easywechat.log',
+        ],
+        /**
+         * OAuth 配置
+         *
+         * scopes：公众平台（snsapi_userinfo / snsapi_base），开放平台：snsapi_login
+         * callback：OAuth授权完成后的回调页地址
+         */
+        'oauth' => [
+            'scopes'   => ['snsapi_userinfo'],
+            'callback' => '/examples/oauth_callback.php',
+        ],
+        /**
+         * 微信支付
+         */
+        'payment' => [
+            'merchant_id'        => 'your-mch-id',
+            'key'                => 'key-for-signature',
+            'cert_path'          => 'path/to/your/cert.pem', // XXX: 绝对路径！！！！
+            'key_path'           => 'path/to/your/key',      // XXX: 绝对路径！！！！
+            // 'device_info'     => '013467007045764',
+            // 'sub_app_id'      => '',
+            // 'sub_merchant_id' => '',
+            // ...
+        ],
+        /**
+         * Guzzle 全局设置
+         *
+         * 更多请参考： http://docs.guzzlephp.org/en/latest/request-options.html
+         */
+        'guzzle' => [
+            'timeout' => 300.0, // 超时时间（秒）
+            //'verify' => false, // 关掉 SSL 认证（强烈不建议！！！）
+        ],
+    ];
+    protected $jsApiList = [
+        "onMenuShareTimeline",//分享到朋友圈
+        "onMenuShareAppMessage",//分享给朋友
+        "onMenuShareQQ",//分享到QQ
+        "onMenuShareWeibo",//分享到腾讯微博
+        "onMenuShareQZone",//分享到QQ空间
+        "startRecord",//开始录音接口
+        "stopRecord",//停止录音接口
+        "onVoiceRecordEnd",//监听录音自动停止接口
+        "playVoice",//播放语音接口
+        "pauseVoice",//暂停播放接口
+        "stopVoice",//停止播放接口
+        "onVoicePlayEnd",//监听语音播放完毕接口
+        "uploadVoice",//上传语音接口
+        "downloadVoice",//下载语音接口
+        "chooseImage",//拍照或从手机相册中选图接口
+        "previewImage",//预览图片接口
+        "uploadImage",//上传图片接口
+        "downloadImage",//下载图片接口
+        "getLocalImgData",//获取本地图片接口
+        "translateVoice",//识别音频并返回识别结果接口
+        "getNetworkType",//获取网络状态接口
+        "openLocation",//使用微信内置地图查看位置接口
+        "getLocation",//获取地理位置接口
+        "startSearchBeacons",//开启查找周边ibeacon设备接口
+        "stopSearchBeacons",//关闭查找周边ibeacon设备接口
+        "onSearchBeacons",//监听周边ibeacon设备接口
+        "hideOptionMenu",
+        "showOptionMenu",
+        "hideMenuItems",//批量隐藏功能按钮接口
+        "showMenuItems",//批量显示功能按钮接口
+        "hideAllNonBaseMenuItem",//隐藏所有非基础按钮接口
+        "showAllNonBaseMenuItem",//显示所有功能按钮接口
+        "closeWindow",//关闭当前网页窗口接口
+        "scanQRCode",//调起微信扫一扫接口
+        "chooseWXPay",//发起一个微信支付请求
+        "openProductSpecificView",//跳转微信商品页接口
+        "addCard",//批量添加卡券接口
+        "chooseCard",//拉取适用卡券列表并获取用户选择信息
+        "openCard",//查看微信卡包中的卡券接口
+    ];
 
     protected function _initialize()
     {
@@ -81,7 +188,14 @@ class Base extends Common
                 $is_admin = true;
             }
         }
+        //微信配置
+        $config=config('we_options');
+        if(!empty($config)) $this->options=array_merge($this->options,$config);
+        $app = new Application($this->options);
+        $js = $app->js;
+
         $this->user['address'] = $address;
+        $this->assign('js',$js);
         $this->assign("user", $this->user);
         $this->assign("is_admin", $is_admin);
     }

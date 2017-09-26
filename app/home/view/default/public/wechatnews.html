@@ -7,7 +7,7 @@
         wx.onMenuShareTimeline({
             title: "<?php echo $news_title;?>",
             link: "<?php echo request()->url(true);?>",
-            imgUrl: "<?php echo $news_img?$news_img:get_imgurl ?>",
+            imgUrl: "<?php echo get_imgurl($news_img);?>",
             success: function () {
                 $.ajax({
                     url:"<?php echo request()->url(true);?>",
@@ -21,7 +21,7 @@
             title: "<?php echo $news_title;?>",
             desc: "<?php echo $news_scontent;?>",
             link: "<?php echo request()->url(true);?>",
-            imgUrl: "<?php echo $news_img?$news_img:get_imgurl ?>",
+            imgUrl: "<?php echo get_imgurl($news_img);?>",
             success: function (res) {
                 $.ajax({
                     url:"<?php echo request()->url(true);?>",
@@ -37,7 +37,7 @@
             title: "<?php echo $news_title;?>",
             desc: "<?php echo $news_scontent;?>",
             link: "<?php echo request()->url(true);?>",
-            imgUrl: "<?php echo $news_img?$news_img:get_imgurl ?>",
+            imgUrl: "<?php echo get_imgurl($news_img);?>",
             success: function () {
                 // 用户确认分享后执行的回调函数
                 $.ajax({
@@ -52,7 +52,7 @@
             title: "<?php echo $news_title;?>",
             desc: "<?php echo $news_scontent;?>",
             link: "<?php echo request()->url(true);?>",
-            imgUrl: "<?php echo $news_img?$news_img:get_imgurl ?>",
+            imgUrl: "<?php echo get_imgurl($news_img);?>",
             success: function () {
                 // 用户确认分享后执行的回调函数
                 // 用户确认分享后执行的回调函数

@@ -1,6 +1,336 @@
 
 <!--微信jssdk-->
-<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" charset="utf-8">
-    wx.config(<?php echo $js->config(array('onMenuShareTimeline', 'onMenuShareAppMessage'), true) ?>);
+    wx.config("<?php echo $js->config(array('onMenuShareTimeline', 'onMenuShareAppMessage'), true);?>");
+    wx.ready(function () {
+        try {
+            if (typeof(eval("onWxReady")) == "function") {
+                onWxReady();
+            }
+        } catch(e) {
+
+        }
+
+        //获取“分享到朋友圈”按钮点击状态及自定义分享内容接口
+        try {
+            if (typeof(shareTimelineData) != "undefined") {
+                wx.onMenuShareTimeline({
+                    title: shareTimelineData.title, // 分享标题
+                    link: shareTimelineData.link, // 分享链接
+                    imgUrl: shareTimelineData.imgUrl, // 分享图标
+                    success: shareTimelineData.success,
+                    cancel: shareTimelineData.cancel
+                });
+            }
+        } catch(e) {
+            wx.onMenuShareTimeline({
+                title: '', // 分享标题
+                link: '', // 分享链接
+                imgUrl: '', // 分享图标
+                success: function () {
+                    // 用户确认分享后执行的回调函数
+                },
+                cancel: function () {
+                    // 用户取消分享后执行的回调函数
+                }
+            });
+        }
+
+//获取“分享给朋友”按钮点击状态及自定义分享内容接口
+        wx.onMenuShareAppMessage({
+            title: "<?php echo $news['Title'];?>",
+            desc: "<?php echo $news['Description'];?>",
+            link: "<?php echo $news['Url'];?>",
+            imgUrl: "<?php echo $news['PicUrl'];?>",
+            trigger: function (res) {
+                // 不要尝试在trigger中使用ajax异步请求修改本次分享的内容，因为客户端分享操作是一个同步操作，这时候使用ajax的回包会还没有返回
+                // alert('用户点击发送给朋友');
+            },
+            success: function (res) {
+                // alert('分享成功!');
+            },
+            cancel: function (res) {
+                // alert('已取消');
+            },
+            fail: function (res) {
+                // alert(JSON.stringify(res));
+            }
+        });
+
+
+        //获取“分享到QQ”按钮点击状态及自定义分享内容接口
+        wx.onMenuShareQQ({
+            title: '', // 分享标题
+            desc: '', // 分享描述
+            link: '', // 分享链接
+            imgUrl: '', // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+        //获取“分享到腾讯微博”按钮点击状态及自定义分享内容接口
+        wx.onMenuShareWeibo({
+            title: '', // 分享标题
+            desc: '', // 分享描述
+            link: '', // 分享链接
+            imgUrl: '', // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+        //获取“分享到QQ空间”按钮点击状态及自定义分享内容接口
+        wx.onMenuShareQZone({
+            title: '', // 分享标题
+            desc: '', // 分享描述
+            link: '', // 分享链接
+            imgUrl: '', // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+        //监听录音自动停止接口
+        wx.onVoiceRecordEnd({
+            // 录音时间超过一分钟没有停止的时候会执行 complete 回调
+            complete: function (res) {
+                var localId = res.localId;
+            }
+        });
+        //监听语音播放完毕接口
+        wx.onVoicePlayEnd({
+            success: function (res) {
+                var localId = res.localId; // 返回音频的本地ID
+            }
+        });
+        wx.startSearchBeacons({
+            ticket: "",  //摇周边的业务ticket, 系统自动添加在摇出来的页面链接后面
+            complete: function (argv) {
+                //开启查找完成后的回调函数
+            }
+        });
+        wx.onSearchBeacons({
+            complete: function (argv) {
+                alert("摇一摇");
+                //回调函数，可以数组形式取得该商家注册的在周边的相关设备列表
+            }
+        });
+
+    });
+    //模拟摇一摇监听接口
+    var SHAKE_THRESHOLD = 800;
+    var last_update = 0;
+    var x = y = z = last_x = last_y = last_z = 0;
+    if (window.DeviceMotionEvent) {
+        window.addEventListener('devicemotion', deviceMotionHandler, false);
+    } else {
+        //alert('本设备不支持devicemotion事件');
+    }
+    function deviceMotionHandler(eventData) {
+        var acceleration = eventData.accelerationIncludingGravity;
+        var curTime = new Date().getTime();
+        if ((curTime - last_update) > 100) {
+            var diffTime = curTime - last_update;
+            last_update = curTime;
+            x = acceleration.x;
+            y = acceleration.y;
+            z = acceleration.z;
+            var speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime * 10000;
+            var status = document.getElementById("status");
+            if (speed > SHAKE_THRESHOLD) {
+                try {
+                    if (typeof(eval("onShake")) == "function") {
+                        onShake();
+                    }
+                } catch(e) {
+
+                }
+                onShake();
+            }
+            last_x = x;
+            last_y = y;
+            last_z = z;
+        }
+    }
+    //拍照或从手机相册中选图接口
+    function chooseImage(func,count,size,source) {
+        if (!(count >= 1 && count <= 9)){
+            count = 9;
+        }
+        if (size == 1){
+            var sizeType = ['original']
+        }else if (size == 2){
+            var sizeType = ['compressed']
+        }else{
+            var sizeType = ['original', 'compressed']
+        }
+        if (source == 1){
+            var sourceType = ['album']
+        }else if (source == 2){
+            var sourceType = ['camera']
+        }else{
+            var sourceType = ['album', 'camera']
+        }
+        wx.chooseImage({
+            count: count, // 默认9
+            sizeType: sizeType, // 可以指定是原图还是压缩图，默认二者都有
+            sourceType: sourceType, // 可以指定来源是相册还是相机，默认二者都有
+            success: function (res) {
+                func(res.localIds); // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+            }
+        });
+    }
+    //预览图片接口
+    function previewImage(current, urls) {
+        wx.previewImage({
+            current: current, // 当前显示图片的http链接
+            urls: urls // 需要预览的图片http链接列表
+        });
+    }
+    //上传图片接口
+    function uploadImage(localId, func) {
+        wx.uploadImage({
+            localId: localId, // 需要上传的图片的本地ID，由chooseImage接口获得
+            isShowProgressTips: 1, // 默认为1，显示进度提示
+            success: function (res) {
+                func(res.serverId); // 返回图片的服务器端ID
+            }
+        });
+    }
+    //下载图片接口
+    function downloadImage(serverId, func) {
+        wx.downloadImage({
+            serverId: serverId, // 需要下载的图片的服务器端ID，由uploadImage接口获得
+            isShowProgressTips: 1, // 默认为1，显示进度提示
+            success: function (res) {
+                func(res.localId); // 返回图片下载后的本地ID
+            }
+        });
+    }
+    //开始录音接口
+    function startRecord() {
+        wx.startRecord();
+    }
+    //停止录音接口
+    function stopRecord(func) {
+        wx.stopRecord({
+            success: function (res) {
+                func(res.localId);
+            }
+        });
+    }
+    //播放语音接口
+    function playVoice(localId) {
+        wx.playVoice({
+            localId: localId // 需要播放的音频的本地ID，由stopRecord接口获得
+        });
+    }
+    //暂停播放接口
+    function pauseVoice(localId) {
+        wx.pauseVoice({
+            localId: localId // 需要暂停的音频的本地ID，由stopRecord接口获得
+        });
+    }
+    //停止播放接口
+    function stopVoice(localId) {
+        wx.stopVoice({
+            localId: localId // 需要停止的音频的本地ID，由stopRecord接口获得
+        });
+    }
+    //上传语音接口
+    function uploadVoice(localId, func) {
+        wx.uploadVoice({
+            localId: localId, // 需要上传的音频的本地ID，由stopRecord接口获得
+            isShowProgressTips: 1, // 默认为1，显示进度提示
+            success: function (res) {
+                func(res.serverId); // 返回音频的服务器端ID
+            }
+        });
+    }
+    //下载语音接口
+    function downloadVoice(serverId, func) {
+        wx.downloadVoice({
+            serverId: serverId, // 需要下载的音频的服务器端ID，由uploadVoice接口获得
+            isShowProgressTips: 1, // 默认为1，显示进度提示
+            success: function (res) {
+                func(res.localId); // 返回音频的本地ID
+            }
+        });
+    }
+    //识别音频并返回识别结果接口
+    function translateVoice(localId, func) {
+        wx.translateVoice({
+            localId: localId, // 需要识别的音频的本地Id，由录音相关接口获得
+            isShowProgressTips: 1, // 默认为1，显示进度提示
+            success: function (res) {
+                translateResult = res.translateResult; // 语音识别的结果
+                func(translateResult);
+            }
+        });
+    }
+    //获取网络状态接口
+    function getNetworkType(func) {
+        wx.getNetworkType({
+            success: function (res) {
+                func(res.networkType); // 返回网络类型2g，3g，4g，wifi
+            }
+        });
+    }
+    //使用微信内置地图查看位置接口
+    function openLocation() {
+        var latitude;
+        var longitude;
+        var speed;
+        var accuracy;
+        wx.getLocation({
+            type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+            success: function (res) {
+                latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+                longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+                speed = res.speed; // 速度，以米/每秒计
+                accuracy = res.accuracy; // 位置精度
+                wx.openLocation({
+                    latitude: latitude, // 纬度，浮点数，范围为90 ~ -90
+                    longitude: longitude, // 经度，浮点数，范围为180 ~ -180。
+                    name: '当前位置', // 位置名
+                    address: '您所在位置', // 地址详情说明
+                    scale: 20, // 地图缩放级别,整形值,范围从1~28。默认为最大
+                    infoUrl: 'http://www.baidu.com' // 在查看位置界面底部显示的超链接,可点击跳转
+                });
+            }
+        });
+    }
+    //调起微信扫一扫接口
+    function scanQRCode(needResult, func) {
+        wx.scanQRCode({
+            needResult: needResult, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+            scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+            success: function (res) {
+                if (needResult == 1) {
+                    func(res.resultStr); // 当needResult 为 1 时，扫码返回的结果
+                }
+            }
+        });
+    }
+    //发起一个微信支付请求
+    function chooseWXPay() {
+        wx.chooseWXPay({
+            timestamp: "<?php echo $signPackage['timestamp'];?>",
+        nonceStr: "<?php echo $signPackage['nonceStr'];?>",
+            package: '', // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=***）
+            signType: 'MD5', // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+            paySign: '', // 支付签名
+            success: function (res) {
+            // 支付成功后的回调函数
+        }
+    });
+    }
 </script>

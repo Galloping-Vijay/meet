@@ -69,7 +69,6 @@ class Js extends AbstractAPI
     public function config(array $APIs, $debug = false, $beta = false, $json = true)
     {
         $signPackage = $this->signature();
-        pr($signPackage);
         $base = [
                  'debug' => $debug,
                  'beta' => $beta,

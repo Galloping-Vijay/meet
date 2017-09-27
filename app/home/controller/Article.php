@@ -116,6 +116,7 @@ class Article extends Base
         $text = $news_list['news_pic_allurl'];
         $pic_list = array_filter(explode(",", $text));
         $this->assign('pic_list', $pic_list);
+        pr($news_list);
         //栏目数据
         $menu_text = user_news($this->lang);
         $this->assign('menu', $menu_text);

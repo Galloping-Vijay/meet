@@ -110,8 +110,6 @@ class Article extends Base
             $this->error('参数错误');
         }
         $news_list = News::get($n_id);
-
-        pr($news_list);
         $news_extra = json_decode($news_list['news_extra'], true);
         $news_extra['showdate'] = ($news_extra['showdate'] == '') ? $news_list['news_time'] : $news_extra['showdate'];
         //多图字符串转换成数组

@@ -110,13 +110,14 @@ class Article extends Base
             $this->error('参数错误');
         }
         $news_list = News::get($n_id);
+
+        pr($news_list);
         $news_extra = json_decode($news_list['news_extra'], true);
         $news_extra['showdate'] = ($news_extra['showdate'] == '') ? $news_list['news_time'] : $news_extra['showdate'];
         //多图字符串转换成数组
         $text = $news_list['news_pic_allurl'];
         $pic_list = array_filter(explode(",", $text));
         $this->assign('pic_list', $pic_list);
-        pr($news_list);
         //栏目数据
         $menu_text = user_news($this->lang);
         $this->assign('menu', $menu_text);

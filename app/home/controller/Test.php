@@ -9,17 +9,20 @@
 
 namespace app\home\controller;
 
+use app\common\lib\Encrypt;
+use app\common\lib\ValidateBasic;
+use app\common\lib\Visitor;
 use EasyWeChat\Message\Text;
-use program\face\Spouse;
 
 class Test extends Base
 {
     public function index()
     {
-        $img_url = 'http://dev.meet.com/public/img/fuqi.jpg';
-       $face = new Spouse($img_url);
-       pr($face);
-        //return $this->fetch('test:index');
+        $vail = new ValidateBasic();
+        $data = '1884416521';
+        $msg = '手机号码';
+        $res = $vail->verification($data,$msg);
+        pr(json_decode($res));
     }
 
     public function ceshi()

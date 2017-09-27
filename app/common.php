@@ -1782,19 +1782,7 @@ function checksms($account, $type, $verify)
         return true;
     }
 }
-
-/**
- * print_r格式化输出
- * @param $data
- */
-function pr($data, $isDumo = false)
-{
-    if ($isDumo) {
-        \think\Debug::dump($data, true, null);
-    } else {
-        echo "<pre>";
-        print_r($data);
-        echo "</pre>";
-    }
-    exit;
+//载入通用函数
+if (file_exists($file = ROOT_PATH . "app/general.php")) {
+    include($file);
 }

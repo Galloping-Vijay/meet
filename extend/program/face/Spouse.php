@@ -1,32 +1,31 @@
 <?php
 // +----------------------------------------------------------------------
-// | Test.测试模块
+// | Spouse.夫妻相
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016 http://www.abc3210.com, All rights reserved.
 // +----------------------------------------------------------------------
-// | Author: wjf <admin@abc3210.com> 2017/9/25
+// | Author: wjf <admin@abc3210.com> 2017/9/26
 // +----------------------------------------------------------------------
 
-namespace app\home\controller;
+namespace program\face;
 
-use EasyWeChat\Message\Text;
-use program\face\Spouse;
-
-class Test extends Base
+class Spouse
 {
-    public function index()
+    public function __construct($url)
     {
-        $img_url = 'http://dev.meet.com/public/img/fuqi.jpg';
-       $face = new Spouse($img_url);
-       pr($face);
-        //return $this->fetch('test:index');
-    }
-
-    public function ceshi()
-    {
-        $text = new Text();
-        $data = $text->reply('测试一下');
-        pr($data);
+        $faceObj = new FacePlusPlus();
+        $detect = $faceObj->face_detect($url);
+        if (!empty($detect->error)) {
+            exit(json_encode(['code' => $detect->error_code, 'msg' => '获取数据失败'], JSON_UNESCAPED_UNICODE));
+        }
+        $numbers = isset($detect->face) ? count($detect->face) : 0;
+        if (($detect->face[0]->attribute->gender->value != $detect->face[1]->attribute->gender->value) && $numbers == 2) {
+            $compare = $faceObj->recognition_compare($detect->face[0]->face_id, $detect->face[1]->face_id);
+            $result = $this->getCoupleComment($compare->component_similarity->eye, $compare->component_similarity->mouth, $compare->component_similarity->nose, $compare->component_similarity->eyebrow, $compare->similarity);
+            return $result;
+        } else {
+            return "似乎不是一男一女，无法测试夫妻相";
+        }
     }
 
     public function getCoupleComment($eye, $mouth, $nose, $eyebrow, $similarity)

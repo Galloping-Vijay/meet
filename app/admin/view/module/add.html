@@ -1,0 +1,80 @@
+{extend name="admin@public/base" /}
+{block name="main-content"}
+<div class="page-content">
+    <link rel="stylesheet" href="__PUBLIC__/bootstrap-select/css/bootstrap-select.min.css">
+    <!--主题-->
+    <div class="page-header">
+        <h1>
+            您当前操作
+            <small>
+                <i class="ace-icon fa fa-angle-double-right"></i>
+                添加模块
+            </small>
+        </h1>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <form class="form-horizontal modelform" name="module_add" method="post" action="{:url('admin/Module/add')}">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 模块标识：  </label>
+                    <div class="col-sm-10">
+                        <input type="text" name="module_name" onKeyUp="value=value.replace(/[^\w\.\/]/ig,'')"  placeholder="输入模块标识" class="col-xs-6 col-sm-6" required/>
+                        <span class="lbl">&nbsp;&nbsp;<span class="red">*</span>必填，对应框架的模块目录</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 模块标题：  </label>
+                    <div class="col-sm-10">
+                        <input type="text" name="module_title" id="module_title" placeholder="输入模块标题" class="col-xs-6 col-sm-6" required/>
+                        <span class="lbl">&nbsp;&nbsp;<span class="red">*</span>必填,中文标题</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 模块备注：  </label>
+                    <div class="col-sm-10">
+                        <textarea class="col-xs-6 col-sm-6" placeholder="" name="module_remark"></textarea>
+                        <span class="lbl">&nbsp;&nbsp;<span class="red">*</span>可选,备注信息</span>
+                    </div>
+                </div>
+                <div class="clearfix form-actions">
+                    <div class="col-md-offset-3 col-md-9">
+                        <button class="btn btn-info save-model" type="submit">
+                            <i class="ace-icon fa fa-check bigger-110"></i>
+                            保存
+                        </button>
+
+                        &nbsp; &nbsp; &nbsp;
+                        <button class="btn" type="reset">
+                            <i class="ace-icon fa fa-undo bigger-110"></i>
+                            重置
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div><!-- /.page-content -->
+{/block}
+{block name="scripts"}
+<script src="__PUBLIC__/bootstrap-select/js/bootstrap-select.min.js"></script>
+<script>
+    //保存模块
+    $('.save-model').click(function () {
+        var $form=$('.modelform'),$url=$form.attr('action');
+        $.post(
+            $url,
+            $form.serialize(),
+            function (data) {
+            if (data.code==1) {
+                layer.alert(data.msg, {icon: 6}, function (index) {
+                    layer.close(index);
+                    window.location.href = data.url;
+                });
+            } else {
+                layer.alert(data.msg, {icon: 5});
+            }
+        }, "json");
+        return false;
+    });
+</script>
+{/block}

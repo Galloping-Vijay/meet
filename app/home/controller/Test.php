@@ -9,20 +9,19 @@
 
 namespace app\home\controller;
 
-use app\common\lib\Encrypt;
-use app\common\lib\ValidateBasic;
-use app\common\lib\Visitor;
+use app\admin\model\Module;
 use EasyWeChat\Message\Text;
 
 class Test extends Base
 {
     public function index()
     {
-       $redis = redis();
-       $ret = $redis->set('test:str1','predis');
-       //echo $ret;
-       $ret1 = $redis->get('test:str1');
-       echo $ret1;
+        $res = new Module();
+        $dir = $res->where('module_status', 1)->update(['module_status' => 0]);
+
+        if ($dir === false) {
+            $this->error = '更换模块失败';
+        }
     }
 
     public function ceshi()

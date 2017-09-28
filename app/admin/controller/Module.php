@@ -31,7 +31,12 @@ class Module extends Base
     {
         if ($this->request->isPost()) {
             $data = input('post.', [], 'trim');
+            $data['module_name'] = strtolower($data['module_name']);
             $model = new ModuleModel;
+            $moduleList = $model::module_list();
+            if (!in_array($data['module_name'], $moduleList)) {
+                $this->error('不存在此模块!');
+            }
             if ($model->plus($data)) {
                 $this->success('操作成功', Url('admin/Module/lists'));
             } else {
@@ -51,6 +56,11 @@ class Module extends Base
         }
         if ($this->request->isPost()) {
             $data = input('post.', [], 'trim');
+            $data['module_name'] = strtolower($data['module_name']);
+            $moduleList = $info::module_list();
+            if (!in_array($data['module_name'], $moduleList)) {
+                $this->error('不存在此模块!');
+            }
             if ($info->plus($data)) {
                 $this->success('操作成功', Url('admin/Module/lists'));
             } else {
@@ -59,6 +69,18 @@ class Module extends Base
         }
         $this->assign('info', $info);
         return $this->fetch();
+    }
+
+    //修改主题
+    public function sel()
+    {
+        $id = input('id');
+        $model = new ModuleModel;
+        if ($model->sel_module($id)) {
+            $this->success('操作成功', Url('admin/Module/lists'));
+        } else {
+            $this->error('操作失败');
+        }
     }
 
     //删除模块

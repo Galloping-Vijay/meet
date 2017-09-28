@@ -29,13 +29,14 @@ function encrypt_password($password, $password_salt)
 }
 
 /**
- * 列出本地目录的文件
- * @author rainfer <81818832@qq.com>
- * @param string $path
- * @param string $pattern
+ * 列出本地目录的文件/目录
+ * Author: wjf <1937832819@qq.com>
+ * @param string $path 路径
+ * @param string $pattern 匹配模式
+ * @param null $flags glob()函数的匹配模式(主要用于查询路径)
  * @return array
  */
-function list_file($path, $pattern = '*')
+function list_file($path, $pattern = '*', $flags = null)
 {
     if (strpos($pattern, '|') !== false) {
         $patterns = explode('|', $pattern);
@@ -48,7 +49,7 @@ function list_file($path, $pattern = '*')
         $path = rtrim($path, '/') . '/';
     }
     foreach ($patterns as $pattern) {
-        $list = glob($path . $pattern);
+        $list = glob($path . $pattern, $flags);
         if ($list !== false) {
             foreach ($list as $file) {
                 $dir [$i] ['filename'] = basename($file);

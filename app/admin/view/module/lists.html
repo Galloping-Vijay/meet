@@ -14,20 +14,20 @@
     </div>
     <div class="row">
         <div class="col-xs-12">
-            <form method="post" action="{:url('admin/Module/sel')}">
+            <form class="form-horizontal modelform" name="module_sel" method="post" action="{:url('admin/Module/sel')}">
                 <table class="table table-striped table-bordered table-hover" id="dynamic-table1">
                     <thead>
                     <tr>
                         <th><span style="font-size: 15px;color: brown;">修改应用模块</span>(指定模块后,其他模块将不可用!请谨慎操作!)</th>
                         <th>
-                            <select name="request_method" class="form-control">
+                            <select name="id" class="form-control">
                             {foreach name="module" item="v"}
                                 <option value="{$v.id}" {if $v.module_status}selected{/if}>{$v.module_name}</option>
                             {/foreach}
                         </select>
                         </th>
                         <th>
-                            <button type="button" class="btn btn-sm btn-success">
+                            <button type="button" class="btn btn-sm btn-success save-sel">
                                 提交
                             </button>
                         </th>
@@ -83,4 +83,27 @@
         </div>
     </div>
 </div><!-- /.page-content -->
+{/block}
+{block name="scripts"}
+<script src="__PUBLIC__/bootstrap-select/js/bootstrap-select.min.js"></script>
+<script>
+    //保存模块
+    $('.save-sel').click(function () {
+        var $form=$('.modelform'),$url=$form.attr('action');
+        $.post(
+            $url,
+            $form.serialize(),
+            function (data) {
+                if (data.code==1) {
+                    layer.alert(data.msg, {icon: 6}, function (index) {
+                        layer.close(index);
+                        window.location.href = data.url;
+                    });
+                } else {
+                    layer.alert(data.msg, {icon: 5});
+                }
+            }, "json");
+        return false;
+    });
+</script>
 {/block}

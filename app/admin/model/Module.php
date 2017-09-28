@@ -33,7 +33,7 @@ class Module extends BaseModel
      */
     public function getModuleStatusNameAttr($value, $data)
     {
-        $module_status = [0 => '未启用', 1 => '启用'];
+        $module_status = [0 => '未使用', 1 => '正在使用'];
         return $module_status[$data['module_status']];
     }
 
@@ -55,11 +55,65 @@ class Module extends BaseModel
     }
 
     /**
+     * 修改启用模块
+     * @param $id
+     * @return bool
+     */
+    public function sel_module($id)
+    {
+        $info = self::get($id);
+        if (empty($info)) {
+            $this->error = '该模块不存在';
+            return false;
+        } elseif ($info['module_status'] == 1) {
+            $this->error = '已选择此模块';
+            return false;
+        } elseif (!in_array($info['module_name'], self::module_list())) {
+            $this->error = '不存在此模块';
+        }
+        $give = self::where('module_status', 1)->update(['module_status' => 0]);
+        if ($give === false) {
+            $this->error = '更换模块失败';
+        }
+        $info->module_status = 1;
+        if ($info->save() === false) {
+            return false;
+        }
+        return $info->id;
+    }
+
+    /**
      * 删除
      * @return bool
      */
     public function rm()
     {
         return $this->delete() !== false ? true : false;
+    }
+
+    /**
+     * 获取模块标识
+     * Author: wjf <1937832819@qq.com>
+     * @param string $path
+     * @return array
+     */
+    public static function module_list($path = APP_PATH)
+    {
+        $moduleList = cache('module_list' . $path);
+        if ($moduleList) return $moduleList;
+        //过滤目录
+        $exclude = ['admin', 'common', 'cron', 'install', 'lang', 'wechat'];
+        //获取目录名称
+        $list = list_file($path, '*', GLOB_ONLYDIR);
+
+        $moduleList = [];
+        foreach ($list as $k => $module) {
+            if (!in_array($module['filename'], $exclude)) {
+                array_push($moduleList, $module['filename']);
+            }
+        }
+        unset($list);
+        cache('module_list' . $path, $moduleList);
+        return $moduleList;
     }
 }

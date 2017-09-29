@@ -1,0 +1,17 @@
+{extend name="admin@public/base" /}
+{block name="main-content"}
+{/block}
+{block name="scripts"}
+<script>
+    var massage = "WJFCMS提示: <br/><strong>{:strip_tags($msg)}</strong>";
+    var code = "{:$code}";
+    var wait = "{:$wait}";
+    var url = "{:$url}";
+    layer.msg(massage, {
+        icon: code,
+        time: wait + '000' //2秒关闭（如果不配置，默认是3秒）
+    }, function () {
+        self.location = url;
+    });
+</script>
+{/block}

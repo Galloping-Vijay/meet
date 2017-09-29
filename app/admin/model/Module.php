@@ -26,6 +26,17 @@ class Module extends BaseModel
     ];
 
     /**
+     * Author: wjf <1937832819@qq.com>
+     */
+    protected static function init()
+    {
+        //更新模块内容后清楚缓存
+        self::event('after_update', function ($object) {
+            cache('module_info/id=' . $object->id, null);
+        });
+    }
+
+    /**
      * 获取当前应用模块
      * @param $value
      * @param $data
@@ -120,5 +131,20 @@ class Module extends BaseModel
         unset($list);
         cache('module_list' . $path, $moduleList);
         return $moduleList;
+    }
+
+    /**
+     * 获取模块信息
+     * Author: wjf <1937832819@qq.com>
+     * @param $id
+     * @return mixed|null|static
+     */
+    public static function module_info($id)
+    {
+        $info = cache('module_info/id=' . $id);
+        if ($info) return $info;
+        $info = self::get($id);
+        cache('module_info/id=' . $id);
+        return $info;
     }
 }

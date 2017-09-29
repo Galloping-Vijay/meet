@@ -11,6 +11,7 @@ namespace app\admin\controller;
 use think\Db;
 use app\admin\model\Menu as MenuModel;
 use app\admin\model\Options as OptionsModel;
+use app\admin\model\Module;
 
 class Menu extends Base
 {
@@ -27,8 +28,9 @@ class Menu extends Base
         $menu_l = input('menu_l');
         //模块id
         $mid = input('mid');
-        if (empty($mid)) {
-            $this->error('请先选择模块');
+        $module = Module::module_info($mid);
+        if (empty($module)) {
+            $this->error('该模块不存在');
         }
         if (!empty($menu_l)) {
             $where['menu_l'] = array('eq', $menu_l);
@@ -46,6 +48,7 @@ class Menu extends Base
         $this->assign('arr', $arr);
         $this->assign('menu_l', $menu_l);
         $this->assign('page', $show);
+        $this->assign('mid', $mid);
         if (request()->isAjax()) {
             return $this->fetch('ajax_news_menu_list');
         } else {
@@ -60,15 +63,16 @@ class Menu extends Base
     {
         $parentid = input('id', 0);
         //模块id
-       /* $mid = input('mid');
-        if (empty($mid)) {
-            $this->error('请先选择模块');
-        }*/
+        $mid = input('mid');
+        $module = Module::module_info($mid);
+        if (empty($module)) {
+            $this->error('该模块不存在');
+        }
         //id不为0,取lang
         $menu_l = '';
         $menu_model = new MenuModel;
         if ($parentid) {
-            $menu_l = $menu_model->where('id', $parentid)->value('menu_l');
+            $menu_l = $menu_model->where('menu_moduleid', $mid)->where('id', $parentid)->value('menu_l');
         }
         $where = array();
         if (!empty($menu_l)) {
@@ -77,6 +81,7 @@ class Menu extends Base
         if (!config('lang_switch_on')) {
             $where['menu_l'] = $this->lang;
         }
+        $where['menu_moduleid'] = $mid;
         $options_model = new OptionsModel;
         $tpls = $options_model->tpls($this->lang);
         $model = Db::name('model')->select();
@@ -84,6 +89,7 @@ class Menu extends Base
         $menu_text = $menu_model->where($where)->order('menu_l Desc,listorder')->select();
         $menu_text = menu_left($menu_text, 'id', 'parentid');
         $this->assign('menu_text', $menu_text);
+        $this->assign('mid', $mid);
         $this->assign('parentid', $parentid);
         $this->assign('menu_l', $menu_l);
         $this->assign('tpls', $tpls);
@@ -100,6 +106,12 @@ class Menu extends Base
         if (!request()->isAjax()) {
             $this->error('提交方式不正确', url('admin/Menu/news_menu_list', array('menu_l' => $lang_list)));
         } else {
+            //模块id
+            $mid = input('mid');
+            $module = Module::module_info($mid);
+            if (empty($module)) {
+                $this->error('该模块不存在');
+            }
             //处理图片
             $img_url = '';
             $file = request()->file('file0');
@@ -142,6 +154,7 @@ class Menu extends Base
                 'menu_l' => $menu_l,
                 'menu_enname' => input('menu_enname'),
                 'menu_type' => input('menu_type'),
+                'menu_moduleid' => input('mid'),
                 'menu_modelid' => input('menu_modelid', 0, 'intval'),
                 'parentid' => $parentid,
                 'menu_listtpl' => input('menu_listtpl'),
@@ -163,9 +176,9 @@ class Menu extends Base
                     $menu_model->where(array('id' => input('parentid')))->setField('menu_type', 1);
                 }
                 cache('site_nav_main', null);
-                $this->success('菜单添加成功', url('admin/Menu/news_menu_list', array('menu_l' => $lang_list)));
+                $this->success('菜单添加成功', url('admin/Menu/news_menu_list', array('menu_l' => $lang_list, 'mid' => $mid)));
             } else {
-                $this->error('菜单添加失败', url('admin/Menu/news_menu_list', array('menu_l' => $lang_list)));
+                $this->error('菜单添加失败', url('admin/Menu/news_menu_list', array('menu_l' => $lang_list, 'mid' => $mid)));
             }
         }
     }
@@ -175,6 +188,12 @@ class Menu extends Base
      */
     public function news_menu_edit()
     {
+        //模块id
+        $mid = input('mid');
+        $module = Module::module_info($mid);
+        if (empty($module)) {
+            $this->error('该模块不存在');
+        }
         $menu = MenuModel::get(input('id'));
         $options_model = new OptionsModel;
         $tpls = $options_model->tpls($this->lang);
@@ -190,6 +209,7 @@ class Menu extends Base
         $this->assign('menu_text', $menu_text);
         $this->assign('menu', $menu);
         $this->assign('tpls', $tpls);
+        $this->assign('mid', $mid);
         return $this->fetch();
     }
 
@@ -203,6 +223,12 @@ class Menu extends Base
         if (!request()->isAjax()) {
             $this->error('提交方式不正确', url('admin/Menu/news_menu_list', array('menu_l' => $lang_list)));
         } else {
+            //模块id
+            $mid = input('mid');
+            $module = Module::module_info($mid);
+            if (empty($module)) {
+                $this->error('该模块不存在');
+            }
             $checkpic = input('checkpic');
             $oldcheckpic = input('oldcheckpic');
             $img_url = '';
@@ -247,6 +273,7 @@ class Menu extends Base
                 'menu_name' => input('menu_name'),
                 'menu_enname' => input('menu_enname'),
                 'menu_type' => input('menu_type'),
+                'menu_moduleid' => input('mid'),
                 'menu_modelid' => input('menu_modelid', 0, 'intval'),
                 'parentid' => $parentid,
                 'menu_l' => $menu_l,
@@ -266,9 +293,9 @@ class Menu extends Base
             $rst = MenuModel::update($data);
             if ($rst !== false) {
                 cache('site_nav_main', null);
-                $this->success('菜单修改成功', url('admin/Menu/news_menu_list', array('menu_l' => $lang_list)));
+                $this->success('菜单修改成功', url('admin/Menu/news_menu_list', array('menu_l' => $lang_list, 'mid' => $mid)));
             } else {
-                $this->error('菜单修改失败', url('admin/Menu/news_menu_list', array('menu_l' => $lang_list)));
+                $this->error('菜单修改失败', url('admin/Menu/news_menu_list', array('menu_l' => $lang_list, 'mid' => $mid)));
             }
         }
     }
@@ -282,6 +309,7 @@ class Menu extends Base
         $id = input('id');
         $arr = MenuModel::get($id);
         $model_id = $arr['menu_modelid'];
+        $mid = $arr['menu_moduleid'];
         $parentid = $arr['parentid'];
         $parent_arr = MenuModel::get($parentid);
         $ids = get_menu_byid($id, 1, 2);//返回含自身id及子菜单id数组
@@ -297,9 +325,9 @@ class Menu extends Base
                 }
             }
             cache('site_nav_main', null);
-            $this->success('菜单删除成功', url('admin/Menu/news_menu_list', ['menu_l' => $lang_list]));
+            $this->success('菜单删除成功', url('admin/Menu/news_menu_list', ['menu_l' => $lang_list, 'mid' => $mid]));
         } else {
-            $this->error("菜单删除失败！", url('admin/Menu/news_menu_list', ['menu_l' => $lang_list]));
+            $this->error("菜单删除失败！", url('admin/Menu/news_menu_list', ['menu_l' => $lang_list, 'mid' => $mid]));
         }
     }
 
@@ -308,9 +336,15 @@ class Menu extends Base
      */
     public function news_menu_order()
     {
+        //模块id
+        $mid = input('mid');
+        $module = Module::module_info($mid);
+        if (empty($module)) {
+            $this->error('该模块不存在');
+        }
         $lang_list = input('lang_list');
         if (!request()->isAjax()) {
-            $this->error('提交方式不正确', url('admin/Menu/news_menu_list', ['menu_l' => $lang_list]));
+            $this->error('提交方式不正确', url('admin/Menu/news_menu_list', ['menu_l' => $lang_list, 'mid' => $mid]));
         } else {
             $list = [];
             foreach (input('post.') as $id => $sort) {
@@ -319,7 +353,7 @@ class Menu extends Base
             $menu_model = new MenuModel;
             $menu_model->saveAll($list);
             cache('site_nav_main', null);
-            $this->success('排序更新成功', url('admin/Menu/news_menu_list', ['menu_l' => $lang_list]));
+            $this->success('排序更新成功', url('admin/Menu/news_menu_list', ['menu_l' => $lang_list, 'mid' => $mid]));
         }
     }
 

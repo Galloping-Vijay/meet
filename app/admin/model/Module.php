@@ -79,6 +79,11 @@ class Module extends BaseModel
         if ($info->save() === false) {
             return false;
         }
+        //设置默认模块
+        $default_module = ['default_module' => $info->module_name];
+        if (sys_config_setbyarr($default_module) === false) {
+            return false;
+        }
         return $info->id;
     }
 

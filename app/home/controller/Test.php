@@ -16,12 +16,9 @@ class Test extends Base
 {
     public function index()
     {
-        $res = new Module();
-        $dir = $res->where('module_status', 1)->update(['module_status' => 0]);
+        $bb =['default_module' => 'admin'];
+        //sys_config_setbyarr($bb);
 
-        if ($dir === false) {
-            $this->error = '更换模块失败';
-        }
     }
 
     public function ceshi()

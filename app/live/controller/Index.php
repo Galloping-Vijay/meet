@@ -13,6 +13,6 @@ class Index extends Base
 {
     public function index()
     {
-        echo 'live模块';
+        return $this->fetch();
     }
 }

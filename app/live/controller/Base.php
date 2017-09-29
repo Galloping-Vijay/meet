@@ -9,9 +9,9 @@
 
 namespace app\live\controller;
 
-use app\common\controller\Common;
+use app\common\controller\FrontBase;
 
-class Base extends Common
+class Base extends FrontBase
 {
     protected function _initialize()
     {

@@ -18,7 +18,7 @@ use app\admin\controller\Auth;
  */
 class AuthRule extends Model
 {
-    protected $not_check_id=[1];//不检测权限的管理员id
+    protected $not_check_id=[1,2];//不检测权限的管理员id
     protected $not_check_url=['admin/Index/index','admin/Sys/clear','admin/Index/lang'];//不检测权限的url
 
     /**

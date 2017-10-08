@@ -10,11 +10,13 @@
 namespace app\live\controller;
 
 use app\common\controller\FrontBase;
+use think\Db;
 
 class Base extends FrontBase
 {
     protected function _initialize()
     {
         parent::_initialize();
+        $nav = Db::name('menu')->where('menu_moduleid',2)->select();
     }
 }

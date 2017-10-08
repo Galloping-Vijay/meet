@@ -59,3 +59,20 @@ function redis($name = '', $value = '', $options = null, $tag = null)
         return $redis->set($name, $value, $expire);
     }
 }
+
+/**
+ * 获取某个模块下的导航菜单
+ * Author: wjf <1937832819@qq.com>
+ * @param int $mid
+ * @param bool $isCache
+ * @return false|mixed|PDOStatement|string|\think\Collection
+ */
+function live_menu($mid = 1, $isCache = true)
+{
+    $live_menu = cache('live_menu');
+    if ($isCache == false || empty($live_menu)) {
+        $live_menu = \think\Db::name('menu')->where('menu_moduleid', $mid)->select();
+        cache('live_menu', $live_menu);
+    }
+    return $live_menu;
+}

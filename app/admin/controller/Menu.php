@@ -159,6 +159,7 @@ class Menu extends Base
                 'parentid' => $parentid,
                 'menu_listtpl' => input('menu_listtpl'),
                 'menu_newstpl' => input('menu_newstpl'),
+                'menu_url' => input('menu_url'),
                 'menu_address' => input('menu_address'),
                 'menu_open' => input('menu_open', 0),
                 'listorder' => input('listorder'),
@@ -201,6 +202,7 @@ class Menu extends Base
         $this->assign('model', $model);
         $where = array();
         $where['menu_l'] = array('eq', $menu['menu_l']);
+        $where['menu_moduleid'] = $mid;
         if (!config('lang_switch_on')) {
             $where['menu_l'] = $this->lang;
         }
@@ -279,6 +281,7 @@ class Menu extends Base
                 'menu_l' => $menu_l,
                 'menu_listtpl' => input('menu_listtpl'),
                 'menu_newstpl' => input('menu_newstpl'),
+                'menu_url' => input('menu_url'),
                 'menu_address' => input('menu_address'),
                 'menu_open' => input('menu_open', 0),
                 'listorder' => input('listorder'),

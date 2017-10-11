@@ -20,7 +20,7 @@ class Index extends Base
      */
     public function index()
     {
-        $this->assign('active',22);
+        $this->assign('active',19);
         return $this->fetch();
     }
 
@@ -30,7 +30,7 @@ class Index extends Base
      */
     public function hot()
     {
-        $this->assign('active',23);
+        $this->assign('active',20);
         return $this->fetch();
     }
 }

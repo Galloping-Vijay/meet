@@ -16,7 +16,7 @@ class Cat extends Base
     public function __construct(Request $request = null)
     {
         parent::__construct($request);
-        $this->assign('active', 24);
+        $this->assign('active', 21);
     }
 
     public function index()

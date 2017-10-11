@@ -16,7 +16,7 @@ class Article extends Base
     public function __construct(Request $request = null)
     {
         parent::__construct($request);
-        $this->assign('active', 25);
+        $this->assign('active', 22);
     }
 
     //文章集

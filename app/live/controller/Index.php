@@ -9,6 +9,8 @@
 
 namespace app\live\controller;
 
+use think\Request;
+
 class Index extends Base
 {
     /**
@@ -18,15 +20,17 @@ class Index extends Base
      */
     public function index()
     {
+        $this->assign('active',22);
         return $this->fetch();
     }
 
     /**
-     * 关于
+     * 推荐
      * Author: wjf <1937832819@qq.com>
      */
-    public function about()
+    public function hot()
     {
+        $this->assign('active',23);
         return $this->fetch();
     }
 }

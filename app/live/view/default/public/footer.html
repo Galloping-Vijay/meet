@@ -2,15 +2,12 @@
     <div class="container">
         <div class="footer_nav1">
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
                 <!-- logo -->
                 <li class="logo"><a href="index.html"><img src="{$wjf_theme_path}public/images/logo.png" alt=""/></a></li>
                 <!-- logo -->
-                <li><a href="faq.html">Faq</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                {foreach $nav as $k=>$v}
+                <li><a href="{$v.menu_url}">{$v.menu_name}</a></li>
+                {/foreach}
             </ul>
         </div>
         <div class="copy_right">

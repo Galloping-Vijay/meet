@@ -9,8 +9,16 @@
 
 namespace app\live\controller;
 
-class Gallery extends Base
+use think\Request;
+
+class Cat extends Base
 {
+    public function __construct(Request $request = null)
+    {
+        parent::__construct($request);
+        $this->assign('active', 24);
+    }
+
     public function index()
     {
         return $this->fetch();

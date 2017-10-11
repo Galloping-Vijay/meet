@@ -17,6 +17,8 @@ class Base extends FrontBase
     protected function _initialize()
     {
         parent::_initialize();
-        $nav = Db::name('menu')->where('menu_moduleid',2)->select();
+        //导航菜单
+        $nav = Db::name('menu')->where('menu_moduleid', 2)->select();
+        $this->assign('nav', $nav);
     }
 }

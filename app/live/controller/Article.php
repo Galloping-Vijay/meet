@@ -9,11 +9,19 @@
 
 namespace app\live\controller;
 
+use think\Request;
+
 class Article extends Base
 {
+    public function __construct(Request $request = null)
+    {
+        parent::__construct($request);
+        $this->assign('active', 25);
+    }
+
+    //文章集
     public function index()
     {
         return $this->fetch();
     }
-
 }

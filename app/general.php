@@ -67,7 +67,7 @@ function redis($name = '', $value = '', $options = null, $tag = null)
  * @param bool $isCache
  * @return false|mixed|PDOStatement|string|\think\Collection
  */
-function live_menu($mid = 1, $isCache = true)
+function nav_menu($mid = 1, $isCache = true)
 {
     $live_menu = cache('live_menu');
     if ($isCache == false || empty($live_menu)) {

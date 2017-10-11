@@ -18,7 +18,7 @@ class Base extends FrontBase
     {
         parent::_initialize();
         //导航菜单
-        $nav = Db::name('menu')->where('menu_moduleid', 2)->select();
+        $nav = nav_menu(2);
         $this->assign('nav', $nav);
     }
 }

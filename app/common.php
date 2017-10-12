@@ -787,7 +787,7 @@ function get_menu($id = 0, $top_ul_id = "", $childtpl = "<span class='file'>\$la
  */
 function get_menu_datas()
 {
-    $navs = Db::name("menu")->where('menu_l', Lang::detect())->where(array('menu_open' => 1))->order(array("listorder" => "ASC"))->select();
+    $navs = Db::name("menu")->where('menu_l', Lang::detect())->where(array('menu_open' => 1, 'menu_moduleid' => 1))->order(array("listorder" => "ASC"))->select();
     foreach ($navs as $key => $nav) {
         if ($nav['menu_type'] == 2) {
             $nav['href'] = $nav['menu_address'];
@@ -1783,6 +1783,7 @@ function checksms($account, $type, $verify)
         return true;
     }
 }
+
 //载入通用函数
 if (file_exists($file = ROOT_PATH . "app/general.php")) {
     include($file);

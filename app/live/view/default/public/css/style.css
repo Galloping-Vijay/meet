@@ -34,6 +34,7 @@ body a {
     position: relative;
     min-height: 400px;
 }
+
 .header-centent {
     padding: 5% 15%;
     color: brown;
@@ -1647,4 +1648,13 @@ p.your-para {
     .more-address {
         padding: 1em 0 0;
     }
+}
+
+.footer-top {
+    color: #ffffff;
+}
+
+.footer-top a {
+    text-decoration: none;
+    color: #ffffff;
 }

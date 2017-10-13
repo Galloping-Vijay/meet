@@ -9,6 +9,7 @@
 
 namespace app\home\controller;
 
+use app\admin\model\Cat;
 use think\Db;
 use \app\home\model\News;
 use think\Validate;
@@ -30,7 +31,9 @@ class Article extends Base
         $menu_text = user_news($this->lang);
         $this->assign('menu', $menu_text);
         $source = Db::name('source')->select();
-        $this->assign('news_columnid', $news_columnid);
+        $newsCat = Cat::cat_all();//分类
+        $this->assign('newsCat', $newsCat);
+        $this->assign('news_columnid', $news_columnid);//栏目id
         $this->assign('source', $source);
 
         return $this->fetch('article/news_add');
@@ -66,6 +69,7 @@ class Article extends Base
             'news_content' => htmlspecialchars_decode(input('news_content')),
             'news_auto' => session('user.member_list_id'),
             'news_time' => time(),
+            'cat_id' => input('cat_id'),
         );
         //验证开始
         $validate = new Validate(
@@ -118,6 +122,8 @@ class Article extends Base
         $this->assign('pic_list', $pic_list);
         //栏目数据
         $menu_text = user_news($this->lang);
+        $newsCat = Cat::cat_all();//分类
+        $this->assign('newsCat', $newsCat);
         $this->assign('menu', $menu_text);
         $source = Db::name('source')->select();//来源
         $this->assign('source', $source);
@@ -144,76 +150,6 @@ class Article extends Base
         $imgInfo = $this->fileUpload($file, $files, '/newsEdit');
         $img_one = $imgInfo['img_one'];
         $picall_url = $imgInfo['picall_url'];
-        /*$img_one = '';
-        $picall_url = '';
-        $file = request()->file('pic_one');
-        $files = request()->file('pic_all');
-        //上传处理
-        if ($file || $files) {
-            if (config('storage.storage_open')) {
-                //七牛
-                $upload = \Qiniu::instance();
-                $info = $upload->upload();
-                $error = $upload->getError();
-                if ($info) {
-                    if ($file && $files) {
-                        //有单图、多图
-                        if (!empty($info['pic_one'])) $img_one = config('storage.domain') . $info['pic_one'][0]['key'];
-                        if (!empty($info['pic_all'])) {
-                            foreach ($info['pic_all'] as $file) {
-                                $img_url = config('storage.domain') . $file['key'];
-                                $picall_url = $img_url . ',' . $picall_url;
-                            }
-                        }
-                    } elseif ($file) {
-                        //单图
-                        $img_one = config('storage.domain') . $info[0]['key'];
-                    } else {
-                        //多图
-                        foreach ($info as $file) {
-                            $img_url = config('storage.domain') . $file['key'];
-                            $picall_url = $img_url . ',' . $picall_url;
-                        }
-                    }
-                } else {
-                    $this->error($error, url('/newsEdit'));//否则就是上传错误，显示错误原因
-                }
-            } else {
-                $validate = config('upload_validate');
-                //单图
-                if (!empty($file)) {
-                    $info = $file[0]->validate($validate)->rule('uniqid')->move(ROOT_PATH . config('upload_path') . DS . date('Y-m-d'));
-                    if ($info) {
-                        $img_url = config('upload_path') . '/' . date('Y-m-d') . '/' . $info->getFilename();
-                        //写入数据库
-                        $data['uptime'] = time();
-                        $data['filesize'] = $info->getSize();
-                        $data['path'] = $img_url;
-                        Db::name('plug_files')->insert($data);
-                        $img_one = $img_url;
-                    } else {
-                        $this->error($file->getError(), url('/newsEdit'));//否则就是上传错误，显示错误原因
-                    }
-                }
-                //多图
-                if (!empty($files)) {
-                    foreach ($files as $file) {
-                        $info = $file->validate($validate)->rule('uniqid')->move(ROOT_PATH . config('upload_path') . DS . date('Y-m-d'));
-                        if ($info) {
-                            $img_url = config('upload_path') . '/' . date('Y-m-d') . '/' . $info->getFilename();
-                            //写入数据库
-                            $data['uptime'] = time();
-                            $data['filesize'] = $info->getSize();
-                            $data['path'] = $img_url;
-                            Db::name('plug_files')->insert($data);
-                            $picall_url = $img_url . ',' . $picall_url;
-                        } else {
-                            $this->error($file->getError(), url('/newsEdit'));//否则就是上传错误，显示错误原因
-                        }
-                    }
-                }
-            }
-        }*/
 
         $sl_data = array(
             'n_id' => input('n_id'),
@@ -230,6 +166,7 @@ class Article extends Base
             'news_scontent' => input('news_scontent', '', 'trim'),
             'news_content' => htmlspecialchars_decode(input('news_content')),
             'news_auto' => session('user.member_list_id'),
+            'cat_id' => input('cat_id'),
         );
         //验证开始
         $validate = new Validate(

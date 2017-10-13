@@ -30,9 +30,10 @@ class Module extends BaseModel
      */
     protected static function init()
     {
-        //更新模块内容后清楚缓存
-        self::event('after_update', function ($object) {
+        self::event('after_write', function ($object) {
+            //更新模块内容后清楚缓存
             cache('module_info/id=' . $object->id, null);
+            self::module_all(false);
         });
     }
 
@@ -146,5 +147,23 @@ class Module extends BaseModel
         $info = self::get($id);
         cache('module_info/id=' . $id);
         return $info;
+    }
+
+    /**
+     * 获取所有模块
+     * Author: wjf <1937832819@qq.com>
+     * @param bool $iscache
+     * @return array|mixed
+     */
+    public function module_all($iscache = true)
+    {
+        $list = cache('moduleAll');
+        if (empty($list) || $iscache == false) {
+            $list = self::column('id,module_name,module_title,module_status', 'id');
+            cache('moduleAll', serialize($list));
+
+            return $list;
+        }
+        return unserialize($list);
     }
 }

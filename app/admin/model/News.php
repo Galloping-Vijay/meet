@@ -19,12 +19,15 @@ class News extends Model
 {
     protected $insert = ['news_hits' => 200];
 
+    /**
+     * Author: wjf <1937832819@qq.com>
+     */
     protected static function init()
     {
         //更新后
         self::event(
             'after_update', function ($object) {
-            self::getNews($object->n_id, false);
+            cache('news/' . $object->n_id, null);
         }
         );
         //删除后
@@ -48,6 +51,7 @@ class News extends Model
 
     /**
      * 文章关联分类
+     * Author: wjf <1937832819@qq.com>
      * @return \think\model\relation\BelongsTo
      */
     public function cat()

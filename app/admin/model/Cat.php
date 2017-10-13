@@ -26,6 +26,21 @@ class Cat extends BaseModel
         'cat_order' => 'integer'
     ];
 
+    protected static function init()
+    {
+        //写入后
+        self::event(
+            'after_write', function ($object) {
+            self::cat_all(false);
+        }
+        );
+        //删除后
+        self::event(
+            'after_delete', function ($object) {
+            self::cat_all(false);
+        }
+        );
+    }
 
     /**
      * @param $value
@@ -37,7 +52,6 @@ class Cat extends BaseModel
         $status = [0 => '禁用', 1 => '正常'];
         return $status[$data['status']];
     }
-
 
     /**
      * 增加
@@ -79,18 +93,24 @@ class Cat extends BaseModel
      */
     public function rm()
     {
-        self::startTrans();
-        //子栏目检测
-        $count = News::where(['cat_id' => $this->cat_id])->count('cat_id');
-        if ($count > 0) {
-            $this->error = '该栏目下存在文章,不能删除';
-            return false;
+        return $this->delete() !== false ? true : false;
+    }
+
+    /**
+     * 获取所有分类
+     * Author: wjf <1937832819@qq.com>
+     * @param bool $isCache
+     * @return array|mixed
+     */
+    public static function cat_all($isCache = true)
+    {
+        $list = cache('article_cat');
+        if (empty($list) || $isCache == false) {
+            $list = self::where('status', 1)->column('cat_id,cat_name');
+            cache('article_cat', serialize($list));
+            return $list;
         }
-        if (false !== $this->delete()) {
-            self::commit();
-            return true;
-        }
-        self::rollback();
-        return false;
+        return unserialize($list);
+
     }
 }

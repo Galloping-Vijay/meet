@@ -26,6 +26,19 @@ class Cat extends BaseModel
         'cat_order' => 'integer'
     ];
 
+
+    /**
+     * @param $value
+     * @param $data
+     * @return mixed
+     */
+    public function getStatusNameAttr($value, $data)
+    {
+        $status = [0 => '禁用', 1 => '正常'];
+        return $status[$data['status']];
+    }
+
+
     /**
      * 增加
      * @param $data

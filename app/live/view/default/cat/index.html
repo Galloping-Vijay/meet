@@ -32,128 +32,31 @@
 <div class="profile">
     <div class="container">
         <h1 class="m_4">
-            Gallery
+            Article Category
         </h1>
         <p class="m_5">
-            In pede maliquet sit amet euismod in auctor ut ligula
+            本站文章类别
         </p>
         <div class="gallery_1">
-            <div class="gallery-bottom">
-                <div class="col-md-3 bottom-gallery">
-                    <a href="{$wjf_theme_path}public/images/g1.jpg" rel="title" class="b-link-stripe b-animate-go  thickbox">
-                        <img class="img-responsive" src="{$wjf_theme_path}public/images/g1.jpg" />
-                        <div class="b-wrapper">
-                            <h3 class="b-animate b-from-left    b-delay03 "> </h3>
+            {foreach name="catList" item="val" key="k"}
+            {if $k==1 || $k%4==0}<div class="gallery-bottom">{/if}
+            <div class="col-md-3 bottom-gallery">
+                <a href="{:Url('info',['cat_id'=>$val.cat_id])}" rel="title" class="b-link-stripe b-animate-go  thickbox">
+                    <img class="img-responsive" src="{$val.cat_img}" style="height: 120px;padding: 3%;"/>
+                    <div class="b-wrapper">
+                        <div  class="b-animate b-from-left">
+                            <h3 class="b-delay03">{$val.cat_name}</h3>
+                            <span>{$val.cat_intro|msubstr=0,30}</span>
                         </div>
-                    </a>
-                </div>
-                <div class="col-md-3 bottom-gallery">
-                    <a href="{$wjf_theme_path}public/images/g2.jpg" rel="title" class="b-link-stripe b-animate-go  thickbox">
-                        <img class="img-responsive" src="{$wjf_theme_path}public/images/g2.jpg" />
-                        <div class="b-wrapper">
-                            <h3 class="b-animate b-from-left    b-delay03 "> </h3>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-3 bottom-gallery">
-                    <a href="{$wjf_theme_path}public/images/g3.jpg" rel="title" class="b-link-stripe b-animate-go  thickbox">
-                        <img class="img-responsive" src="{$wjf_theme_path}public/images/g3.jpg" />
-                        <div class="b-wrapper">
-                            <h3 class="b-animate b-from-left b-delay03 "> </h3>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-3 bottom-gallery">
-                    <a href="{$wjf_theme_path}public/images/g4.jpg" rel="title" class="b-link-stripe b-animate-go  thickbox">
-                        <img class="img-responsive" src="{$wjf_theme_path}public/images/g4.jpg" />
-                        <div class="b-wrapper">
-                            <h3 class="b-animate b-from-left b-delay03 "> </h3>
-                        </div>
-                    </a>
-                </div>
-                <div class="clearfix"> </div>
+                    </div>
+                </a>
             </div>
-            <div class="gallery-bottom">
-                <div class="col-md-3 bottom-gallery">
-                    <a href="{$wjf_theme_path}public/images/g5.jpg" rel="title" class="b-link-stripe b-animate-go  thickbox">
-                        <img class="img-responsive" src="{$wjf_theme_path}public/images/g5.jpg" />
-                        <div class="b-wrapper">
-                            <h3 class="b-animate b-from-left b-delay03 "> </h3>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-3 bottom-gallery">
-                    <a href="{$wjf_theme_path}public/images/g6.jpg" rel="title" class="b-link-stripe b-animate-go  thickbox">
-                        <img class="img-responsive" src="{$wjf_theme_path}public/images/g6.jpg" />
-                        <div class="b-wrapper">
-                            <h3 class="b-animate b-from-left    b-delay03 "> </h3>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-3 bottom-gallery">
-                    <a href="{$wjf_theme_path}public/images/g7.jpg" rel="title" class="b-link-stripe b-animate-go  thickbox">
-                        <img class="img-responsive" src="{$wjf_theme_path}public/images/g7.jpg" />
-                        <div class="b-wrapper">
-                            <h3 class="b-animate b-from-left    b-delay03 "> </h3>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-3 bottom-gallery">
-                    <a href="{$wjf_theme_path}public/images/g8.jpg" rel="title" class="b-link-stripe b-animate-go  thickbox">
-                        <img class="img-responsive" src="{$wjf_theme_path}public/images/g8.jpg" />
-                        <div class="b-wrapper">
-                            <h3 class="b-animate b-from-left b-delay03 "> </h3>
-                        </div>
-                    </a>
-                </div>
-                <div class="clearfix"> </div>
-            </div>
-            <div class="gallery-bottom">
-                <div class="col-md-3 bottom-gallery">
-                    <a href="{$wjf_theme_path}public/images/g5.jpg" rel="title" class="b-link-stripe b-animate-go  thickbox">
-                        <img class="img-responsive" src="{$wjf_theme_path}public/images/g5.jpg" />
-                        <div class="b-wrapper">
-                            <h3 class="b-animate b-from-left b-delay03 "> </h3>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-3 bottom-gallery">
-                    <a href="{$wjf_theme_path}public/images/g6.jpg" rel="title" class="b-link-stripe b-animate-go  thickbox">
-                        <img class="img-responsive" src="{$wjf_theme_path}public/images/g6.jpg" />
-                        <div class="b-wrapper">
-                            <h3 class="b-animate b-from-left b-delay03 "> </h3>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-3 bottom-gallery">
-                    <a href="{$wjf_theme_path}public/images/g7.jpg" rel="title" class="b-link-stripe b-animate-go  thickbox">
-                        <img class="img-responsive" src="{$wjf_theme_path}public/images/g7.jpg" />
-                        <div class="b-wrapper">
-                            <h3 class="b-animate b-from-left b-delay03 ">
-                            </h3>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-3 bottom-gallery">
-                    <a href="{$wjf_theme_path}public/images/g8.jpg" rel="title" class="b-link-stripe b-animate-go thickbox">
-                        <img class="img-responsive" src="{$wjf_theme_path}public/images/g8.jpg" />
-                        <div class="b-wrapper">
-                            <h3 class="b-animate b-from-left b-delay03 "> </h3>
-                        </div>
-                    </a>
-                </div>
-                <div class="clearfix"> </div>
-            </div>
+            {if $k%4==0}<div class="clearfix"> </div></div>{/if}
+            {/foreach}
         </div>
     </div>
-    <script src="{$wjf_theme_path}public/js/jquery.chocolat.js"></script>
     <link rel="stylesheet" href="{$wjf_theme_path}public/css/chocolat.css" type="text/css" media="screen" charset="utf-8">
     <!--light-box-files -->
-    <script type="text/javascript" charset="utf-8">
-        $(function() {
-            $('.bottom-gallery a').Chocolat();
-        });
-    </script>
 </div>
 {include file="public:footer" /}
 </body>

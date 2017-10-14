@@ -9,7 +9,9 @@
 
 namespace app\live\controller;
 
+use app\admin\model\News;
 use think\Request;
+use app\admin\model\Cat as CatModel;
 
 class Cat extends Base
 {
@@ -21,6 +23,30 @@ class Cat extends Base
 
     public function index()
     {
+        $model = new CatModel();
+        $catList = $model::cat_all();
+        $this->assign('catList', $catList);
+        return $this->fetch();
+    }
+
+    public function info()
+    {
+        $catId = input('cat_id/d');
+        $info = CatModel::cat_info($catId);
+        if (empty($info)) {
+            $this->error('该分类不存在');
+        }
+        $catList = CatModel::cat_all();
+        $newsmodel = new News();
+        $where['news_open'] = 1;
+        $where['cat_id'] = $catId;
+        $order['news_hits'] = 'desc';
+        $newsList = $newsmodel::getWhereNews($where, 3, $order, 0);
+        $page = $newsList->render();
+        $this->assign('newsList', $newsList);
+        $this->assign('catList', $catList);
+        $this->assign('page', $page);
+        $this->assign('catInfo', $info);
         return $this->fetch();
     }
 }

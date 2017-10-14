@@ -1661,3 +1661,62 @@ p.your-para {
 .text_about{
     text-indent: 30px;
 }
+.profile-info{
+    padding: 2em 0;
+}
+.profile-info .info-one{
+    margin: 2%;
+    display: block;
+}
+.info-one .info-one-img{
+    width: 30%;
+    float: left;
+    margin: auto 2%;
+    padding: 2%;
+}
+.info-one .info-one-img img{
+    padding: 2%;
+    width: 100%;
+}
+.info-one .info-one-centent{
+    margin: 2%;
+    width: 60%;
+    float: left;
+}
+/*有导航样式*/
+.cat-info-right {
+    border: 1px solid #e1e1e1;
+    border-radius: 5px;
+}
+
+.info-search {
+    margin: 2% auto;
+}
+
+.info-search input {
+    border: 1px solid #e1e1e1;
+    border-radius: 2px;
+}
+
+.info-cat {
+    width: 100%;
+    border-radius: 2px;
+}
+
+.info-cat h3 {
+    margin: 1%;
+    padding: 2%;
+    text-align: center;
+    border-bottom-style: solid;
+    border-width: 1px;
+    border-bottom-color: chartreuse;
+}
+
+.info-cat a {
+    float: left;
+    width: 48%;
+    text-align: center;
+    border: 1px solid #e1e1e1;
+    margin: 1%;
+    padding: 1%;
+}

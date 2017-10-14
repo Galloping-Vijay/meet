@@ -9,6 +9,7 @@
 
 namespace app\live\controller;
 
+use app\admin\model\News;
 use think\Request;
 
 class Article extends Base
@@ -22,6 +23,18 @@ class Article extends Base
     //文章集
     public function index()
     {
+        return $this->fetch();
+    }
+
+    public function info()
+    {
+        $n_id = input('id');
+        $news= new News();
+        $info = $news->getNews($n_id);
+        if (empty($info)) {
+            $this->error('文章不存在或已被删除', 'index');
+        }
+        $this->assign('info', $info);
         return $this->fetch();
     }
 }

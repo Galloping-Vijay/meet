@@ -35,7 +35,7 @@
 							<select name="cat_id" id="" class="col-sm-3 selector">
 								<option value="">选择分类</option>
 								{foreach $newsCat as $k=>$v}
-								<option {if $k == $news_list.cat_id}selected{/if} value="{$k}">{$v}</option>
+								<option {if $v.cat_id == $news_list.cat_id}selected{/if} value="{$v.cat_id}">{$v.cat_name}</option>
 								{/foreach}
 							</select>
 						</div>

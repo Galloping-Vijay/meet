@@ -37,6 +37,7 @@ class Cat extends BaseModel
         //删除后
         self::event(
             'after_delete', function ($object) {
+            cache('cat_info/cat_id' . $object->cat_id, null);
             self::cat_all(false);
         }
         );
@@ -97,6 +98,24 @@ class Cat extends BaseModel
     }
 
     /**
+     * 获取指定的分类
+     * Author: wjf <1937832819@qq.com>
+     * @param int $cat_id 分类id
+     * @param bool $isCache 是否缓存
+     * @return array|false|mixed|\PDOStatement|string|\think\Model
+     */
+    public static function cat_info($cat_id, $isCache = true)
+    {
+        $cat_info = cache('cat_info/cat_id' . $cat_id);
+        if (empty($cat_info) || $isCache == false) {
+            $cat_info = self::where('cat_id', $cat_id)->where('status', 1)->find();
+            cache('cat_info/cat_id' . $cat_id, serialize($cat_info));
+            return $cat_info;
+        }
+        return unserialize($cat_info);
+    }
+
+    /**
      * 获取所有分类
      * Author: wjf <1937832819@qq.com>
      * @param bool $isCache
@@ -106,7 +125,7 @@ class Cat extends BaseModel
     {
         $list = cache('article_cat');
         if (empty($list) || $isCache == false) {
-            $list = self::where('status', 1)->column('cat_id,cat_name');
+            $list = self::where('status', 1)->column('cat_id,cat_name,cat_intro,cat_img,cid,cat_order', 'cat_id');
             cache('article_cat', serialize($list));
             return $list;
         }

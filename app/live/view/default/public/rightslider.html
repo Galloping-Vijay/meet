@@ -1,0 +1,11 @@
+<div class="col-md-4 box cat-info-right">
+    <div class="info-search">
+        <input type="text" value="" class="form-control" placeholder="请输入内容">
+    </div>
+    <div class="info-cat">
+        <h3>分类导航</h3>
+        {foreach $catList as $key=>$val}
+        <a href="{:Url('/live/cat/info',['cat_id'=>$val['cat_id']])}">{$val.cat_name}</a>
+        {/foreach}
+    </div>
+</div>

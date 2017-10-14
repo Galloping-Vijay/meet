@@ -50,6 +50,19 @@ class News extends Model
     }
 
     /**
+     * 获取文章审核状态
+     * Author: wjf <1937832819@qq.com>
+     * @param $value
+     * @param $data
+     * @return mixed
+     */
+    public function getNewsOpenNameAttr($value, $data)
+    {
+        $news_open = [0 => '×', 1 => '√', 2 => '?'];
+        return $news_open[$data['news_open']];
+    }
+
+    /**
      * 文章关联分类
      * Author: wjf <1937832819@qq.com>
      * @return \think\model\relation\BelongsTo
@@ -73,5 +86,21 @@ class News extends Model
             cache('news/' . $id, $data);
         }
         return $data;
+    }
+
+    /**
+     * 获取指定条件下的文章
+     * Author: wjf <1937832819@qq.com>
+     * @param array $where 条件
+     * @param int $limit 限制
+     * @param int $cache 缓存
+     * @param array $order 排序
+     * @return \think\Paginator
+     */
+    public static function getWhereNews($where = [], $limit = 15, $order = [], $cache = 300)
+    {
+        $newsList = self::where($where)->cache($cache)->order($order)->paginate($limit);
+
+        return $newsList;
     }
 }

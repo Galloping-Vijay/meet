@@ -3,7 +3,12 @@
 function helloworld(){
 	echo "hello WJFCMS!";
 }
-function nav(){
-
+function parity($key){
+	if($key%2 == 0 ){
+		$position = 'left';
+	}else{
+		$position = 'right';
+	}
+	echo $position;
 }
 {/php}

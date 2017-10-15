@@ -23,6 +23,11 @@ class Article extends Base
     //文章集
     public function index()
     {
+        $news = new News();
+        $newsList = $news::getWhereNews([],5,['news_time'=>'desc']);
+        $page = $newsList->render();
+        $this->assign('newsList', $newsList);
+        $this->assign('page', $page);
         return $this->fetch();
     }
 

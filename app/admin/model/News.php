@@ -41,7 +41,7 @@ class News extends Model
 
     public function user()
     {
-        return $this->belongsTo('MemberList', 'member_list_id');
+        return $this->belongsTo('MemberList', 'news_auto','member_list_id');
     }
 
     public function menu()
@@ -80,6 +80,8 @@ class News extends Model
      */
     public function getNews($id, $iscache = true)
     {
+        //浏览数+1,但先用缓存数据
+        self::where('n_id', $id)->setInc('news_hits');
         $data = cache('news/' . $id);
         if ($iscache == false || empty($data)) {
             $data = self::where('n_id', $id)->where('news_back', 0)->where('news_open', 1)->find();

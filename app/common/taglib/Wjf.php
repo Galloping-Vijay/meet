@@ -9,6 +9,9 @@
 
 namespace app\common\taglib;
 
+use think\exception\ClassNotFoundException;
+use think\Loader;
+use think\Request;
 use think\template\TagLib;
 
 class Wjf extends TagLib
@@ -26,6 +29,7 @@ class Wjf extends TagLib
         'data' => ['attr' => 'name,table,join,joinon,ids,cid,field,limit,order,where,ispage,pagesize,key,page', 'close' => 0],
         //volist
         'list' => ['attr' => 'name,table,join,joinon,ids,cid,field,limit,order,where,ispage,pagesize,key,page', 'close' => 1],
+        'get' => ['attr' => 'sql,return,cache,limit,table,order,where,page', 'level' => 3],
     ];
 
     /**
@@ -184,5 +188,181 @@ class Wjf extends TagLib
             return $parseStr;
         }
         return;
+    }
+
+    /**
+     * 获取数据标签
+     * sql/table 不能同时存在,sql优先级最高
+     * where 部分不能存在 limit 和 order 语句部分,只能是where部分
+     * page 是否启用分页,当 limit 小于 2 时,强制关闭分页
+     * 其他属性,作为where 部分条件传入
+     * Author: wjf <1937832819@qq.com>
+     * @param  $tag 标签属性
+     * @param $content
+     * @return string
+     * @throws \think\Exception
+     */
+    public function tagGet($tag, $content)
+    {
+        $att = ['return', 'cache', 'sql', 'limit', 'table', 'model', 'order', 'where', 'whereArr', 'page', 'pageUrl', 'field', 'datasource'];
+        $tag['return'] = isset($tag['return']) ? $tag['return'] : 'data';
+        $tag['cache'] = isset($tag['cache']) ? (int)$tag['cache'] : false;
+        $tag['sql'] = isset($tag['sql']) ? $tag['sql'] : null;
+        $tag['limit'] = isset($tag['limit']) ? $tag['limit'] : 200;
+        $tag['table'] = isset($tag['table']) ? (Config('database.prefix') . $tag['table']) : '';
+        $tag['model'] = isset($tag['model']) ? $tag['model'] : '';
+        $tag['order'] = isset($tag['order']) ? $tag['order'] : [];
+        $tag['where'] = isset($tag['where']) ? $tag['where'] : '';
+        $tag['whereArr'] = isset($tag['whereArr']) ? $tag['whereArr'] : '';
+        $tag['page'] = isset($tag['page']) ? $tag['page'] : 0;
+        $tag['pageUrl'] = isset($tag['pageUrl']) ? $tag['pageUrl'] : false;
+        $tag['field'] = isset($tag['field']) ? explode(',', $tag['field']) : '*';
+        $tag['datasource'] = isset($tag['datasource']) ? trim($tag['datasource']) : [];
+        if (!is_null($tag['sql'])) {
+            $tag['table'] = '';
+            //删除，插入不执行！这样处理感觉有点鲁莽了，，，-__,-!
+            if (strpos($tag['sql'], 'delete') || strpos($tag['sql'], 'insert')) {
+                throw new \think\Exception('_XML_TAG_ERROR_: get 标签不支持 delete/insert ');
+            }
+        }
+        //差集部分作为条件,同时进行分析
+        foreach ($tag as $k => $v) {
+            if (!in_array($k, $att)) {
+                if (!is_array($tag['whereArr'])) {
+                    $tag['whereArr'] = [];
+                }
+                $tag['whereArr'][$k] = $v;
+                unset($tag[$k]);
+            }
+        }
+        //数量统计sql
+        $tag['sql_count'] = preg_replace('/select([^from].*)from/i', "SELECT COUNT(*) as count FROM ", $tag['sql']);
+        //模型参数处理
+        if ($tag['model']) {
+            if (false !== strpos($tag['model'], '\\')) {
+                $class = $tag['model'];
+                $module = Request::instance()->module();
+            } else {
+                if (strpos($tag['model'], '/')) {
+                    list($module, $tag['model']) = explode('/', $tag['model'], 2);
+                } else {
+                    $module = Request::instance()->module();
+                }
+                $class = Loader::parseClass($module, 'model', $tag['model'], false);
+            }
+            if (class_exists($class)) {
+                $tag['model'] = "{$class}::";
+            } else {
+                $class = str_replace('\\' . $module . '\\', '\\common\\', $class);
+                if (class_exists($class)) {
+                    $tag['model'] = "{$class}::";
+                } else {
+                    throw new ClassNotFoundException('class not exists:' . $class, $class);
+                }
+            }
+        } else {
+            $tag['model'] = "\\think\\Db::table('{$tag['table']}')->";
+        }
+        $parseStr = '';
+        $parseStr .= " <?php \n";
+        $parseStr .= " if(isset(\${$tag['return']})):unset(\${$tag['return']});endif;";
+        $parseStr .= "  \$_tag = " . self::varExport($tag) . "; \n";
+        $parseStr .= "  \$_tag['cacheKey'] = md5('_get' . json_encode(\$_tag) . 'd1xz'); \n";
+        $parseStr .= "  \${$tag['return']} = []; \n";
+        if ($tag['sql'] && !empty($tag['sql_count'])) {
+            $tag['table'] = $tag['order'] = $tag['where'] = '';
+            $tag['where'] = $tag['whereArr'] = '1 = 1';
+            $parseStr .= "  if(\$_tag['page']):; \n";
+            $parseStr .= "   \$count = \\think\\Db::connect(\$_tag['datasource'])->query(\$_tag['sql_count']); \n";
+            $parseStr .= "   \$count = isset(\$count[0]['count'])?\$count[0]['count']:0; \n";
+            $parseStr .= "   \$page = page(\$count, \$_tag['limit'], \$_tag['page'], []); \n";
+            $parseStr .= "   \$page->setPageUrl(\$_tag['pageUrl']); \n";
+            $parseStr .= "   \$Page = \$page->show(); \n";
+            $parseStr .= "   \$PageInfo = ['total'=>\$count,'size'=>\$_tag['limit'],'page'=>\$_tag['page'],'pageurl'=>\$_tag['pageUrl'],'object'=>\$page]; \n";
+            $parseStr .= "   \${$tag['return']} = \\think\\Db::connect(\$_tag['datasource'])->query(\$_tag['sql'].' limit '.\$page->limit()); \n";
+            $parseStr .= "  else: \n";
+            $parseStr .= "    if(\$_tag['cache']):; \n";
+            $parseStr .= "      \${$tag['return']} = cache(\$_tag['cacheKey']); \n";
+            $parseStr .= "      if(empty(\${$tag['return']})):; \n";
+            $parseStr .= "         \${$tag['return']} = \\think\\Db::connect(\$_tag['datasource'])->query(\$_tag['sql']); \n";
+            $parseStr .= "         cache(\$_tag['cacheKey'],\${$tag['return']},\$_tag['cache']); \n";
+            $parseStr .= "      endif; \n";
+            $parseStr .= "    else: \n";
+            $parseStr .= "      \${$tag['return']} = \\think\\Db::connect(\$_tag['datasource'])->query(\$_tag['sql']); \n";
+            $parseStr .= "    endif; \n";
+            $parseStr .= "  endif; \n";
+        } else {
+            $parseStr .= "  if(\$_tag['page']):; \n";
+            $parseStr .= "   \$count = {$tag['model']}where(\$_tag['where'])->where(\$_tag['whereArr'])->field(\$_tag['field'])->cache(\$_tag['cache'])->count(); \n";
+            $parseStr .= "   \$page = page(\$count, \$_tag['limit'], \$_tag['page'], []); \n";
+            $parseStr .= "   \$page->setPageUrl(\$_tag['pageUrl']); \n";
+            $parseStr .= "   \$Page = \$page->show(); \n";
+            $parseStr .= "   \$PageInfo = ['total'=>\$count,'size'=>\$_tag['limit'],'page'=>\$_tag['page'],'pageurl'=>\$_tag['pageUrl'],'object'=>\$page]; \n";
+            $parseStr .= "   \${$tag['return']} = {$tag['model']}where(\$_tag['where'])->where(\$_tag['whereArr'])->field(\$_tag['field'])->cache(\$_tag['cache'])->limit(\$page->limit())->order(\$_tag['order'])->select(); \n";
+            $parseStr .= "  else: \n";
+            $parseStr .= "   \${$tag['return']} = {$tag['model']}where(\$_tag['where'])->where(\$_tag['whereArr'])->field(\$_tag['field'])->cache(\$_tag['cache'])->limit(\$_tag['limit'])->order(\$_tag['order'])->select(); \n";
+            $parseStr .= "  endif; \n";
+        }
+        $parseStr .= "  ?>{$content}<?php \n";
+        $parseStr .= "  \n";
+        $parseStr .= " ?>";
+        return $parseStr;
+    }
+
+    /**
+     * 转换数据为HTML代码
+     * Author: wjf <1937832819@qq.com>
+     * @param $data 数组
+     * @return bool|string
+     */
+    private static function varExport($data)
+    {
+        if (is_array($data)) {
+            $str = "[";
+            foreach ($data as $key => $val) {
+                if (is_array($val)) {
+                    $str .= "\n'$key'=>" . self::varExport($val) . ",";
+                } else {
+                    //如果是变量的情况
+                    if (strpos($val, '$') === 0) {
+                        $str .= "\n'$key'=>$val,";
+                    } else if (preg_match("/^([a-zA-Z_].*)\(/i", $val, $matches)) {//判断是否使用函数
+                        if (function_exists($matches[1])) {
+                            $str .= "\n'$key'=>$val,";
+                        } else {
+                            $str .= "\n'$key'=>'" . self::newAddslashes($val) . "',";
+                        }
+                    } else if (is_bool($val)) {
+                        $val = $val ? 'true' : 'false';
+                        $str .= "\n'$key'=>$val,";
+                    } else if (is_null($val)) {
+                        $str .= "\n'$key'=>null,";
+                    } else if (is_integer($val)) {
+                        $str .= "\n'$key'=>$val,";
+                    } else {
+                        $str .= "\n'$key'=>'" . self::newAddslashes($val) . "',";
+                    }
+                }
+            }
+            return $str . "\n]";
+        }
+        return false;
+    }
+
+    /**
+     *  返回经addslashes处理过的字符串或数组
+     * Author: wjf <1937832819@qq.com>
+     * @param array|string $string 需要处理的字符串或数组
+     * @return array|string
+     */
+    protected static function newAddslashes($string)
+    {
+        if (!is_array($string)) {
+            return addslashes($string);
+        }
+        foreach ($string as $key => $val) {
+            $string[$key] = self::newAddslashes($val);
+        }
+        return $string;
     }
 }

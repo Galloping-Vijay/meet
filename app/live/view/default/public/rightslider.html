@@ -4,8 +4,10 @@
     </div>
     <div class="info-cat">
         <h3>分类导航</h3>
-        {foreach $catList as $key=>$val}
+        {Wjf:get model="admin/Cat" field="cat_id,cat_name" status="1" order='cat_order desc,cat_id desc' cache='300'}
+        {foreach $data as $key=>$val}
         <a href="{:Url('/live/cat/info',['cat_id'=>$val['cat_id']])}">{$val.cat_name}</a>
         {/foreach}
+        {/Wjf:get}
     </div>
 </div>

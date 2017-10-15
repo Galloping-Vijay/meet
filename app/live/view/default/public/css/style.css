@@ -1683,6 +1683,9 @@ p.your-para {
     width: 60%;
     float: left;
 }
+.info-page{
+    padding-left: 8%;
+}
 /*有导航样式*/
 .cat-info-right {
     border: 1px solid #e1e1e1;
@@ -1697,7 +1700,6 @@ p.your-para {
     border: 1px solid #e1e1e1;
     border-radius: 2px;
 }
-
 .info-cat {
     width: 100%;
     border-radius: 2px;

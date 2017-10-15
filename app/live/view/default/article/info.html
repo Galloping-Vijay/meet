@@ -29,18 +29,23 @@
         <!---End-top-nav---->
     </div>
 </div>
-<div class="profile">
+<div class="profile-info">
     <div class="container">
-        <div class="catinfo">
-            <h1 class="m_4">
-                啊啊飒飒
-            </h1>
-            <p class="m_5">
-                十大
-            </p>
-        </div>
-        <div class="about-grids">
-            asdfasf
+        <div class="about_grid1">
+            <div class="col-md-8 box">
+                <h1 class="m_4">
+                    {$info.news_title}
+                </h1>
+                <p class="m_5" style="margin-bottom: 3%;">
+                    <span>时间: {$info.news_time|date="Y-m-d H:i:s",###}</span>&nbsp;&nbsp;
+                    <span>作者: {$info->user->member_list_nickname}</span>&nbsp;&nbsp;
+                    <span><i class="fa fa-eye">&nbsp;</i>{$info.news_hits}</span>
+                </p>
+                <div class="container">
+                    {$info.news_content}
+                </div>
+            </div>
+            {include file="public:rightslider" /}
         </div>
     </div>
 </div>

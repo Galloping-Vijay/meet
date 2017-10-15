@@ -41,17 +41,19 @@
                 </p>
                 <div class="container">
                     {foreach $newsList as $key=>$val}
-                    <div class="row info-one">
-                        <div class="info-one-img">
-                            <img src="{$val.news_img}" alt="文章大图">
+                    <a href="{:url('/live/article/info',['id'=>$val['n_id']])}">
+                        <div class="row info-one">
+                            <div class="info-one-img">
+                                <img src="{$val.news_img}" alt="文章大图">
+                            </div>
+                            <div class="info-one-centent">
+                                <h4 style="color: darkcyan;">{$val.news_title}</h4>
+                                <span>{$val.news_scontent|msubstr=0,30}</span>
+                            </div>
                         </div>
-                        <div class="info-one-centent">
-                            <h3>{$val.news_title}</h3>
-                            <span>{$val.news_scontent}</span>
-                        </div>
-                    </div>
+                    </a>
                     {/foreach}
-                    <div class="row">
+                    <div class="row info-page">
                         {$page}
                     </div>
                 </div>

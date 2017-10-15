@@ -29,6 +29,11 @@ class Cat extends Base
         return $this->fetch();
     }
 
+    /**
+     * 分类文章列表
+     * Author: wjf <1937832819@qq.com>
+     * @return mixed
+     */
     public function info()
     {
         $catId = input('cat_id/d');
@@ -41,7 +46,7 @@ class Cat extends Base
         $where['news_open'] = 1;
         $where['cat_id'] = $catId;
         $order['news_hits'] = 'desc';
-        $newsList = $newsmodel::getWhereNews($where, 3, $order, 0);
+        $newsList = $newsmodel::getWhereNews($where, 3, $order);
         $page = $newsList->render();
         $this->assign('newsList', $newsList);
         $this->assign('catList', $catList);

@@ -29,7 +29,7 @@ class Article extends Base
     public function info()
     {
         $n_id = input('id');
-        $news= new News();
+        $news = new News();
         $info = $news->getNews($n_id);
         if (empty($info)) {
             $this->error('文章不存在或已被删除', 'index');

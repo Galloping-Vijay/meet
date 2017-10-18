@@ -1,7 +1,12 @@
 <div class="col-md-4 box cat-info-right">
+    <form action="{:url('live/article/search')}" class="search-ajaxform" method="post">
     <div class="info-search">
-        <input type="text" value="" class="form-control" placeholder="请输入内容">
+        <input name="keyword" type="text" value="Search..." onfocus="if(this.value=='Search...')this.value='';" onblur="if(this.value=='')this.value='Search...';" class="form-control" placeholder="请输入内容">
+        <button type="submit" class="subscribe-btn btn">
+            <i class="fa fa-search"></i>
+        </button>
     </div>
+    </form>
     <div class="info-cat">
         <h3>分类导航</h3>
         {Wjf:get model="admin/Cat" field="cat_id,cat_name" status="1" order='cat_order desc,cat_id desc' cache='300'}

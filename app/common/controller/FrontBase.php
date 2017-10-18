@@ -19,24 +19,24 @@ class FrontBase extends Common
     protected $user;
     protected $wjf_theme_path;
     //微信平台
-    protected $options=[
+    protected $options = [
         /**
          * Debug 模式，bool 值：true/false
          *
          * 当值为 false 时，所有的日志都不会记录
          */
-        'debug'  => true,
+        'debug' => true,
         /**
          * 账号基本信息，请从微信公众平台/开放平台获取
          */
         'app_id' => '',
         'secret' => '',
-        'token'  => '',
+        'token' => '',
         'aes_key' => '',
-        'we_name'=>'',
-        'we_id'=>'',
-        'we_number'=>'',
-        'we_type'=>1,
+        'we_name' => '',
+        'we_id' => '',
+        'we_number' => '',
+        'we_type' => 1,
         /**
          * 日志配置
          *
@@ -46,9 +46,9 @@ class FrontBase extends Common
          * file：日志文件位置(绝对路径!!!)，要求可写权限
          */
         'log' => [
-            'level'      => 'debug',
+            'level' => 'debug',
             'permission' => 0777,
-            'file'       => './data/runtime/temp/easywechat.log',
+            'file' => './data/runtime/temp/easywechat.log',
         ],
         /**
          * OAuth 配置
@@ -57,17 +57,17 @@ class FrontBase extends Common
          * callback：OAuth授权完成后的回调页地址
          */
         'oauth' => [
-            'scopes'   => ['snsapi_userinfo'],
+            'scopes' => ['snsapi_userinfo'],
             'callback' => '/examples/oauth_callback.php',
         ],
         /**
          * 微信支付
          */
         'payment' => [
-            'merchant_id'        => 'your-mch-id',
-            'key'                => 'key-for-signature',
-            'cert_path'          => 'path/to/your/cert.pem', // XXX: 绝对路径！！！！
-            'key_path'           => 'path/to/your/key',      // XXX: 绝对路径！！！！
+            'merchant_id' => 'your-mch-id',
+            'key' => 'key-for-signature',
+            'cert_path' => 'path/to/your/cert.pem', // XXX: 绝对路径！！！！
+            'key_path' => 'path/to/your/key',      // XXX: 绝对路径！！！！
             // 'device_info'     => '013467007045764',
             // 'sub_app_id'      => '',
             // 'sub_merchant_id' => '',
@@ -138,7 +138,7 @@ class FrontBase extends Common
             $theme = $site_options['site_tpl'];
         }
         $this->view = $this->view->config('view_path', APP_PATH . request()->module() . '/view/' . $theme . '/');
-        $wjf_theme_path = __ROOT__ . '/app/'. request()->module() .'/view/' . $theme . '/';
+        $wjf_theme_path = __ROOT__ . '/app/' . request()->module() . '/view/' . $theme . '/';
         $this->assign($site_options);
         $this->assign('wjf_theme_path', $wjf_theme_path);
         $address = '';
@@ -189,13 +189,13 @@ class FrontBase extends Common
             }
         }
         //微信配置
-        $config=config('we_options');
-        if(!empty($config)) $this->options=array_merge($this->options,$config);
+        $config = config('we_options');
+        if (!empty($config)) $this->options = array_merge($this->options, $config);
         $app = new Application($this->options);
         $js = $app->js;
         $wxconfig = $js->config($this->jsApiList, $debug = false, $beta = false, $json = true);
         $this->user['address'] = $address;
-        $this->assign('wxconfig',$wxconfig);
+        $this->assign('wxconfig', $wxconfig);
         $this->assign("user", $this->user);
         $this->assign("is_admin", $is_admin);
     }
@@ -230,5 +230,23 @@ class FrontBase extends Common
             session('last_action.action', $action);
             session('last_action.time', $time);
         }
+    }
+
+    /**
+     * 返回模型对象
+     * Author: wjf <1937832819@qq.com>
+     * @param string $model 模型名称
+     * @return \think\Model
+     * @throws \think\Exception
+     */
+    protected function getModelObject($model)
+    {
+        if (is_string($model) && strpos($model, '/')) {
+            $model = model($model);
+        }
+        if (!is_object($model)) {
+            throw new \think\Exception('$model 不是模型对象');
+        }
+        return $model;
     }
 }

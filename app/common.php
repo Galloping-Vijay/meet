@@ -824,7 +824,6 @@ function get_menu_tree($id)
 
 /**
  * 查询文章列表，支持分页或不分页
- * @author rainfer <81818832@qq.com>
  * @param string $tag 查询标签，以字符串方式传入,例："cid:1,2;field:news_title,news_content;limit:0,8;order:news_time desc,news_hits desc;where:n_id>5;"<br>
  *  ids:调用指定id的一个或多个数据,如 1,2,3<br>
  *    cid:数据所在分类,可调出一个或多个分类数据,如 1,2,3 默认值为全部,在当前分类为:'.$cid.'<br>

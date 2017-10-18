@@ -1700,7 +1700,12 @@ p.your-para {
     border: 1px solid #e1e1e1;
     border-radius: 2px;
 }
+.info-search button{
+    float: right;
+    margin-top: -34px;
+}
 .info-cat {
+    clear: both;
     width: 100%;
     border-radius: 2px;
 }

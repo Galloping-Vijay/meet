@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<head>
+    <title>{$site_seo_title} {$site_name}</title>
+    {include file="public:head" /}
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/timeline/jquery.eeyellow.Timeline.css" />
+    <meta name="description" content="{$site_seo_description}">
+</head>
+<body>
+<div class="about_header">
+    <div class="container">
+        <!---start-top-nav---->
+        <div class="top-nav">
+            <div class="top-header">
+                <div class="logo">
+                    <a href="index.html"><img src="{$wjf_theme_path}public/images/logo.png" alt=""/></a>
+                </div>
+            </div>
+            {include file="public:nav" /}
+            <script type="text/javascript">
+                $(document).ready(function() {
+
+                    $('#menu-toggle').click(function () {
+                        $('#menu').toggleClass('open');
+                        e.preventDefault();
+                    });
+
+                });
+            </script>
+        </div>
+        <!---End-top-nav---->
+    </div>
+</div>
+<div class="profile-info">
+    <div class="container">
+        <div class="about_grid1">
+            <div class="col-md-8 box">
+                <div class="VivaTimeline">
+                    <dl>
+                        {foreach name="newsList" item="val"}
+                        <dd class="pos-{:parity($key)} clearfix">
+                            <div class="circ"></div>
+                            <div class="time">{:date('F d',$val['news_time'])}</div>
+                            <div class="events">
+                                <div class="events-header">{$val.news_title}</div>
+                                <div class="events-body">
+                                    <div class="row">
+                                        <div class="col-md-6 pull-left">
+                                            <img class="events-object img-responsive img-rounded" src="__PUBLIC__/img/news.jpg" />
+                                        </div>
+                                        <div class="events-desc">
+                                            {$val.news_scontent}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 pull-left">
+                                            <img class="events-object img-responsive img-rounded" src="__PUBLIC__/img/news.jpg" />
+                                        </div>
+                                        <div class="events-desc">
+                                            {$val.news_scontent}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 pull-left">
+                                            <img class="events-object img-responsive img-rounded" src="__PUBLIC__/img/news.jpg" />
+                                        </div>
+                                        <div class="events-desc">
+                                            {$val.news_scontent}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="events-footer">
+                                    123
+                                </div>
+                            </div>
+                        </dd>
+                        {/foreach}
+                    </dl>
+                </div>
+            </div>
+            {include file="public:rightslider" /}
+        </div>
+    </div>
+</div>
+{include file="public:footer" /}
+<script src="__PUBLIC__/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/timeline/jquery.eeyellow.Timeline.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.VivaTimeline').vivaTimeline({
+            carousel: true,
+            carouselTime: 3000
+        });
+    });
+</script>
+</body>
+</html>

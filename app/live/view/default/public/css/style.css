@@ -1658,7 +1658,9 @@ p.your-para {
     color: #ffffff;
 }
 .news-content img{
-    width: 100%;
+    display: block;
+    height: auto;
+    max-width: 100%;
 }
 .footer-top a {
     text-decoration: none;

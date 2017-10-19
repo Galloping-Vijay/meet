@@ -9,6 +9,7 @@
 
 namespace app\live\controller;
 
+use app\admin\model\News;
 use think\Request;
 
 class Index extends Base
@@ -20,7 +21,13 @@ class Index extends Base
      */
     public function index()
     {
-        $this->assign('active',19);
+        $model = new News();
+        $where['news_flag'] = ['like','%a%'];
+        $order = ['n_id'=> 'desc'];
+        //推荐
+        $data = $model::getWhereNews($where,3,$order,false);
+        $this->assign('active', 19);
+        $this->assign('data',$data);
         return $this->fetch();
     }
 
@@ -30,7 +37,7 @@ class Index extends Base
      */
     public function hot()
     {
-        $this->assign('active',20);
+        $this->assign('active', 20);
         return $this->fetch();
     }
 }

@@ -41,7 +41,7 @@ class News extends Model
 
     public function user()
     {
-        return $this->belongsTo('MemberList', 'news_auto','member_list_id');
+        return $this->belongsTo('MemberList', 'news_auto', 'member_list_id');
     }
 
     public function menu()
@@ -95,14 +95,18 @@ class News extends Model
      * Author: wjf <1937832819@qq.com>
      * @param array $where 条件
      * @param int $limit 限制
-     * @param int $cache 缓存
      * @param array $order 排序
-     * @return \think\Paginator
+     * @param bool $ispage 是否使用分页
+     * @param int $cache 缓存时间
+     * @return false|\PDOStatement|string|\think\Collection|\think\Paginator
      */
-    public static function getWhereNews($where = [], $limit = 15, $order = [], $cache = 300)
+    public static function getWhereNews($where = [], $limit = 15, $order = [], $ispage = true, $cache = 300)
     {
-        $newsList = self::where($where)->cache($cache)->order($order)->paginate($limit);
-
+        if ($ispage == false) {
+            $newsList = self::where($where)->cache($cache)->order($order)->limit($limit)->select();
+        } else {
+            $newsList = self::where($where)->cache($cache)->order($order)->paginate($limit);
+        }
         return $newsList;
     }
 }

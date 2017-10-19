@@ -2,7 +2,6 @@
 <head>
     <title>{$site_seo_title} {$site_name}</title>
     {include file="public:head" /}
-    <link rel="stylesheet" type="text/css" href="__PUBLIC__/timeline/jquery.eeyellow.Timeline.css" />
     <meta name="description" content="{$site_seo_description}">
 </head>
 <body>
@@ -17,7 +16,7 @@
             </div>
             {include file="public:nav" /}
             <script type="text/javascript">
-                $(document).ready(function() {
+                $(document).ready(function () {
 
                     $('#menu-toggle').click(function () {
                         $('#menu').toggleClass('open');
@@ -34,47 +33,28 @@
     <div class="container">
         <div class="about_grid1">
             <div class="col-md-8 box">
-                <div class="VivaTimeline">
-                    <dl>
-                        {foreach name="newsList" item="val"}
-                        <dd class="pos-{:parity($key)} clearfix">
-                            <div class="circ"></div>
-                            <div class="time">{:date('F d',$val['news_time'])}</div>
-                            <div class="events">
-                                <div class="events-header">{$val.news_title}</div>
-                                <div class="events-body">
-                                    <div class="row">
-                                        <div class="col-md-6 pull-left">
-                                            <img class="events-object img-responsive img-rounded" src="__PUBLIC__/img/news.jpg" />
-                                        </div>
-                                        <div class="events-desc">
-                                            {$val.news_scontent}
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6 pull-left">
-                                            <img class="events-object img-responsive img-rounded" src="__PUBLIC__/img/news.jpg" />
-                                        </div>
-                                        <div class="events-desc">
-                                            {$val.news_scontent}
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6 pull-left">
-                                            <img class="events-object img-responsive img-rounded" src="__PUBLIC__/img/news.jpg" />
-                                        </div>
-                                        <div class="events-desc">
-                                            {$val.news_scontent}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="events-footer">
-                                    123
-                                </div>
-                            </div>
-                        </dd>
-                        {/foreach}
+                <h1 class="m_4">
+                    搜索文章
+                </h1>
+                <p class="m_5">
+                    关键词:{$keyword}
+                </p>
+                <div class="container">
+                    {foreach $newsList as $key=>$val}
+                    <dl class="faq-list">
+                        <a href="{:url('/live/article/info',array('id'=>$val['n_id']))}">
+                            <dt class="faq-list_h">
+                                <h4>{$val.news_title}</h4>
+                            </dt>
+                            <dd id="post-100" class="faq-list">
+                                <p>{$val.news_scontent|msubstr=0,30}</p>
+                            </dd>
+                        </a>
                     </dl>
+                    {/foreach}
+                    <div class="row info-page">
+                        {$page}
+                    </div>
                 </div>
             </div>
             {include file="public:rightslider" /}
@@ -82,15 +62,5 @@
     </div>
 </div>
 {include file="public:footer" /}
-<script src="__PUBLIC__/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="__PUBLIC__/timeline/jquery.eeyellow.Timeline.js"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('.VivaTimeline').vivaTimeline({
-            carousel: true,
-            carouselTime: 3000
-        });
-    });
-</script>
 </body>
 </html>

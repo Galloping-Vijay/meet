@@ -24,7 +24,7 @@ class Article extends Base
     public function index()
     {
         $news = new News();
-        $newsList = $news::getWhereNews([],20,['news_time'=>'desc']);
+        $newsList = $news::getWhereNews([], 20, ['news_time' => 'desc']);
         $page = $newsList->render();
         $this->assign('newsList', $newsList);
         $this->assign('page', $page);
@@ -50,33 +50,16 @@ class Article extends Base
     public function search()
     {
         $k = input("keyword");
-        $page = input("post.page");
-        $pagesize = 5;
         if (empty($k)) {
             $this->error('关键字为空');
         }
-        if (request()->isAjax()) {
-            if (empty($page)) {
-                $this->success('操作成功', url('live/article/search', array('keyword' => $k)));
-            } else {
-                $lists = get_news('order:news_time desc', 1, $pagesize, 'keyword', $k, array(), $page);
-                //替换成带ajax的class
-                $page_html = $lists['page'];
-                $page_html = preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)", "<a href='javascript:ajax_page($1);'>$2</a>", $page_html);
-                $this->assign('page_html', $page_html);
-                $this->assign('lists', $lists);
-                $this->assign("keyword", $k);
-                return $this->fetch(":ajax_list");
-            }
-        } else {
-            $lists = get_news('order:news_time desc', 1, $pagesize, 'keyword', $k);
-            //替换成带ajax的class
-            $page_html = $lists['page'];
-            $page_html = preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)", "<a href='javascript:ajax_page($1);'>$2</a>", $page_html);
-            $this->assign('page_html', $page_html);
-            $this->assign('lists', $lists);
-            $this->assign("keyword", $k);
-            return $this->fetch(':search');
-        }
+        $news = new News();
+        $where['news_title|news_key'] = ['like', '%' . $k . '%'];
+        $newsList = $news::getWhereNews($where, 20, ['news_time' => 'desc']);
+        $page = $newsList->render();
+        $this->assign('newsList', $newsList);
+        $this->assign('keyword', $k);
+        $this->assign('page', $page);
+        return $this->fetch();
     }
 }

@@ -45,6 +45,25 @@
                     <div class="news-content">
                         {$info.news_content}
                     </div>
+                    {if condition="!empty($info.news_source)"}
+                    <hr/>
+                    <div class="post-content">
+                        <b>{:lang('news copyright',[$info.news_source])}</b>
+                    </div>
+                    {/if}
+                    <script type="text/javascript" src="__PUBLIC__/js/qrcode.min.js"></script>
+                    <div id="qrcode" style="width: 100px;margin:0 auto"></div>
+                    <script type="text/javascript">
+                        var qrcode = new QRCode(document.getElementById("qrcode"), {
+                            width : 100,
+                            height : 100
+                        });
+                        function makeCode () {
+                            qrcode.makeCode("http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}");
+                        }
+                        makeCode();
+                    </script>
+                    <div class="qrcode-annotation clearfix">文章二维码,扫码查看</div>
                 </div>
             </div>
             {include file="public:rightslider" /}

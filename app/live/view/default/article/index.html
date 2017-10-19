@@ -42,34 +42,20 @@
                             <div class="time">{:date('F d',$val['news_time'])}</div>
                             <div class="events">
                                 <div class="events-header">{$val.news_title}</div>
+                                <a href="{:url('/live/article/info',array('id'=>$val['n_id']))}">
                                 <div class="events-body">
                                     <div class="row">
                                         <div class="col-md-6 pull-left">
-                                            <img class="events-object img-responsive img-rounded" src="__PUBLIC__/img/news.jpg" />
-                                        </div>
-                                        <div class="events-desc">
-                                            {$val.news_scontent}
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6 pull-left">
-                                            <img class="events-object img-responsive img-rounded" src="__PUBLIC__/img/news.jpg" />
-                                        </div>
-                                        <div class="events-desc">
-                                            {$val.news_scontent}
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6 pull-left">
-                                            <img class="events-object img-responsive img-rounded" src="__PUBLIC__/img/news.jpg" />
+                                            <img class="events-object img-responsive img-rounded" src="{$val.news_img|default='__PUBLIC__/img/news.jpg'}" />
                                         </div>
                                         <div class="events-desc">
                                             {$val.news_scontent}
                                         </div>
                                     </div>
                                 </div>
+                                </a>
                                 <div class="events-footer">
-                                    123
+                                    <span>{$val.news_time|date="Y-m-d",###} By {$val->user->member_list_nickname}</span>&nbsp;&nbsp;
                                 </div>
                             </div>
                         </dd>

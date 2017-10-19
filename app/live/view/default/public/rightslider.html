@@ -11,8 +11,22 @@
         <h3>分类导航</h3>
         {Wjf:get model="admin/Cat" field="cat_id,cat_name" status="1" order='cat_order desc,cat_id desc' cache='300'}
         {foreach $data as $key=>$val}
-        <a href="{:Url('/live/cat/info',['cat_id'=>$val['cat_id']])}">{$val.cat_name}</a>
+        <a class="info-cat-a" href="{:Url('/live/cat/info',['cat_id'=>$val['cat_id']])}">{$val.cat_name}</a>
         {/foreach}
         {/Wjf:get}
+    </div>
+    <div class="info-cat">
+        <h3>广告赞助</h3>
+        <div class="ads-img row">
+            {Wjf:ads name="ad_sponsor" cid="2" /}
+            {foreach name="ad_sponsor" item="vo"}
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <a href="{$vo.plug_ad_url}" target="_blank">
+                    <img class="img-thumbnail" alt="" src="{$vo.plug_ad_pic|default='__PUBLIC__/img/ads-small.jpg'}">
+                    <em>{$vo.plug_ad_name}</em>
+                </a>
+            </div>
+            {/foreach}
+        </div>
     </div>
 </div>

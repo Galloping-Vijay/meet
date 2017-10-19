@@ -1649,7 +1649,11 @@ p.your-para {
         padding: 1em 0 0;
     }
 }
-
+.qrcode-annotation {
+    margin: 2%;
+    text-align: center;
+    font-size: smaller;
+}
 .footer-top {
     color: #ffffff;
 }
@@ -1721,11 +1725,19 @@ p.your-para {
     border-bottom-color: chartreuse;
 }
 
-.info-cat a {
+.info-cat .info-cat-a {
     float: left;
     width: 48%;
     text-align: center;
     border: 1px solid #e1e1e1;
     margin: 1%;
     padding: 1%;
+}
+.info-cat .ads-img div{
+    margin: 2% auto;
+}
+.info-cat .ads-img em{
+    padding: 2%;
+    font-size: 10px;
+    font-style: inherit;
 }

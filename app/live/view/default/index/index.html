@@ -92,10 +92,10 @@
         </div>
         <div class="col-md-6 contact_right">
             <div class="contact-form">
-                <form method="post" action="{:url('index/Unify/addmsg')}">
-                    <input type="text" class="textbox" value="Name" onFocus="this.value = '';"
+                <form class="form-horizontal verify-ajax-form" name="plug_sug_add" method="post" action="{:url('index/Unify/addmsg')}">
+                    <input type="text" class="textbox form-control" value="Name" onFocus="this.value = '';"
                            onBlur="if (this.value == '') {this.value = 'Name';}" name="plug_sug_name">
-                    <input type="text" class="textbox" value="Email" onFocus="this.value = '';"
+                    <input type="text" class="textbox form-control" value="Email" onFocus="this.value = '';"
                            onBlur="if (this.value == '') {this.value = 'Email';}" name="plug_sug_email">
                     <textarea value="Message" onFocus="this.value= '';"
                               onBlur="if (this.value == '') {this.value = 'Message';}" name="plug_sug_content">Message</textarea>
@@ -103,7 +103,7 @@
                         <input type="text" style="width: 42%; display: inline" value="verify" onFocus="this.value = '';" name="verify" onBlur="if (this.value == '') {this.value = 'verify';}">
                         <img class="img-responsive"  style="display: inline;cursor:pointer;" src="{:url('index/Unify/verify_msg')}" onClick="this.src='{:url('index/Unify/verify_msg')}'+'?'+Math.random()" title="{:lang('click to get')}">
                     </div>
-                    <label class="btn2 btn-2 btn2-1b"><input type="submit" value="提交留言"></label>
+                    <label class="btn2 btn-2 btn2-1b"><input type="submit" data-wait="1500" value="提交留言"></label>
                 </form>
             </div>
         </div>

@@ -1687,10 +1687,27 @@ p.your-para {
     padding-left: 8%;
 }
 /*开始 文章页面样式*/
+.footer-scrollup{
+    position: fixed;
+    right: 1%;
+    bottom: 1%;
+    width: 40px;
+    border: 1px solid #eee;
+    font-size: 24px;
+    z-index: 1040;
+    -webkit-backface-visibility: hidden;
+    padding-left: 1%;
+}
+.footer-scrollup i{
+    padding: 25%;
+}
 .qrcode-annotation {
     margin: 2%;
     text-align: center;
     font-size: smaller;
+}
+.news-content img{
+    width: 100%;
 }
 /*结束 文章页面样式*/
 /*开始 右导航样式*/

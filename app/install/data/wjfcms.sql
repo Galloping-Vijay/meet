@@ -7,8 +7,8 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 
-DROP TABLE IF EXISTS `yf_action_log`;
-CREATE TABLE IF NOT EXISTS `yf_action_log` (
+DROP TABLE IF EXISTS `wjf_action_log`;
+CREATE TABLE IF NOT EXISTS `wjf_action_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `uid` bigint(20) DEFAULT '0' COMMENT '用户id',
   `object` varchar(100) DEFAULT NULL COMMENT '访问对象的id,格式：不带前缀的表名+id;如news1表示xx_news表里id为1的记录',
@@ -21,8 +21,8 @@ CREATE TABLE IF NOT EXISTS `yf_action_log` (
   KEY `user_object_action_ip` (`uid`,`object`,`action`,`ip`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='访问记录表' AUTO_INCREMENT=1 ;
 
-DROP TABLE IF EXISTS `yf_addon`;
-CREATE TABLE IF NOT EXISTS `yf_addon` (
+DROP TABLE IF EXISTS `wjf_addon`;
+CREATE TABLE IF NOT EXISTS `wjf_addon` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL DEFAULT '' COMMENT '插件名称',
   `title` varchar(32) NOT NULL DEFAULT '' COMMENT '插件标题',
@@ -42,14 +42,14 @@ CREATE TABLE IF NOT EXISTS `yf_addon` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='插件表' AUTO_INCREMENT=18 ;
 
-INSERT INTO `yf_addon` (`id`, `name`, `title`, `icon`, `description`, `author`, `author_url`, `config`, `admin_actions`, `version`, `identifier`, `admin`, `create_time`, `update_time`, `sort`, `status`) VALUES
-(17, 'Maintain', '日常维护', '', '后台首页日常维护', 'rainfer', '', '{"display":"1"}', '{"index":[],"config":[],"edit":[],"add":[]}', '0.1', '', 0, 1487424935, 1487425273, 15, 1),
-(15, 'Security', '安全检测', '', '网站安全检测', 'rainfer', '', '', '{"index":["Admin\\/security_list"],"config":[],"edit":[],"add":[]}', '0.1', '', 1, 1487422525, 1487425273, 40, 1),
-(13, 'Info', '后台信息', '', '后台首页信息显示', 'rainfer', '', '{"display":"1"}', '{"index":[],"config":["Admin\\/config"],"edit":[],"add":[]}', '0.1', '', 0, 1487419743, 1487425273, 100, 1),
-(16, 'Team', '团队&贡献者', '', '后台首页团队&贡献者显示', 'rainfer', '', '{"display":"1"}', NULL, '0.1', '', 0, 1487422724, 1487425273, 10, 1);
+INSERT INTO `wjf_addon` (`id`, `name`, `title`, `icon`, `description`, `author`, `author_url`, `config`, `admin_actions`, `version`, `identifier`, `admin`, `create_time`, `update_time`, `sort`, `status`) VALUES
+(17, 'Maintain', '日常维护', '', '后台首页日常维护', 'wjf', '', '{"display":"1"}', '{"index":[],"config":[],"edit":[],"add":[]}', '0.1', '', 0, 1487424935, 1487425273, 15, 1),
+(15, 'Security', '安全检测', '', '网站安全检测', 'vijay', '', '', '{"index":["Admin\\/security_list"],"config":[],"edit":[],"add":[]}', '0.1', '', 1, 1487422525, 1487425273, 40, 1),
+(13, 'Info', '后台信息', '', '后台首页信息显示', 'wjf', '', '{"display":"1"}', '{"index":[],"config":["Admin\\/config"],"edit":[],"add":[]}', '0.1', '', 0, 1487419743, 1487425273, 100, 1),
+(16, 'Team', '团队&贡献者', '', '后台首页团队&贡献者显示', 'wjf', '', '{"display":"1"}', NULL, '0.1', '', 0, 1487422724, 1487425273, 10, 1);
 
-DROP TABLE IF EXISTS `yf_admin`;
-CREATE TABLE IF NOT EXISTS `yf_admin` (
+DROP TABLE IF EXISTS `wjf_admin`;
+CREATE TABLE IF NOT EXISTS `wjf_admin` (
   `admin_id` tinyint(4) NOT NULL AUTO_INCREMENT COMMENT '管理员ID',
   `admin_username` varchar(20) NOT NULL COMMENT '管理员用户名',
   `admin_pwd` varchar(70) NOT NULL COMMENT '管理员密码',
@@ -72,8 +72,8 @@ CREATE TABLE IF NOT EXISTS `yf_admin` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
-DROP TABLE IF EXISTS `yf_auth_group`;
-CREATE TABLE IF NOT EXISTS `yf_auth_group` (
+DROP TABLE IF EXISTS `wjf_auth_group`;
+CREATE TABLE IF NOT EXISTS `wjf_auth_group` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `title` char(100) NOT NULL DEFAULT '',
   `status` tinyint(1) NOT NULL DEFAULT '1',
@@ -82,12 +82,12 @@ CREATE TABLE IF NOT EXISTS `yf_auth_group` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
-INSERT INTO `yf_auth_group` (`id`, `title`, `status`, `rules`, `addtime`) VALUES
+INSERT INTO `wjf_auth_group` (`id`, `title`, `status`, `rules`, `addtime`) VALUES
 (1, '超级管理员', 1, '1,2,6,59,151,10,62,154,19,60,152,26,43,63,64,65,66,67,155,57,61,153,3,4,89,90,159,5,85,86,87,88,160,15,16,68,69,70,71,72,73,156,17,55,56,74,75,76,77,78,157,18,79,80,81,82,83,84,158,40,41,92,162,42,91,161,7,8,11,94,95,96,100,101,175,12,93,174,25,97,98,99,173,9,13,103,104,105,106,107,172,14,102,171,22,23,24,27,29,37,108,109,110,111,112,113,114,170,38,115,116,117,118,119,120,169,30,28,31,32,129,128,130,131,132,167,34,133,134,135,136,166,44,45,138,139,140,141,142,143,165,46,144,145,146,147,148,164,48,49,137,163,35,36,39,121,122,123,124,125,126,127,168,', 1212451252),
 (2, '管理员', 1, '1,2,6,151,10,154,19,152,43,65,67,155,57,153,184,190,3,4,159,5,160,15,16,68,70,156,17,74,77,157,176,18,82,158,177,40,41,162,42,161,178,179,180,7,8,11,94,175,12,174,25,173,9,13,105,172,14,171,22,23,24,27,29,37,108,110,170,38,119,169,28,31,32,131,167,34,166,44,45,142,165,46,145,164,181,182,36,39,124,168,48,49,137,185,186,198,199,201,', 1212451252);
 
-DROP TABLE IF EXISTS `yf_auth_group_access`;
-CREATE TABLE IF NOT EXISTS `yf_auth_group_access` (
+DROP TABLE IF EXISTS `wjf_auth_group_access`;
+CREATE TABLE IF NOT EXISTS `wjf_auth_group_access` (
   `uid` mediumint(8) unsigned NOT NULL,
   `group_id` mediumint(8) unsigned NOT NULL,
   UNIQUE KEY `uid_group_id` (`uid`,`group_id`),
@@ -95,12 +95,13 @@ CREATE TABLE IF NOT EXISTS `yf_auth_group_access` (
   KEY `group_id` (`group_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-INSERT INTO `yf_auth_group_access` (`uid`, `group_id`) VALUES
+INSERT INTO `wjf_auth_group_access` (`uid`, `group_id`) VALUES
 (1, 1);
 
-DROP TABLE IF EXISTS `yf_auth_rule`;
-CREATE TABLE IF NOT EXISTS `yf_auth_rule` (
+DROP TABLE IF EXISTS `wjf_auth_rule`;
+CREATE TABLE `wjf_auth_rule` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `module_id` mediumint(8) unsigned DEFAULT '0' COMMENT '模块id,主后台模块ID为0',
   `name` char(80) NOT NULL DEFAULT '',
   `title` char(20) NOT NULL DEFAULT '',
   `type` tinyint(1) NOT NULL DEFAULT '1',
@@ -113,282 +114,291 @@ CREATE TABLE IF NOT EXISTS `yf_auth_rule` (
   `sort` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
   `addtime` int(11) NOT NULL DEFAULT '0' COMMENT '添加时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=327 ;
+) ENGINE=MyISAM AUTO_INCREMENT=332 DEFAULT CHARSET=utf8;
 
 --
--- 转存表中的数据 `yf_auth_rule`
+-- 转存表中的数据 `wjf_auth_rule`
 --
 
-INSERT INTO `yf_auth_rule` (`id`, `name`, `title`, `type`, `status`, `notcheck`, `css`, `condition`, `pid`, `level`, `sort`, `addtime`) VALUES
-(1, 'admin/Sys', '系统设置', 1, 1, 0, 'fa-tachometer', '', 0, 1, 1, 1446535750),
-(2, 'admin/Sys/sys', '系统参数设置', 1, 1, 0, '', '', 1, 2, 10, 1446535789),
-(3, 'admin/Sys/database', '数据备份还原', 1, 1, 0, '', '', 1, 2, 30, 1446535805),
-(4, 'admin/Sys/import', '数据库还原', 1, 1, 0, '', '', 3, 3, 20, 1446535750),
-(5, 'admin/Sys/database', '数据库备份', 1, 1, 0, '', '', 3, 3, 10, 1446535834),
-(6, 'admin/Sys/sys', '站点设置', 1, 1, 0, '', '', 2, 3, 10, 1446535843),
-(7, 'admin/News', '文章管理', 1, 1, 0, 'fa-folder', '', 0, 1, 13, 1446535875),
-(9, 'admin/Menu', '前台菜单', 1, 1, 0, 'fa-desktop', '', 0, 1, 9, 1446535750),
-(10, 'wechat/We/wesys', '微信设置', 1, 1, 0, '', '', 2, 3, 40, 1446535750),
-(11, 'admin/News/news_list', '文章列表', 1, 1, 0, '', '', 7, 2, 10, 1446535750),
-(12, 'admin/News/news_add', '添加文章', 1, 1, 0, '', '', 7, 2, 20, 1446535750),
-(13, 'admin/Menu/news_menu_list', '菜单列表', 1, 1, 0, '', '', 9, 2, 10, 1446535750),
-(14, 'admin/Menu/news_menu_add', '添加菜单', 1, 1, 0, '', '', 9, 2, 20, 1446535750),
-(15, 'admin/Admin', '管理员管理', 1, 1, 0, 'fa-users', '', 0, 1, 3, 1446535750),
-(16, 'admin/Admin/admin_list', '管理员列表', 1, 1, 0, '', '', 15, 2, 10, 1446535750),
-(17, 'admin/Admin/admin_group_list', '用户组列表', 1, 1, 0, '', '', 15, 2, 20, 1446535750),
-(18, 'admin/Sys', '后台菜单', 1, 1, 0, 'fa-desktop', '', 0, 1, 7, 1446535750),
-(19, 'admin/Sys/emailsys', '邮件连接', 1, 1, 0, '', '', 2, 3, 20, 1446535750),
-(22, 'admin/Help', '帮助中心', 1, 1, 0, 'fa-cogs', '', 0, 1, 99, 1446711367),
-(23, 'admin/Help/soft', '软件下载', 1, 1, 0, '', '', 22, 2, 10, 1446711421),
-(24, 'admin/Help/soft', '下载列表', 1, 1, 0, '', '', 23, 3, 10, 1446711448),
-(25, 'admin/News/news_back', '回收站', 1, 1, 0, '', '', 7, 2, 30, 1447039310),
-(26, 'admin/Sys/paysys', '支付配置', 1, 1, 0, '', '', 2, 3, 35, 1447231369),
-(27, 'admin/Member', '会员管理', 1, 1, 0, 'fa-users', '', 0, 1, 5, 1447231507),
-(28, 'admin/Plug', '扩展管理', 1, 1, 0, 'fa-cubes', '', 0, 1, 90, 1447231590),
-(239, 'admin/Sys/logsys', '日志显示', 1, 0, 0, '', '', 228, 4, 10, 1482844815),
-(30, 'admin/Member/member_score', '积分管理', 1, 0, 0, '', '', 27, 2, 30, 1447232133),
-(31, 'admin/Plug/plug_link_list', '友情链接', 1, 1, 0, '', '', 28, 2, 10, 1447232183),
-(32, 'admin/Plug/plug_link_list', '链接列表', 1, 1, 0, '', '', 31, 3, 10, 1447639935),
-(129, 'admin/Plug/plug_link_del', '删除操作', 1, 0, 0, '', '', 32, 4, 20, 1460345954),
-(34, 'admin/Plug/plug_linktype_list', '所属栏目', 1, 1, 0, '', '', 31, 3, 20, 1447640839),
-(35, 'wechat/We', '微信基本功能', 1, 1, 0, 'fa-weixin', '', 0, 1, 80, 1447842435),
-(44, 'admin/Plug/plug_ad_list', '广告管理', 1, 1, 0, '', '', 28, 2, 20, 1450314265),
-(37, 'admin/Member/member_list', '会员列表', 1, 1, 0, '', '', 27, 2, 10, 1448413219),
-(38, 'admin/Member/member_group_list', '会员组', 1, 1, 0, '', '', 27, 2, 20, 1448413248),
-(39, 'wechat/We/menu_list', '菜单管理', 1, 1, 0, '', '', 35, 2, 10, 1448501584),
-(40, 'admin/Sys/excel_export', 'Excel导入/导出', 1, 1, 0, '', '', 1, 2, 40, 1448613588),
-(41, 'admin/Sys/excel_import', 'Excel导入', 1, 1, 0, '', '', 40, 3, 20, 1448613614),
-(42, 'admin/Sys/excel_export', 'Excel导出', 1, 1, 0, '', '', 40, 3, 10, 1448613651),
-(43, 'admin/Sys/source_list', '来源管理', 1, 1, 0, '', '', 28, 2, 5, 1448940532),
-(45, 'admin/Plug/plug_ad_list', '广告设置', 1, 1, 0, '', '', 44, 3, 10, 1450314297),
-(46, 'admin/Plug/plug_adtype_list', '广告位设置', 1, 1, 0, '', '', 44, 3, 20, 1450314324),
-(138, 'admin/Plug/plug_ad_runadd', '添加操作', 1, 0, 0, '', '', 45, 4, 15, 1460346513),
-(48, 'admin/Plug', '留言管理', 1, 1, 0, 'fa-book', '', 0, 1, 17, 1451267354),
-(49, 'admin/Plug/plug_sug_list', '留言列表', 1, 1, 0, '', '', 48, 2, 10, 1451267369),
-(51, 'wechat/We/we_datum_tp', '图文素材', 1, 0, 0, '', '', 50, 3, 50, 1453255857),
-(52, 'wechat/We/we_datum_pic', '图片', 1, 0, 0, '', '', 50, 3, 50, 1453255922),
-(53, 'wechat/We/we_datum_voice', '语音', 1, 0, 0, '', '', 50, 3, 50, 1453255953),
-(54, 'wechat/We/we_datum_video', '视频', 1, 0, 0, '', '', 50, 3, 50, 1453255995),
-(55, 'admin/Admin/admin_group_runadd', '添加操作', 1, 0, 0, '', '', 17, 3, 15, 1460110505),
-(56, 'admin/Admin/admin_group_del', '删除操作', 1, 0, 0, '', '', 17, 3, 20, 1460110551),
-(68, 'admin/Admin/admin_add', '添加显示', 1, 0, 0, '', '', 16, 3, 15, 1460301646),
-(85, 'admin/Sys/export', '备份多表', 1, 0, 0, '', '', 5, 4, 15, 1460302396),
-(57, 'admin/Sys/activesys', '帐号激活', 1, 1, 0, '', '', 2, 3, 30, 1460299219),
-(60, 'admin/Sys/runemail', '保存操作', 1, 0, 0, '', '', 19, 4, 20, 1460299500),
-(59, 'admin/Sys/runsys', '编辑操作', 1, 0, 0, '', '', 6, 4, 20, 1460299338),
-(61, 'admin/Sys/runactive', '编辑操作', 1, 0, 0, '', '', 57, 4, 20, 1460299563),
-(62, 'wechat/We/runwesys', '编辑操作', 1, 0, 0, '', '', 10, 4, 20, 1460299610),
-(63, 'admin/Sys/source_runadd', '添加操作', 1, 0, 0, '', '', 43, 3, 20, 1460299680),
-(64, 'admin/Sys/source_del', '删除操作', 1, 0, 0, '', '', 43, 3, 20, 1460299709),
-(65, 'admin/Sys/source_edit', '编辑显示', 1, 0, 0, '', '', 43, 3, 30, 1460299760),
-(66, 'admin/Sys/source_runedit', '编辑操作', 1, 0, 0, '', '', 43, 3, 40, 1460299803),
-(67, 'admin/Sys/source_order', '排序操作', 1, 0, 0, '', '', 43, 3, 50, 1460299827),
-(69, 'admin/Admin/admin_runadd', '添加操作', 1, 0, 0, '', '', 16, 3, 20, 1460301671),
-(70, 'admin/Admin/admin_edit', '编辑显示', 1, 0, 0, '', '', 16, 3, 30, 1460301711),
-(71, 'admin/Admin/admin_runedit', '编辑操作', 1, 0, 0, '', '', 16, 3, 40, 1460301751),
-(72, 'admin/Admin/admin_del', '删除操作', 1, 0, 0, '', '', 16, 3, 50, 1460301774),
-(73, 'admin/Admin/admin_state', '状态操作', 1, 0, 0, '', '', 16, 3, 60, 1460301806),
-(74, 'admin/Admin/admin_group_edit', '编辑显示', 1, 0, 0, '', '', 17, 3, 30, 1460301956),
-(75, 'admin/Admin/admin_group_runedit', '编辑操作', 1, 0, 0, '', '', 17, 3, 40, 1460301980),
-(76, 'admin/Admin/admin_group_state', '状态操作', 1, 0, 0, '', '', 17, 3, 50, 1460302008),
-(77, 'admin/Admin/admin_group_access', '权限配置', 1, 0, 0, '', '', 17, 3, 60, 1460302033),
-(78, 'admin/Admin/admin_group_runaccess', '权限配置操作', 1, 0, 0, '', '', 17, 3, 70, 1460302062),
-(79, 'admin/Sys/admin_rule_runadd', '添加操作', 1, 0, 0, '', '', 158, 3, 15, 1460302177),
-(80, 'admin/Sys/admin_rule_state', '状态操作', 1, 0, 0, '', '', 158, 3, 20, 1460302201),
-(81, 'admin/Sys/admin_rule_order', '排序操作', 1, 0, 0, '', '', 158, 3, 30, 1460302223),
-(82, 'admin/Sys/admin_rule_edit', '编辑显示', 1, 0, 0, '', '', 158, 3, 40, 1460302247),
-(83, 'admin/Sys/admin_rule_runedit', '编辑操作', 1, 0, 0, '', '', 158, 3, 50, 1460302266),
-(84, 'admin/Sys/admin_rule_del', '删除操作', 1, 0, 0, '', '', 158, 3, 60, 1460302287),
-(86, 'admin/Sys/exportsql', '备份单表', 1, 0, 0, '', '', 5, 4, 20, 1460302429),
-(87, 'admin/Sys/repair', '修复表', 1, 0, 0, '', '', 5, 4, 30, 1460302464),
-(88, 'admin/Sys/optimize', '优化表', 1, 0, 0, '', '', 5, 4, 40, 1460302487),
-(89, 'admin/Sys/del', '删除操作', 1, 0, 0, '', '', 4, 4, 15, 1460302516),
-(90, 'admin/Sys/restore', '还原操作', 1, 0, 0, '', '', 4, 4, 20, 1460302545),
-(91, 'admin/Sys/excel_runexport', '导出操作', 1, 0, 0, '', '', 42, 4, 15, 1460302639),
-(92, 'admin/Sys/excel_runimport', '导入操作', 1, 0, 0, '', '', 41, 4, 15, 1460302665),
-(93, 'admin/News/news_runadd', '添加操作', 1, 0, 0, '', '', 12, 3, 15, 1460335746),
-(94, 'admin/News/news_edit', '编辑显示', 1, 0, 0, '', '', 11, 3, 15, 1460335887),
-(95, 'admin/News/news_runedit', '编辑操作', 1, 0, 0, '', '', 11, 3, 20, 1460335925),
-(96, 'admin/News/news_del', '删到回收站', 1, 0, 0, '', '', 11, 3, 30, 1460335982),
-(97, 'admin/News/news_back_open', '还原', 1, 0, 0, '', '', 25, 3, 15, 1460336269),
-(98, 'admin/News/news_back_del', '删除操作', 1, 0, 0, '', '', 25, 3, 20, 1460341080),
-(99, 'admin/News/news_back_alldel', '删除全部', 1, 0, 0, '', '', 25, 3, 30, 1460341109),
-(100, 'admin/News/news_alldel', '删除全部', 1, 0, 0, '', '', 11, 3, 40, 1460341178),
-(101, 'admin/News/news_state', '状态操作', 1, 0, 0, '', '', 11, 3, 50, 1460341216),
-(102, 'admin/Menu/news_menu_runadd', '添加操作', 1, 0, 0, '', '', 14, 3, 15, 1460341752),
-(103, 'admin/Menu/news_menu_del', '删除操作', 1, 0, 0, '', '', 13, 3, 15, 1460341796),
-(104, 'admin/Menu/news_menu_order', '排序操作', 1, 0, 0, '', '', 13, 3, 20, 1460341845),
-(105, 'admin/Menu/news_menu_edit', '编辑显示', 1, 0, 0, '', '', 13, 3, 30, 1460341972),
-(106, 'admin/Menu/news_menu_runedit', '编辑操作', 1, 0, 0, '', '', 13, 3, 40, 1460342057),
-(107, 'admin/Menu/news_menu_state', '状态操作', 1, 0, 0, '', '', 13, 3, 50, 1460342099),
-(108, 'admin/Member/member_add', '添加显示', 1, 0, 0, '', '', 37, 3, 15, 1460343493),
-(109, 'admin/Member/member_runadd', '添加操作', 1, 0, 0, '', '', 37, 3, 20, 1460343550),
-(110, 'admin/Member/member_edit', '编辑显示', 1, 0, 0, '', '', 37, 3, 30, 1460343589),
-(111, 'admin/Member/member_runedit', '编辑操作', 1, 0, 0, '', '', 37, 3, 40, 1460343773),
-(112, 'admin/Member/member_state', '排序操作', 1, 0, 0, '', '', 37, 3, 50, 1460343804),
-(113, 'admin/Member/member_del', '删除操作', 1, 0, 0, '', '', 37, 3, 60, 1460343932),
-(114, 'admin/Member/member_userpic', '头像上传', 1, 0, 0, '', '', 37, 3, 70, 1460344029),
-(115, 'admin/Member/member_group_runadd', '添加操作', 1, 0, 0, '', '', 38, 3, 15, 1460344133),
-(116, 'admin/Member/member_group_del', '删除操作', 1, 0, 0, '', '', 38, 3, 20, 1460344158),
-(117, 'admin/Member/member_group_state', '状态操作', 1, 0, 0, '', '', 38, 3, 30, 1460344212),
-(118, 'admin/Member/member_group_order', '排序操作', 1, 0, 0, '', '', 38, 3, 40, 1460344255),
-(119, 'admin/Member/member_group_edit', '编辑显示', 1, 0, 0, '', '', 38, 3, 50, 1460344294),
-(120, 'admin/Member/member_group_runedit', '编辑操作', 1, 0, 0, '', '', 38, 3, 60, 1460344347),
-(121, 'wechat/We/menu_runadd', '添加操作', 1, 0, 0, '', '', 39, 3, 15, 1460345046),
-(122, 'wechat/We/menu_state', '状态操作', 1, 0, 0, '', '', 39, 3, 20, 1460345151),
-(123, 'wechat/We/menu_order', '排序操作', 1, 0, 0, '', '', 39, 3, 30, 1460345176),
-(124, 'wechat/We/menu_edit', '编辑显示', 1, 0, 0, '', '', 39, 3, 40, 1460345280),
-(125, 'wechat/We/menu_runedit', '编辑操作', 1, 0, 0, '', '', 39, 3, 50, 1460345306),
-(126, 'wechat/We/menu_del', '删除操作', 1, 0, 0, '', '', 39, 3, 60, 1460345332),
-(127, 'wechat/We/menu_make', '生成菜单', 1, 0, 0, '', '', 39, 3, 70, 1460345377),
-(128, 'admin/Plug/plug_link_runadd', '添加操作', 1, 0, 0, '', '', 32, 4, 15, 1460345848),
-(130, 'admin/Plug/plug_link_state', '状态操作', 1, 0, 0, '', '', 32, 4, 30, 1460345976),
-(131, 'admin/Plug/plug_link_edit', '编辑显示', 1, 0, 0, '', '', 32, 4, 40, 1460345999),
-(132, 'admin/Plug/plug_link_runedit', '编辑操作', 1, 0, 0, '', '', 32, 4, 50, 1460346017),
-(133, 'admin/Plug/plug_linktype_del', '删除操作', 1, 0, 0, '', '', 34, 4, 15, 1460346077),
-(134, 'admin/Plug/plug_linktype_runadd', '添加操作', 1, 0, 0, '', '', 34, 4, 20, 1460346115),
-(135, 'admin/Plug/plug_linktype_runedit', '编辑操作', 1, 0, 0, '', '', 34, 4, 30, 1460346171),
-(136, 'admin/Plug/plug_linktype_order', '排序操作', 1, 0, 0, '', '', 34, 4, 40, 1460346207),
-(137, 'admin/Plug/plug_sug_edit', '编辑显示', 1, 0, 0, '', '', 48, 2, 15, 1460346468),
-(139, 'admin/Plug/plug_ad_del', '删除操作', 1, 0, 0, '', '', 45, 4, 20, 1460346533),
-(140, 'admin/Plug/plug_ad_order', '排序操作', 1, 0, 0, '', '', 45, 4, 30, 1460346549),
-(141, 'admin/Plug/plug_ad_state', '状态操作', 1, 0, 0, '', '', 45, 4, 40, 1460346571),
-(142, 'admin/Plug/plug_ad_edit', '编辑显示', 1, 0, 0, '', '', 45, 4, 50, 1460346593),
-(143, 'admin/Plug/plug_ad_runedit', '编辑操作', 1, 0, 0, '', '', 45, 4, 60, 1460346610),
-(144, 'admin/Plug/plug_adtype_runadd', '添加操作', 1, 0, 0, '', '', 46, 4, 15, 1460346640),
-(145, 'admin/Plug/plug_adtype_edit', '编辑显示', 1, 0, 0, '', '', 46, 4, 20, 1460346659),
-(146, 'admin/Plug/plug_adtype_runedit', '编辑操作', 1, 0, 0, '', '', 46, 4, 30, 1460346680),
-(147, 'admin/Plug/plug_adtype_del', '删除操作', 1, 0, 0, '', '', 46, 4, 40, 1460346700),
-(148, 'admin/Plug/plug_adtype_order', '排序操作', 1, 0, 0, '', '', 46, 4, 50, 1460346717),
-(151, 'admin/Sys/sys', '设置显示', 1, 0, 0, '', '', 6, 4, 10, 1460367871),
-(152, 'admin/Sys/emailsys', '设置显示', 1, 0, 0, '', '', 19, 4, 10, 1460367909),
-(153, 'admin/Sys/activesys', '设置显示', 1, 0, 0, '', '', 57, 4, 10, 1460368054),
-(154, 'wechat/We/wesys', '设置显示', 1, 0, 0, '', '', 10, 4, 10, 1460368073),
-(155, 'admin/Sys/source_list', '来源列表', 1, 0, 0, '', '', 43, 3, 10, 1460368118),
-(156, 'admin/Admin/admin_list', '列表显示', 1, 0, 0, '', '', 16, 3, 10, 1460368235),
-(157, 'admin/Admin/admin_group_list', '列表显示', 1, 0, 0, '', '', 17, 3, 10, 1460368277),
-(158, 'admin/Sys/admin_rule_list', '菜单列表', 1, 1, 0, '', '', 18, 2, 10, 1460368308),
-(159, 'admin/Sys/import', '还原列表', 1, 0, 0, '', '', 4, 4, 10, 1460368413),
-(160, 'admin/Sys/database', '备份列表', 1, 0, 0, '', '', 5, 4, 10, 1460368442),
-(161, 'admin/Sys/excel_export', '导出显示', 1, 0, 0, '', '', 42, 4, 10, 1460368467),
-(162, 'admin/Sys/excel_import', '导入显示', 1, 0, 0, '', '', 41, 4, 10, 1460368482),
-(187, 'admin/Comment/comment_setting', '评论设置', 1, 1, 0, '', '', 185, 2, 20, 1463305710),
-(164, 'admin/Plug/plug_adtype_list', '列表显示', 1, 0, 0, '', '', 46, 4, 10, 1460368616),
-(165, 'admin/Plug/plug_ad_list', '列表显示', 1, 0, 0, '', '', 45, 4, 10, 1460368637),
-(166, 'admin/Plug/plug_linktype_list', '列表显示', 1, 0, 0, '', '', 34, 4, 10, 1460368656),
-(167, 'admin/Plug/plug_link_list', '列表显示', 1, 0, 0, '', '', 32, 4, 10, 1460368676),
-(168, 'wechat/We/menu_list', '列表显示', 1, 0, 0, '', '', 39, 3, 10, 1460368744),
-(169, 'admin/Member/member_group_list', '列表显示', 1, 0, 0, '', '', 38, 3, 10, 1460368780),
-(170, 'admin/Member/member_list', '列表显示', 1, 0, 0, '', '', 37, 3, 10, 1460368804),
-(171, 'admin/Menu/news_menu_add', '添加显示', 1, 0, 0, '', '', 14, 3, 10, 1460369022),
-(172, 'admin/Menu/news_menu_list', '列表显示', 1, 0, 0, '', '', 13, 3, 10, 1460369062),
-(173, 'admin/News/news_back', '列表显示', 1, 0, 0, '', '', 25, 3, 10, 1460369095),
-(174, 'admin/News/news_add', '添加显示', 1, 0, 0, '', '', 12, 3, 10, 1460369128),
-(175, 'admin/News/news_list', '列表显示', 1, 0, 0, '', '', 11, 3, 10, 1460369158),
-(176, 'admin/Admin/admin_group_add', '添加显示', 1, 0, 0, '', '', 17, 3, 15, 1460461365),
-(177, 'admin/Sys/admin_rule_copy', '复制显示', 1, 0, 0, '', '', 158, 3, 40, 1460461557),
-(178, 'admin/Admin/profile', '个人中心', 1, 1, 0, '', '', 15, 2, 90, 1461395663),
-(179, 'admin/Admin/profile', '信息显示', 1, 0, 0, '', '', 178, 3, 10, 1461395702),
-(180, 'admin/Admin/avatar', '头像编辑', 1, 0, 0, '', '', 178, 3, 10, 1461395790),
-(181, 'admin/Plug/plug_file_list', '本地文件管理', 1, 1, 0, '', '', 28, 2, 40, 1461810174),
-(182, 'admin/Plug/plug_file_list', '文件列表', 1, 1, 0, '', '', 181, 3, 10, 1461810218),
-(183, 'admin/Plug/plug_file_filter', '文件清理', 1, 1, 0, '', '', 181, 3, 20, 1461810273),
-(184, 'admin/Sys/oauthsys', '第三方登录', 1, 1, 0, '', '', 2, 3, 40, 1463045567),
-(185, 'admin/Comment', '评论管理', 1, 1, 0, 'fa-comment', '', 0, 1, 15, 1463305461),
-(186, 'admin/Comment/comment_list', '评论列表', 1, 1, 0, '', '', 185, 2, 10, 1463305496),
-(190, 'admin/Sys/urlsetsys', 'URL设置', 1, 1, 0, '', '', 2, 3, 15, 1464341076),
-(202, 'admin/Sys/storagesys', '七牛云存储', 1, 1, 0, '', '', 2, 3, 50, 1481536058),
-(203, 'admin/Sys/runstorage', '保存设置', 1, 0, 0, '', '', 202, 4, 50, 1481536129),
-(204, 'admin/Sys/storagesys', '七牛云存储', 1, 0, 0, '', '', 202, 4, 50, 1481536149),
-(206, 'admin/Model', '模型管理', 1, 1, 0, 'fa fa-list', '', 0, 1, 11, 1482139134),
-(207, 'admin/Model/model_list', '模型列表', 1, 1, 0, '', '', 206, 2, 10, 1482139166),
-(208, 'admin/Model/model_add', '增加模型', 1, 1, 0, '', '', 206, 2, 20, 1482139191),
-(209, 'admin/Model/model_runadd', '增加操作', 1, 0, 0, '', '', 208, 3, 10, 1482139219),
-(210, 'admin/Sys/langsys', '多语言设置', 1, 1, 0, '', '', 2, 3, 13, 1482229864),
-(211, 'admin/Sys/runlangsys', '多语言设置', 1, 0, 0, '', '', 210, 4, 50, 1482229896),
-(212, 'admin/Model', '测试模型管理', 1, 1, 0, 'fa fa-list', '', 28, 2, 35, 1482402595),
-(213, 'admin/Model/cmslist?id=1', '模型列表', 1, 1, 0, '', '', 212, 3, 10, 1482402646),
-(214, 'admin/Model/cmsedit', '编辑模型', 1, 0, 0, '', '', 213, 4, 10, 1482403110),
-(215, 'admin/Model/cmsadd?id=1', '增加测试模型', 1, 1, 0, '', '', 212, 3, 20, 1482403160),
-(216, 'admin/Model/model_edit', '编辑模型', 1, 0, 0, '', '', 207, 3, 20, 1482485417),
-(228, 'admin/Sys/logsys', '日志设置', 1, 1, 0, '', '', 2, 3, 12, 1482635360),
-(240, 'admin/Sys/runlogsys', '保存操作', 1, 0, 0, '', '', 228, 4, 20, 1482844844),
-(241, 'admin/Sys/langsys', '设置显示', 1, 0, 0, '', '', 210, 4, 10, 1482844882),
-(242, 'admin/Sys/urlsys', '设置显示', 1, 0, 0, '', '', 190, 4, 10, 1482844916),
-(243, 'admin/Sys/runurlsys', '保存操作', 1, 0, 0, '', '', 190, 4, 20, 1482844970),
-(244, 'admin/Sys/oauthsys', '设置显示', 1, 0, 0, '', '', 184, 4, 10, 1482845029),
-(245, 'admin/Sys/runoauthsys', '设置显示', 1, 0, 0, '', '', 184, 4, 20, 1482845048),
-(246, 'admin/Model/model_runedit', '编辑操作', 1, 0, 0, '', '', 207, 3, 20, 1482845641),
-(247, 'admin/Model/model_state', '状态操作', 1, 0, 0, '', '', 207, 3, 20, 1482845675),
-(248, 'admin/Model/model_copy', '模型复制', 1, 0, 0, '', '', 207, 3, 20, 1482845725),
-(249, 'admin/Model/model_del', '删除操作', 1, 0, 0, '', '', 207, 3, 20, 1482845749),
-(250, 'admin/Model/model_addmenu', '添加菜单', 1, 0, 0, '', '', 207, 3, 20, 1482845848),
-(251, 'admin/Model/model_add', '增加显示', 1, 0, 0, '', '', 208, 3, 10, 1482845873),
-(252, 'admin/Comment/comment_del', '删除操作', 1, 0, 0, '', '', 186, 3, 50, 1482846045),
-(253, 'admin/Comment/comment_alldel', '全部删除', 1, 0, 0, '', '', 186, 3, 50, 1482846076),
-(254, 'admin/Comment/comment_state', '状态操作', 1, 0, 0, '', '', 186, 3, 50, 1482846099),
-(255, 'admin/Comment/comment_setting', '设置显示', 1, 0, 0, '', '', 187, 3, 50, 1482846131),
-(256, 'admin/Comment/runcsys', '保存操作', 1, 0, 0, '', '', 187, 3, 50, 1482846152),
-(257, 'admin/Plug/plug_sug_reply', '留言回复', 1, 0, 0, '', '', 49, 3, 50, 1482846205),
-(258, 'admin/Plug/plug_sug_runreply', '回复操作', 1, 0, 0, '', '', 49, 3, 50, 1482846233),
-(259, 'admin/Plug/plug_sug_del', '删除操作', 1, 0, 0, '', '', 49, 3, 50, 1482846259),
-(260, 'admin/Plug/plug_sug_alldel', '全部删除', 1, 0, 0, '', '', 49, 3, 50, 1482846279),
-(261, 'admin/Model/cmsrunedit', '编辑操作', 1, 0, 0, '', '', 213, 4, 10, 1482846345),
-(262, 'admin/Model/cmsalldel', '全部删除', 1, 0, 0, '', '', 213, 4, 10, 1482846373),
-(263, 'admin/Model/cmsdel', '删除操作', 1, 0, 0, '', '', 213, 4, 10, 1482846402),
-(264, 'admin/Model/cmsstate', '状态操作', 1, 0, 0, '', '', 213, 4, 10, 1482846428),
-(265, 'admin/Model/cmsorder', '排序操作', 1, 0, 0, '', '', 213, 4, 10, 1482846448),
-(266, 'admin/Model', '常见问题', 1, 1, 0, 'fa-question-circle', '', 28, 2, 50, 1482821140),
-(267, 'admin/Model/cmsadd?id=2', '增加常见问题', 1, 1, 0, '', '', 266, 3, 20, 1482821140),
-(268, 'admin/cmsrunadd', '增加操作', 1, 0, 0, '', '', 267, 4, 10, 1482821140),
-(269, 'admin/Model/cmslist?id=2', '常见问题列表', 1, 1, 0, '', '', 266, 3, 10, 1482821140),
-(270, 'admin/Model/cmsdel', '删除操作', 1, 0, 0, '', '', 269, 4, 0, 1482821140),
-(271, 'admin/Model/cmsstate', '状态操作', 1, 0, 0, '', '', 269, 4, 0, 1482821140),
-(272, 'admin/Model/cmsorder', '排序操作', 1, 0, 0, '', '', 269, 4, 0, 1482821140),
-(273, 'admin/Model/cmsalldel', '全部删除', 1, 0, 0, '', '', 269, 4, 0, 1482821140),
-(274, 'admin/Model/cmsedit', '编辑显示', 1, 0, 0, '', '', 269, 4, 0, 1482821140),
-(275, 'admin/Model/cmsrunedit', '编辑操作', 1, 0, 0, '', '', 269, 4, 0, 1482821140),
-(276, 'admin/WebLog', '操作日志', 1, 1, 0, 'fa-tasks', '', 0, 1, 19, 1483091169),
-(277, 'admin/WebLog/weblog_list', '操作日志列表', 1, 1, 0, '', '', 276, 2, 10, 1483091198),
-(278, 'admin/WebLog/weblog_setting', '操作日志设置', 1, 1, 0, '', '', 276, 2, 20, 1483091220),
-(279, 'admin/Sys/paysys', '设置显示', 1, 0, 0, '', '', 26, 4, 10, 1483325524),
-(280, 'admin/Sys/runpaysys', '设置操作', 1, 0, 0, '', '', 26, 4, 20, 1483325553),
-(281, 'admin/Sys/smssys', '短信设置', 1, 1, 0, '', '', 2, 3, 33, 1483327040),
-(282, 'admin/Sys/smssys', '设置显示', 1, 0, 0, '', '', 281, 4, 10, 1483327064),
-(283, 'admin/Sys/runsmssys', '设置操作', 1, 0, 0, '', '', 281, 4, 20, 1483327089),
-(294, 'wechat/We/reply_list', '自动回复', 1, 1, 0, '', '', 35, 2, 20, 1483616060),
-(295, 'wechat/We/mats_list', '素材管理', 1, 1, 0, '', '', 35, 2, 30, 1483617538),
-(296, 'wechat/We/menu_get', '同步菜单', 1, 0, 0, '', '', 39, 3, 80, 1483789025),
-(297, 'wechat/We/reply_list', '回复列表', 1, 0, 0, '', '', 294, 3, 10, 1483789065),
-(298, 'wechat/We/reply_edit', '回复编辑', 1, 0, 0, '', '', 294, 3, 20, 1483789096),
-(299, 'wechat/We/reply_runedit', '编辑操作', 1, 0, 0, '', '', 294, 3, 30, 1483789123),
-(300, 'wechat/We/reply_runadd', '添加操作', 1, 0, 0, '', '', 294, 3, 40, 1483789149),
-(301, 'wechat/We/reply_state', '状态操作', 1, 0, 0, '', '', 294, 3, 50, 1483789174),
-(302, 'wechat/We/reply_alldel', '全部删除', 1, 0, 0, '', '', 294, 3, 60, 1483789197),
-(303, 'wechat/We/reply_del', '删除操作', 1, 0, 0, '', '', 294, 3, 70, 1483789219),
-(304, 'wechat/We/mats_list', '素材列表', 1, 0, 0, '', '', 295, 3, 10, 1483789249),
-(305, 'wechat/We/mats_get', '同步素材', 1, 0, 0, '', '', 295, 3, 20, 1483789271),
-(306, 'wechat/We/mats_edit', '编辑素材', 1, 0, 0, '', '', 295, 3, 30, 1483789295),
-(307, 'wechat/We/mats_runedit', '编辑操作', 1, 0, 0, '', '', 295, 3, 40, 1483789317),
-(308, 'wechat/We/mats_add', '增加显示', 1, 0, 0, 'fa-plug', '', 295, 3, 40, 1483789367),
-(309, 'wechat/We/mats_runadd', '增加操作', 1, 0, 0, 'fa-plug', '', 295, 3, 50, 1483789393),
-(310, 'wechat/We/mats_del', '删除操作', 1, 0, 0, 'fa-plug', '', 295, 3, 60, 1483789418),
-(311, 'wechat/We/mats_alldel', '全选删除', 1, 0, 0, 'fa-plug', '', 295, 3, 70, 1483789443),
-(312, 'admin/Model', '订单管理', 1, 1, 0, '', '', 28, 2, 50, 1483867059),
-(313, 'admin/Model/cmsadd?id=3', '增加订单支付', 1, 1, 0, '', '', 312, 3, 20, 1483867059),
-(314, 'admin/cmsrunadd', '增加操作', 1, 0, 0, '', '', 313, 4, 10, 1483867059),
-(315, 'admin/Model/cmslist?id=3', '订单支付列表', 1, 1, 0, '', '', 312, 3, 10, 1483867059),
-(316, 'admin/Model/cmsdel', '删除操作', 1, 0, 0, '', '', 315, 4, 0, 1483867059),
-(317, 'admin/Model/cmsstate', '状态操作', 1, 0, 0, '', '', 315, 4, 0, 1483867059),
-(318, 'admin/Model/cmsorder', '排序操作', 1, 0, 0, '', '', 315, 4, 0, 1483867059),
-(319, 'admin/Model/cmsalldel', '全部删除', 1, 0, 0, '', '', 315, 4, 0, 1483867059),
-(320, 'admin/Model/cmsedit', '编辑显示', 1, 0, 0, '', '', 315, 4, 0, 1483867059),
-(321, 'admin/Model/cmsrunedit', '编辑操作', 1, 0, 0, '', '', 315, 4, 0, 1483867059),
-(325, 'admin/Addons', '插件管理', 1, 1, 0, 'fa-plug', '', 0, 1, 50, 1487422836),
-(326, 'admin/Addons/addons_list', '插件列表', 1, 1, 0, '', '', 325, 2, 10, 1487422893);
+insert  into `wjf_auth_rule`(`id`,`module_id`,`name`,`title`,`type`,`status`,`notcheck`,`css`,`condition`,`pid`,`level`,`sort`,`addtime`) values
+(1,0,'admin/Sys','系统设置',1,1,0,'fa-tachometer','',0,1,1,1446535750),
+(2,0,'admin/Sys/sys','系统参数设置',1,1,0,'','',1,2,10,1446535789),
+(3,0,'admin/Sys/database','数据备份还原',1,1,0,'','',1,2,30,1446535805),
+(4,0,'admin/Sys/import','数据库还原',1,1,0,'','',3,3,20,1446535750),
+(5,0,'admin/Sys/database','数据库备份',1,1,0,'','',3,3,10,1446535834),
+(6,0,'admin/Sys/sys','站点设置',1,1,0,'','',2,3,10,1446535843),
+(7,0,'admin/News','文章管理',1,1,0,'fa-folder','',0,1,13,1446535875),
+(9,0,'admin/Menu','前台菜单',1,1,0,'fa-desktop','',0,1,9,1446535750),
+(10,0,'wechat/We/wesys','微信设置',1,1,0,'','',2,3,40,1446535750),
+(11,0,'admin/News/news_list','文章列表',1,1,0,'','',7,2,10,1446535750),
+(12,0,'admin/News/news_add','添加文章',1,1,0,'','',7,2,20,1446535750),
+(13,0,'admin/Menu/news_menu_list','菜单列表',1,1,0,'','',9,2,10,1446535750),
+(14,0,'admin/Menu/news_menu_add','添加菜单',1,1,0,'','',9,2,20,1446535750),
+(15,0,'admin/Admin','管理员管理',1,1,0,'fa-users','',0,1,3,1446535750),
+(16,0,'admin/Admin/admin_list','管理员列表',1,1,0,'','',15,2,10,1446535750),
+(17,0,'admin/Admin/admin_group_list','用户组列表',1,1,0,'','',15,2,20,1446535750),
+(18,0,'admin/Sys','后台菜单',1,1,0,'fa-desktop','',0,1,7,1446535750),
+(19,0,'admin/Sys/emailsys','邮件连接',1,1,0,'','',2,3,20,1446535750),
+(22,0,'admin/Help','帮助中心',1,1,0,'fa-cogs','',0,1,99,1446711367),
+(23,0,'admin/Help/soft','软件下载',1,1,0,'','',22,2,10,1446711421),
+(24,0,'admin/Help/soft','下载列表',1,1,0,'','',23,3,10,1446711448),
+(25,0,'admin/News/news_back','回收站',1,1,0,'','',7,2,30,1447039310),
+(26,0,'admin/Sys/paysys','支付配置',1,1,0,'','',2,3,35,1447231369),
+(27,0,'admin/Member','会员管理',1,1,0,'fa-users','',0,1,5,1447231507),
+(28,0,'admin/Plug','扩展管理',1,1,0,'fa-cubes','',0,1,90,1447231590),
+(239,0,'admin/Sys/logsys','日志显示',1,0,0,'','',228,4,10,1482844815),
+(30,0,'admin/Member/member_score','积分管理',1,0,0,'','',27,2,30,1447232133),
+(31,0,'admin/Plug/plug_link_list','友情链接',1,1,0,'','',28,2,10,1447232183),
+(32,0,'admin/Plug/plug_link_list','链接列表',1,1,0,'','',31,3,10,1447639935),
+(129,0,'admin/Plug/plug_link_del','删除操作',1,0,0,'','',32,4,20,1460345954),
+(34,0,'admin/Plug/plug_linktype_list','所属栏目',1,1,0,'','',31,3,20,1447640839),
+(35,0,'wechat/We','微信基本功能',1,1,0,'fa-weixin','',0,1,80,1447842435),
+(44,0,'admin/Plug/plug_ad_list','广告管理',1,1,0,'','',28,2,20,1450314265),
+(37,0,'admin/Member/member_list','会员列表',1,1,0,'','',27,2,10,1448413219),
+(38,0,'admin/Member/member_group_list','会员组',1,1,0,'','',27,2,20,1448413248),
+(39,0,'wechat/We/menu_list','菜单管理',1,1,0,'','',35,2,10,1448501584),
+(40,0,'admin/Sys/excel_export','Excel导入/导出',1,1,0,'','',1,2,40,1448613588),
+(41,0,'admin/Sys/excel_import','Excel导入',1,1,0,'','',40,3,20,1448613614),
+(42,0,'admin/Sys/excel_export','Excel导出',1,1,0,'','',40,3,10,1448613651),
+(43,0,'admin/Sys/source_list','来源管理',1,1,0,'','',28,2,5,1448940532),
+(45,0,'admin/Plug/plug_ad_list','广告设置',1,1,0,'','',44,3,10,1450314297),
+(46,0,'admin/Plug/plug_adtype_list','广告位设置',1,1,0,'','',44,3,20,1450314324),
+(138,0,'admin/Plug/plug_ad_runadd','添加操作',1,0,0,'','',45,4,15,1460346513),
+(48,0,'admin/Plug','留言管理',1,1,0,'fa-book','',0,1,17,1451267354),
+(49,0,'admin/Plug/plug_sug_list','留言列表',1,1,0,'','',48,2,10,1451267369),
+(51,0,'wechat/We/we_datum_tp','图文素材',1,0,0,'','',50,3,50,1453255857),
+(52,0,'wechat/We/we_datum_pic','图片',1,0,0,'','',50,3,50,1453255922),
+(53,0,'wechat/We/we_datum_voice','语音',1,0,0,'','',50,3,50,1453255953),
+(54,0,'wechat/We/we_datum_video','视频',1,0,0,'','',50,3,50,1453255995),
+(55,0,'admin/Admin/admin_group_runadd','添加操作',1,0,0,'','',17,3,15,1460110505),
+(56,0,'admin/Admin/admin_group_del','删除操作',1,0,0,'','',17,3,20,1460110551),
+(68,0,'admin/Admin/admin_add','添加显示',1,0,0,'','',16,3,15,1460301646),
+(85,0,'admin/Sys/export','备份多表',1,0,0,'','',5,4,15,1460302396),
+(57,0,'admin/Sys/activesys','帐号激活',1,1,0,'','',2,3,30,1460299219),
+(60,0,'admin/Sys/runemail','保存操作',1,0,0,'','',19,4,20,1460299500),
+(59,0,'admin/Sys/runsys','编辑操作',1,0,0,'','',6,4,20,1460299338),
+(61,0,'admin/Sys/runactive','编辑操作',1,0,0,'','',57,4,20,1460299563),
+(62,0,'wechat/We/runwesys','编辑操作',1,0,0,'','',10,4,20,1460299610),
+(63,0,'admin/Sys/source_runadd','添加操作',1,0,0,'','',43,3,20,1460299680),
+(64,0,'admin/Sys/source_del','删除操作',1,0,0,'','',43,3,20,1460299709),
+(65,0,'admin/Sys/source_edit','编辑显示',1,0,0,'','',43,3,30,1460299760),
+(66,0,'admin/Sys/source_runedit','编辑操作',1,0,0,'','',43,3,40,1460299803),
+(67,0,'admin/Sys/source_order','排序操作',1,0,0,'','',43,3,50,1460299827),
+(69,0,'admin/Admin/admin_runadd','添加操作',1,0,0,'','',16,3,20,1460301671),
+(70,0,'admin/Admin/admin_edit','编辑显示',1,0,0,'','',16,3,30,1460301711),
+(71,0,'admin/Admin/admin_runedit','编辑操作',1,0,0,'','',16,3,40,1460301751),
+(72,0,'admin/Admin/admin_del','删除操作',1,0,0,'','',16,3,50,1460301774),
+(73,0,'admin/Admin/admin_state','状态操作',1,0,0,'','',16,3,60,1460301806),
+(74,0,'admin/Admin/admin_group_edit','编辑显示',1,0,0,'','',17,3,30,1460301956),
+(75,0,'admin/Admin/admin_group_runedit','编辑操作',1,0,0,'','',17,3,40,1460301980),
+(76,0,'admin/Admin/admin_group_state','状态操作',1,0,0,'','',17,3,50,1460302008),
+(77,0,'admin/Admin/admin_group_access','权限配置',1,0,0,'','',17,3,60,1460302033),
+(78,0,'admin/Admin/admin_group_runaccess','权限配置操作',1,0,0,'','',17,3,70,1460302062),
+(79,0,'admin/Sys/admin_rule_runadd','添加操作',1,0,0,'','',158,3,15,1460302177),
+(80,0,'admin/Sys/admin_rule_state','状态操作',1,0,0,'','',158,3,20,1460302201),
+(81,0,'admin/Sys/admin_rule_order','排序操作',1,0,0,'','',158,3,30,1460302223),
+(82,0,'admin/Sys/admin_rule_edit','编辑显示',1,0,0,'','',158,3,40,1460302247),
+(83,0,'admin/Sys/admin_rule_runedit','编辑操作',1,0,0,'','',158,3,50,1460302266),
+(84,0,'admin/Sys/admin_rule_del','删除操作',1,0,0,'','',158,3,60,1460302287),
+(86,0,'admin/Sys/exportsql','备份单表',1,0,0,'','',5,4,20,1460302429),
+(87,0,'admin/Sys/repair','修复表',1,0,0,'','',5,4,30,1460302464),
+(88,0,'admin/Sys/optimize','优化表',1,0,0,'','',5,4,40,1460302487),
+(89,0,'admin/Sys/del','删除操作',1,0,0,'','',4,4,15,1460302516),
+(90,0,'admin/Sys/restore','还原操作',1,0,0,'','',4,4,20,1460302545),
+(91,0,'admin/Sys/excel_runexport','导出操作',1,0,0,'','',42,4,15,1460302639),
+(92,0,'admin/Sys/excel_runimport','导入操作',1,0,0,'','',41,4,15,1460302665),
+(93,0,'admin/News/news_runadd','添加操作',1,0,0,'','',12,3,15,1460335746),
+(94,0,'admin/News/news_edit','编辑显示',1,0,0,'','',11,3,15,1460335887),
+(95,0,'admin/News/news_runedit','编辑操作',1,0,0,'','',11,3,20,1460335925),
+(96,0,'admin/News/news_del','删到回收站',1,0,0,'','',11,3,30,1460335982),
+(97,0,'admin/News/news_back_open','还原',1,0,0,'','',25,3,15,1460336269),
+(98,0,'admin/News/news_back_del','删除操作',1,0,0,'','',25,3,20,1460341080),
+(99,0,'admin/News/news_back_alldel','删除全部',1,0,0,'','',25,3,30,1460341109),
+(100,0,'admin/News/news_alldel','删除全部',1,0,0,'','',11,3,40,1460341178),
+(101,0,'admin/News/news_state','状态操作',1,0,0,'','',11,3,50,1460341216),
+(102,0,'admin/Menu/news_menu_runadd','添加操作',1,0,0,'','',14,3,15,1460341752),
+(103,0,'admin/Menu/news_menu_del','删除操作',1,0,0,'','',13,3,15,1460341796),
+(104,0,'admin/Menu/news_menu_order','排序操作',1,0,0,'','',13,3,20,1460341845),
+(105,0,'admin/Menu/news_menu_edit','编辑显示',1,0,0,'','',13,3,30,1460341972),
+(106,0,'admin/Menu/news_menu_runedit','编辑操作',1,0,0,'','',13,3,40,1460342057),
+(107,0,'admin/Menu/news_menu_state','状态操作',1,0,0,'','',13,3,50,1460342099),
+(108,0,'admin/Member/member_add','添加显示',1,0,0,'','',37,3,15,1460343493),
+(109,0,'admin/Member/member_runadd','添加操作',1,0,0,'','',37,3,20,1460343550),
+(110,0,'admin/Member/member_edit','编辑显示',1,0,0,'','',37,3,30,1460343589),
+(111,0,'admin/Member/member_runedit','编辑操作',1,0,0,'','',37,3,40,1460343773),
+(112,0,'admin/Member/member_state','排序操作',1,0,0,'','',37,3,50,1460343804),
+(113,0,'admin/Member/member_del','删除操作',1,0,0,'','',37,3,60,1460343932),
+(114,0,'admin/Member/member_userpic','头像上传',1,0,0,'','',37,3,70,1460344029),
+(115,0,'admin/Member/member_group_runadd','添加操作',1,0,0,'','',38,3,15,1460344133),
+(116,0,'admin/Member/member_group_del','删除操作',1,0,0,'','',38,3,20,1460344158),
+(117,0,'admin/Member/member_group_state','状态操作',1,0,0,'','',38,3,30,1460344212),
+(118,0,'admin/Member/member_group_order','排序操作',1,0,0,'','',38,3,40,1460344255),
+(119,0,'admin/Member/member_group_edit','编辑显示',1,0,0,'','',38,3,50,1460344294),
+(120,0,'admin/Member/member_group_runedit','编辑操作',1,0,0,'','',38,3,60,1460344347),
+(121,0,'wechat/We/menu_runadd','添加操作',1,0,0,'','',39,3,15,1460345046),
+(122,0,'wechat/We/menu_state','状态操作',1,0,0,'','',39,3,20,1460345151),
+(123,0,'wechat/We/menu_order','排序操作',1,0,0,'','',39,3,30,1460345176),
+(124,0,'wechat/We/menu_edit','编辑显示',1,0,0,'','',39,3,40,1460345280),
+(125,0,'wechat/We/menu_runedit','编辑操作',1,0,0,'','',39,3,50,1460345306),
+(126,0,'wechat/We/menu_del','删除操作',1,0,0,'','',39,3,60,1460345332),
+(127,0,'wechat/We/menu_make','生成菜单',1,0,0,'','',39,3,70,1460345377),
+(128,0,'admin/Plug/plug_link_runadd','添加操作',1,0,0,'','',32,4,15,1460345848),
+(130,0,'admin/Plug/plug_link_state','状态操作',1,0,0,'','',32,4,30,1460345976),
+(131,0,'admin/Plug/plug_link_edit','编辑显示',1,0,0,'','',32,4,40,1460345999),
+(132,0,'admin/Plug/plug_link_runedit','编辑操作',1,0,0,'','',32,4,50,1460346017),
+(133,0,'admin/Plug/plug_linktype_del','删除操作',1,0,0,'','',34,4,15,1460346077),
+(134,0,'admin/Plug/plug_linktype_runadd','添加操作',1,0,0,'','',34,4,20,1460346115),
+(135,0,'admin/Plug/plug_linktype_runedit','编辑操作',1,0,0,'','',34,4,30,1460346171),
+(136,0,'admin/Plug/plug_linktype_order','排序操作',1,0,0,'','',34,4,40,1460346207),
+(137,0,'admin/Plug/plug_sug_edit','编辑显示',1,0,0,'','',48,2,15,1460346468),
+(139,0,'admin/Plug/plug_ad_del','删除操作',1,0,0,'','',45,4,20,1460346533),
+(140,0,'admin/Plug/plug_ad_order','排序操作',1,0,0,'','',45,4,30,1460346549),
+(141,0,'admin/Plug/plug_ad_state','状态操作',1,0,0,'','',45,4,40,1460346571),
+(142,0,'admin/Plug/plug_ad_edit','编辑显示',1,0,0,'','',45,4,50,1460346593),
+(143,0,'admin/Plug/plug_ad_runedit','编辑操作',1,0,0,'','',45,4,60,1460346610),
+(144,0,'admin/Plug/plug_adtype_runadd','添加操作',1,0,0,'','',46,4,15,1460346640),
+(145,0,'admin/Plug/plug_adtype_edit','编辑显示',1,0,0,'','',46,4,20,1460346659),
+(146,0,'admin/Plug/plug_adtype_runedit','编辑操作',1,0,0,'','',46,4,30,1460346680),
+(147,0,'admin/Plug/plug_adtype_del','删除操作',1,0,0,'','',46,4,40,1460346700),
+(148,0,'admin/Plug/plug_adtype_order','排序操作',1,0,0,'','',46,4,50,1460346717),
+(151,0,'admin/Sys/sys','设置显示',1,0,0,'','',6,4,10,1460367871),
+(152,0,'admin/Sys/emailsys','设置显示',1,0,0,'','',19,4,10,1460367909),
+(153,0,'admin/Sys/activesys','设置显示',1,0,0,'','',57,4,10,1460368054),
+(154,0,'wechat/We/wesys','设置显示',1,0,0,'','',10,4,10,1460368073),
+(155,0,'admin/Sys/source_list','来源列表',1,0,0,'','',43,3,10,1460368118),
+(156,0,'admin/Admin/admin_list','列表显示',1,0,0,'','',16,3,10,1460368235),
+(157,0,'admin/Admin/admin_group_list','列表显示',1,0,0,'','',17,3,10,1460368277),
+(158,0,'admin/Sys/admin_rule_list','菜单列表',1,1,0,'','',18,2,10,1460368308),
+(159,0,'admin/Sys/import','还原列表',1,0,0,'','',4,4,10,1460368413),
+(160,0,'admin/Sys/database','备份列表',1,0,0,'','',5,4,10,1460368442),
+(161,0,'admin/Sys/excel_export','导出显示',1,0,0,'','',42,4,10,1460368467),
+(162,0,'admin/Sys/excel_import','导入显示',1,0,0,'','',41,4,10,1460368482),
+(187,0,'admin/Comment/comment_setting','评论设置',1,1,0,'','',185,2,20,1463305710),
+(164,0,'admin/Plug/plug_adtype_list','列表显示',1,0,0,'','',46,4,10,1460368616),
+(165,0,'admin/Plug/plug_ad_list','列表显示',1,0,0,'','',45,4,10,1460368637),
+(166,0,'admin/Plug/plug_linktype_list','列表显示',1,0,0,'','',34,4,10,1460368656),
+(167,0,'admin/Plug/plug_link_list','列表显示',1,0,0,'','',32,4,10,1460368676),
+(168,0,'wechat/We/menu_list','列表显示',1,0,0,'','',39,3,10,1460368744),
+(169,0,'admin/Member/member_group_list','列表显示',1,0,0,'','',38,3,10,1460368780),
+(170,0,'admin/Member/member_list','列表显示',1,0,0,'','',37,3,10,1460368804),
+(171,0,'admin/Menu/news_menu_add','添加显示',1,0,0,'','',14,3,10,1460369022),
+(172,0,'admin/Menu/news_menu_list','列表显示',1,0,0,'','',13,3,10,1460369062),
+(173,0,'admin/News/news_back','列表显示',1,0,0,'','',25,3,10,1460369095),
+(174,0,'admin/News/news_add','添加显示',1,0,0,'','',12,3,10,1460369128),
+(175,0,'admin/News/news_list','列表显示',1,0,0,'','',11,3,10,1460369158),
+(176,0,'admin/Admin/admin_group_add','添加显示',1,0,0,'','',17,3,15,1460461365),
+(177,0,'admin/Sys/admin_rule_copy','复制显示',1,0,0,'','',158,3,40,1460461557),
+(178,0,'admin/Admin/profile','个人中心',1,1,0,'','',15,2,90,1461395663),
+(179,0,'admin/Admin/profile','信息显示',1,0,0,'','',178,3,10,1461395702),
+(180,0,'admin/Admin/avatar','头像编辑',1,0,0,'','',178,3,10,1461395790),
+(184,0,'admin/Sys/oauthsys','第三方登录',1,1,0,'','',2,3,40,1463045567),
+(185,0,'admin/Comment','评论管理',1,1,0,'fa-comment','',0,1,15,1463305461),
+(186,0,'admin/Comment/comment_list','评论列表',1,1,0,'','',185,2,10,1463305496),
+(190,0,'admin/Sys/urlsetsys','URL设置',1,1,0,'','',2,3,15,1464341076),
+(202,0,'admin/Sys/storagesys','七牛云存储',1,1,0,'','',2,3,50,1481536058),
+(203,0,'admin/Sys/runstorage','保存设置',1,0,0,'','',202,4,50,1481536129),
+(204,0,'admin/Sys/storagesys','七牛云存储',1,0,0,'','',202,4,50,1481536149),
+(210,0,'admin/Sys/langsys','多语言设置',1,1,0,'','',2,3,13,1482229864),
+(211,0,'admin/Sys/runlangsys','多语言设置',1,0,0,'','',210,4,50,1482229896),
+(228,0,'admin/Sys/logsys','日志设置',1,1,0,'','',2,3,12,1482635360),
+(240,0,'admin/Sys/runlogsys','保存操作',1,0,0,'','',228,4,20,1482844844),
+(241,0,'admin/Sys/langsys','设置显示',1,0,0,'','',210,4,10,1482844882),
+(242,0,'admin/Sys/urlsys','设置显示',1,0,0,'','',190,4,10,1482844916),
+(243,0,'admin/Sys/runurlsys','保存操作',1,0,0,'','',190,4,20,1482844970),
+(244,0,'admin/Sys/oauthsys','设置显示',1,0,0,'','',184,4,10,1482845029),
+(245,0,'admin/Sys/runoauthsys','设置显示',1,0,0,'','',184,4,20,1482845048),
+(252,0,'admin/Comment/comment_del','删除操作',1,0,0,'','',186,3,50,1482846045),
+(253,0,'admin/Comment/comment_alldel','全部删除',1,0,0,'','',186,3,50,1482846076),
+(254,0,'admin/Comment/comment_state','状态操作',1,0,0,'','',186,3,50,1482846099),
+(255,0,'admin/Comment/comment_setting','设置显示',1,0,0,'','',187,3,50,1482846131),
+(256,0,'admin/Comment/runcsys','保存操作',1,0,0,'','',187,3,50,1482846152),
+(257,0,'admin/Plug/plug_sug_reply','留言回复',1,0,0,'','',49,3,50,1482846205),
+(258,0,'admin/Plug/plug_sug_runreply','回复操作',1,0,0,'','',49,3,50,1482846233),
+(259,0,'admin/Plug/plug_sug_del','删除操作',1,0,0,'','',49,3,50,1482846259),
+(260,0,'admin/Plug/plug_sug_alldel','全部删除',1,0,0,'','',49,3,50,1482846279),
+(266,0,'admin/Model','常见问题',1,1,0,'fa-question-circle','',28,2,50,1482821140),
+(267,0,'admin/Model/cmsadd?id=2','增加常见问题',1,1,0,'','',266,3,20,1482821140),
+(268,0,'admin/cmsrunadd','增加操作',1,0,0,'','',267,4,10,1482821140),
+(269,0,'admin/Model/cmslist?id=2','常见问题列表',1,1,0,'','',266,3,10,1482821140),
+(270,0,'admin/Model/cmsdel','删除操作',1,0,0,'','',269,4,0,1482821140),
+(271,0,'admin/Model/cmsstate','状态操作',1,0,0,'','',269,4,0,1482821140),
+(272,0,'admin/Model/cmsorder','排序操作',1,0,0,'','',269,4,0,1482821140),
+(273,0,'admin/Model/cmsalldel','全部删除',1,0,0,'','',269,4,0,1482821140),
+(274,0,'admin/Model/cmsedit','编辑显示',1,0,0,'','',269,4,0,1482821140),
+(275,0,'admin/Model/cmsrunedit','编辑操作',1,0,0,'','',269,4,0,1482821140),
+(276,0,'admin/WebLog','操作日志',1,1,0,'fa-tasks','',0,1,19,1483091169),
+(277,0,'admin/WebLog/weblog_list','操作日志列表',1,1,0,'','',276,2,10,1483091198),
+(278,0,'admin/WebLog/weblog_setting','操作日志设置',1,1,0,'','',276,2,20,1483091220),
+(279,0,'admin/Sys/paysys','设置显示',1,0,0,'','',26,4,10,1483325524),
+(280,0,'admin/Sys/runpaysys','设置操作',1,0,0,'','',26,4,20,1483325553),
+(281,0,'admin/Sys/smssys','短信设置',1,1,0,'','',2,3,33,1483327040),
+(282,0,'admin/Sys/smssys','设置显示',1,0,0,'','',281,4,10,1483327064),
+(283,0,'admin/Sys/runsmssys','设置操作',1,0,0,'','',281,4,20,1483327089),
+(294,0,'wechat/We/reply_list','自动回复',1,1,0,'','',35,2,20,1483616060),
+(295,0,'wechat/We/mats_list','素材管理',1,1,0,'','',35,2,30,1483617538),
+(296,0,'wechat/We/menu_get','同步菜单',1,0,0,'','',39,3,80,1483789025),
+(297,0,'wechat/We/reply_list','回复列表',1,0,0,'','',294,3,10,1483789065),
+(298,0,'wechat/We/reply_edit','回复编辑',1,0,0,'','',294,3,20,1483789096),
+(299,0,'wechat/We/reply_runedit','编辑操作',1,0,0,'','',294,3,30,1483789123),
+(300,0,'wechat/We/reply_runadd','添加操作',1,0,0,'','',294,3,40,1483789149),
+(301,0,'wechat/We/reply_state','状态操作',1,0,0,'','',294,3,50,1483789174),
+(302,0,'wechat/We/reply_alldel','全部删除',1,0,0,'','',294,3,60,1483789197),
+(303,0,'wechat/We/reply_del','删除操作',1,0,0,'','',294,3,70,1483789219),
+(304,0,'wechat/We/mats_list','素材列表',1,0,0,'','',295,3,10,1483789249),
+(305,0,'wechat/We/mats_get','同步素材',1,0,0,'','',295,3,20,1483789271),
+(306,0,'wechat/We/mats_edit','编辑素材',1,0,0,'','',295,3,30,1483789295),
+(307,0,'wechat/We/mats_runedit','编辑操作',1,0,0,'','',295,3,40,1483789317),
+(308,0,'wechat/We/mats_add','增加显示',1,0,0,'fa-plug','',295,3,40,1483789367),
+(309,0,'wechat/We/mats_runadd','增加操作',1,0,0,'fa-plug','',295,3,50,1483789393),
+(310,0,'wechat/We/mats_del','删除操作',1,0,0,'fa-plug','',295,3,60,1483789418),
+(311,0,'wechat/We/mats_alldel','全选删除',1,0,0,'fa-plug','',295,3,70,1483789443),
+(312,0,'admin/Model','订单管理',1,1,0,'','',28,2,50,1483867059),
+(313,0,'admin/Model/cmsadd?id=3','增加订单支付',1,1,0,'','',312,3,20,1483867059),
+(314,0,'admin/cmsrunadd','增加操作',1,0,0,'','',313,4,10,1483867059),
+(315,0,'admin/Model/cmslist?id=3','订单支付列表',1,1,0,'','',312,3,10,1483867059),
+(316,0,'admin/Model/cmsdel','删除操作',1,0,0,'','',315,4,0,1483867059),
+(317,0,'admin/Model/cmsstate','状态操作',1,0,0,'','',315,4,0,1483867059),
+(318,0,'admin/Model/cmsorder','排序操作',1,0,0,'','',315,4,0,1483867059),
+(319,0,'admin/Model/cmsalldel','全部删除',1,0,0,'','',315,4,0,1483867059),
+(320,0,'admin/Model/cmsedit','编辑显示',1,0,0,'','',315,4,0,1483867059),
+(321,0,'admin/Model/cmsrunedit','编辑操作',1,0,0,'','',315,4,0,1483867059),
+(325,0,'admin/Addons','插件管理',1,1,0,'fa-plug','',0,1,50,1487422836),
+(326,0,'admin/Addons/addons_list','插件列表',1,1,0,'','',325,2,10,1487422893),
+(327,0,'admin/Module/lists','模块管理',1,1,0,'','',18,2,50,1508770028),
+(328,1,'/index/admin.sys/index','后台菜单',1,1,0,'fa-desktop','',0,1,0,1508770028),
+(329,1,'/index/admin.sys/admin_rule_list','菜单列表',1,1,0,'','',328,2,0,1508770028),
+(330,2,'/blog/admin.sys/index','后台菜单',1,1,0,'fa-desktop','',0,1,0,1508770028),
+(331,2,'/blog/admin.sys/admin_rule_list','菜单列表',1,1,0,'','',330,2,0,1508770028);
 
-DROP TABLE IF EXISTS `yf_faq`;
-CREATE TABLE IF NOT EXISTS `yf_faq` (
+DROP TABLE IF EXISTS `wjf_cat`;
+
+CREATE TABLE `wjf_cat` (
+  `cat_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `cat_name` varchar(256) DEFAULT '' COMMENT '分类名称',
+  `cat_intro` text COMMENT '分类简介',
+  `cat_img` varchar(256) DEFAULT NULL COMMENT '分类图片',
+  `cid` int(11) DEFAULT NULL COMMENT '模块id',
+  `status` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '状态',
+  `create_time` int(11) DEFAULT NULL COMMENT '创建时间',
+  `cat_cid` varchar(100) DEFAULT '' COMMENT '前台栏目',
+  `cat_order` int(11) DEFAULT '50' COMMENT '排序',
+  PRIMARY KEY (`cat_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+/*Data for the table `wjf_cat` */
+
+insert  into `wjf_cat`(`cat_id`,`cat_name`,`cat_intro`,`cat_img`,`cid`,`status`,`create_time`,`cat_cid`,`cat_order`) values
+(1,'PHP','记录关于PHP开发遇到的问题以及一些相关技术','/app/index/view/default/public/images/php.png',0,1,1507941238,'',50),
+(2,'Web前端','前端技术汇总','/app/index/view/default/public/images/html5.jpg',0,1,1507941604,'',50),
+(3,'Linux','linux技术交流','/app/index/view/default/public/images/linux.jpg',0,1,1507941653,'',50),
+(4,'Python','python有时间一定要学一学,它是人工智能能用到的','/app/index/view/default/public/images/python.png',0,1,1507941703,'',50),
+(5,'微信开发','微信开发技术','/app/index/view/default/public/images/wechat.png',0,1,1507941751,'',50),
+(6,'其他技术','其他技术','/app/index/view/default/public/images/others.jpg',0,1,1507941791,'',50),
+(7,'爱好','个人爱好','/app/index/view/default/public/images/hobby.jpg',0,1,1507941818,'',50),
+(8,'生活','宝宝有小情绪了,宝宝要记录一下,哈哈','/app/index/view/default/public/images/live.jpg',0,1,1507941865,'',50);
+
+DROP TABLE IF EXISTS `wjf_faq`;
+CREATE TABLE IF NOT EXISTS `wjf_faq` (
   `faq_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `faq_title` varchar(200) NOT NULL DEFAULT '未填写' COMMENT '标题',
   `faq_answer` text COMMENT '答复',
@@ -397,7 +407,7 @@ CREATE TABLE IF NOT EXISTS `yf_faq` (
   PRIMARY KEY (`faq_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
 
-INSERT INTO `yf_faq` (`faq_id`, `faq_title`, `faq_answer`, `faq_cid`, `faq_order`) VALUES
+INSERT INTO `wjf_faq` (`faq_id`, `faq_title`, `faq_answer`, `faq_cid`, `faq_order`) VALUES
 (1, 'Question 1', 'Question 1：Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '15', 50),
 (2, 'Question 2', 'Question 2：Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '15', 50),
 (3, 'Question 3', 'Question 3：Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '15', 50),
@@ -412,8 +422,8 @@ INSERT INTO `yf_faq` (`faq_id`, `faq_title`, `faq_answer`, `faq_cid`, `faq_order
 (12, 'Question 12', 'Question 12：Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '15', 50),
 (13, 'Question 13', 'Question13：Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '15', 50);
 
-DROP TABLE IF EXISTS `yf_comments`;
-CREATE TABLE IF NOT EXISTS `yf_comments` (
+DROP TABLE IF EXISTS `wjf_comments`;
+CREATE TABLE IF NOT EXISTS `wjf_comments` (
   `c_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `t_name` varchar(100) NOT NULL COMMENT '评论内容所在表，不带表前缀',
   `t_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '评论内容 id',
@@ -435,8 +445,8 @@ CREATE TABLE IF NOT EXISTS `yf_comments` (
   KEY `createtime` (`createtime`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='评论表' AUTO_INCREMENT=1 ;
 
-DROP TABLE IF EXISTS `yf_diyflag`;
-CREATE TABLE IF NOT EXISTS `yf_diyflag` (
+DROP TABLE IF EXISTS `wjf_diyflag`;
+CREATE TABLE IF NOT EXISTS `wjf_diyflag` (
   `diyflag_id` int(2) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `diyflag_value` char(2) NOT NULL COMMENT '值',
   `diyflag_name` char(10) NOT NULL COMMENT '名称',
@@ -444,7 +454,7 @@ CREATE TABLE IF NOT EXISTS `yf_diyflag` (
   PRIMARY KEY (`diyflag_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
 
-INSERT INTO `yf_diyflag` (`diyflag_id`, `diyflag_value`, `diyflag_name`, `diyflag_order`) VALUES
+INSERT INTO `wjf_diyflag` (`diyflag_id`, `diyflag_value`, `diyflag_name`, `diyflag_order`) VALUES
 (1, 'h', '头条', 10),
 (2, 'c', '推荐', 20),
 (3, 'f', '幻灯', 30),
@@ -455,8 +465,8 @@ INSERT INTO `yf_diyflag` (`diyflag_id`, `diyflag_value`, `diyflag_name`, `diyfla
 (8, 'd', '原创', 80),
 (9, 'cp', '产品', 90);
 
-DROP TABLE IF EXISTS `yf_favorites`;
-CREATE TABLE IF NOT EXISTS `yf_favorites` (
+DROP TABLE IF EXISTS `wjf_favorites`;
+CREATE TABLE IF NOT EXISTS `wjf_favorites` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `uid` bigint(20) DEFAULT NULL COMMENT '用户 id',
   `t_name` varchar(50) DEFAULT NULL COMMENT '收藏实体以前所在表，不带前缀',
@@ -466,8 +476,8 @@ CREATE TABLE IF NOT EXISTS `yf_favorites` (
   KEY `uid` (`uid`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='用户收藏表' AUTO_INCREMENT=1 ;
 
-DROP TABLE IF EXISTS `yf_hook`;
-CREATE TABLE IF NOT EXISTS `yf_hook` (
+DROP TABLE IF EXISTS `wjf_hook`;
+CREATE TABLE IF NOT EXISTS `wjf_hook` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL DEFAULT '' COMMENT '钩子名称',
   `addon` varchar(32) NOT NULL DEFAULT '' COMMENT '钩子来自哪个插件',
@@ -479,14 +489,14 @@ CREATE TABLE IF NOT EXISTS `yf_hook` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='钩子表' AUTO_INCREMENT=18 ;
 
-INSERT INTO `yf_hook` (`id`, `name`, `addon`, `description`, `system`, `create_time`, `update_time`, `status`) VALUES
+INSERT INTO `wjf_hook` (`id`, `name`, `addon`, `description`, `system`, `create_time`, `update_time`, `status`) VALUES
 (17, 'maintain', 'Maintain', '日常维护钩子', 0, 1487424935, 1487424935, 1),
 (13, 'gitinfo', 'Info', 'git信息钩子', 0, 1487419743, 1487419743, 1),
 (14, 'sysinfo', 'Info', '框架信息钩子', 0, 1487419743, 1487419743, 1),
 (16, 'team', 'Team', '团队钩子', 0, 1487422600, 1487422600, 1);
 
-DROP TABLE IF EXISTS `yf_hook_addon`;
-CREATE TABLE IF NOT EXISTS `yf_hook_addon` (
+DROP TABLE IF EXISTS `wjf_hook_addon`;
+CREATE TABLE IF NOT EXISTS `wjf_hook_addon` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `hook` varchar(32) NOT NULL DEFAULT '' COMMENT '钩子id',
   `addon` varchar(32) NOT NULL DEFAULT '' COMMENT '插件标识',
@@ -497,15 +507,15 @@ CREATE TABLE IF NOT EXISTS `yf_hook_addon` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='钩子-插件对应表' AUTO_INCREMENT=20 ;
 
-INSERT INTO `yf_hook_addon` (`id`, `hook`, `addon`, `create_time`, `update_time`, `sort`, `status`) VALUES
+INSERT INTO `wjf_hook_addon` (`id`, `hook`, `addon`, `create_time`, `update_time`, `sort`, `status`) VALUES
 (19, 'maintain', 'Maintain', 1487424935, 1487424935, 100, 1),
 (14, 'sysinfo', 'Info', 1487419743, 1487419743, 100, 1),
 (13, 'gitinfo', 'Info', 1487419743, 1487419743, 100, 1),
 (17, 'team', 'Team', 1487422600, 1487422600, 100, 1),
 (18, 'team', 'Team', 1487422724, 1487422724, 100, 1);
 
-DROP TABLE IF EXISTS `yf_member_group`;
-CREATE TABLE IF NOT EXISTS `yf_member_group` (
+DROP TABLE IF EXISTS `wjf_member_group`;
+CREATE TABLE IF NOT EXISTS `wjf_member_group` (
   `member_group_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '会员组ID',
   `member_group_name` varchar(30) NOT NULL COMMENT '会员组名',
   `member_group_open` int(11) NOT NULL DEFAULT '0' COMMENT '会员组是否开放',
@@ -515,11 +525,11 @@ CREATE TABLE IF NOT EXISTS `yf_member_group` (
   PRIMARY KEY (`member_group_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
-INSERT INTO `yf_member_group` (`member_group_id`, `member_group_name`, `member_group_open`, `member_group_toplimit`, `member_group_bomlimit`, `member_group_order`) VALUES
+INSERT INTO `wjf_member_group` (`member_group_id`, `member_group_name`, `member_group_open`, `member_group_toplimit`, `member_group_bomlimit`, `member_group_order`) VALUES
 (1, '会员', 1, 11, 22, 50);
 
-DROP TABLE IF EXISTS `yf_member_list`;
-CREATE TABLE IF NOT EXISTS `yf_member_list` (
+DROP TABLE IF EXISTS `wjf_member_list`;
+CREATE TABLE IF NOT EXISTS `wjf_member_list` (
   `member_list_id` int(11) NOT NULL AUTO_INCREMENT,
   `member_list_username` varchar(60) NOT NULL COMMENT '登录用户名',
   `member_list_pwd` char(32) NOT NULL DEFAULT '' COMMENT '登录密码',
@@ -549,19 +559,24 @@ CREATE TABLE IF NOT EXISTS `yf_member_list` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
-DROP TABLE IF EXISTS `yf_member_lvl`;
-CREATE TABLE IF NOT EXISTS `yf_member_lvl` (
+DROP TABLE IF EXISTS `wjf_member_lvl`;
+CREATE TABLE IF NOT EXISTS `wjf_member_lvl` (
   `member_lvl_id` tinyint(3) NOT NULL AUTO_INCREMENT COMMENT '等级ID',
   `member_lvl_name` varchar(20) NOT NULL COMMENT '等级名称',
   PRIMARY KEY (`member_lvl_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-DROP TABLE IF EXISTS `yf_menu`;
-CREATE TABLE IF NOT EXISTS `yf_menu` (
+/*Table structure for table `wjf_menu` */
+
+DROP TABLE IF EXISTS `wjf_menu`;
+
+CREATE TABLE `wjf_menu` (
   `id` int(20) unsigned NOT NULL AUTO_INCREMENT,
   `menu_name` varchar(36) NOT NULL,
   `menu_enname` varchar(50) NOT NULL COMMENT '英文标题',
-  `menu_type` int(8) NOT NULL,
+  `menu_type` int(8) NOT NULL COMMENT '导航类型id',
+  `menu_url` varchar(70) DEFAULT NULL COMMENT '导航对应的URL',
+  `menu_moduleid` int(3) NOT NULL COMMENT '模块id',
   `menu_modelid` int(3) NOT NULL DEFAULT '0' COMMENT '模型id',
   `parentid` int(3) NOT NULL COMMENT '父级id',
   `menu_listtpl` varchar(50) NOT NULL DEFAULT '' COMMENT '列表页模板',
@@ -576,27 +591,18 @@ CREATE TABLE IF NOT EXISTS `yf_menu` (
   `menu_content` longtext NOT NULL,
   `menu_l` varchar(10) NOT NULL DEFAULT 'zh-cn',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=16 ;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
-INSERT INTO `yf_menu` (`id`, `menu_name`, `menu_enname`, `menu_type`, `menu_modelid`, `parentid`, `menu_listtpl`, `menu_newstpl`, `menu_address`, `menu_open`, `listorder`, `menu_img`, `menu_seo_title`, `menu_seo_key`, `menu_seo_des`, `menu_content`, `menu_l`) VALUES
-(1, '公司简介', '', 4, 0, 0, 'about', '', '', 1, 10, 'http://ohjmksy46.bkt.clouddn.com/image/iwm4864g_3hbi3a1uhkw0584ea6206fdcc.jpg', '关于我们', '关于我们', '关于我们', '<p style="white-space: normal;">&nbsp; 团队成立与于2014年,是一个专注于高端品牌网站建设的设计工作室。</p><p style="white-space: normal;">团队骨干有着丰富的网页设计和网站开发水平，为客户提供更符合搜索引擎的网站研发服务，协助构建OA网络办公信息平台，定制网站与数据库开发，并提供WAP网站建设、微网站、微商城、微信裂变式分销，网站维护、网络推广等互联网一站式服务。我们将商业与技术完美结合起来，以使我们的客户可以在快速发展的信息科技领域中获得更有效的竞争力。</p><p style="white-space: normal;">&nbsp;&nbsp;团队成立以来，先后为数十家企业提供网站建设及推广服务。我们一直秉承“只做有灵魂的设计”和“坚持原创”的核心价值观，以“为客户赢得客户”为己任，用我们的激情和智慧，勤奋与努力，帮助中小企业开展网站建设，打开互联网营销局面，深刻影响着魔酷阁的经营模式和营销思路我们坚信，中国的每一家企业都应该有一个赋有灵魂的网站，用来发布企业产品、发布企业资讯、开展网上调查、与客户进行在线交流、分析客户需求和了解市场发展等功能于一体的营销型网站。</p>', 'zh-cn'),
-(2, '服务项目', '', 3, 0, 0, 'list', 'news', '', 1, 20, '', '', '', '', '', 'zh-cn'),
-(3, '成功案例', '', 3, 0, 0, 'photo_list', 'news', '', 1, 45, '', '', '', '', '', 'zh-cn'),
-(4, '联系方式', '', 4, 0, 0, 'contact', '', '', 1, 55, '', '', '', '', '&lt;p&gt;联系方式&lt;/p&gt;', 'zh-cn'),
-(5, '新闻资讯', '', 3, 0, 0, 'list', 'news', '', 1, 30, '', '', '', '', '', 'zh-cn'),
-(6, '合作伙伴', '', 3, 0, 0, 'list', 'news', '', 0, 50, '', '', '', '', '', 'zh-cn'),
-(7, '首页', 'Home', 1, 0, 0, '', '', '', 1, 1, '', '', '', '', '', 'zh-cn'),
-(8, 'About us', '', 4, 0, 0, 'about', '', '', 1, 10, 'http://ohjmksy46.bkt.clouddn.com/image/iwm3zkpk_21n6xk2bzngg584ea48f41bc7.jpg', 'About us', 'About us', 'About us', '<p>Team was founded in 2014, is a focus on high-end brand website construction design studio.</p><p>The backbone of the team has a wealth of web design and web development level, to provide more in line with the search engine website development services for customers, to assist the construction of OA network information office platform, customized website and database development, and provide the WAP website, micro sites, micro mall, WeChat fission distribution, website maintenance, network promotion, Internet stop service. We will be the perfect combination of business and technology, so that our customers can be in the rapid development of the information technology in the field of more effective competition.</p><p>Since the establishment of the team, has dozens of enterprises to provide website construction and promotion services. We have been adhering to the "only do the design with a soul" and "adhere to the original" core values "to win customers" to customers for the mission, with our passion and wisdom, diligence and efforts to help small and medium-sized enterprises to carry out the construction site, open Internet marketing, deeply influence the business model and marketing ideas possessed cool Pavilion we believe that every company should have a Chinese are endowed with soul of the website, to release enterprise products, enterprise information, carry out online survey released, the marketing website of online communication and customer needs analysis and understanding of market development and other functions in one with customers.</p>', 'en-us'),
-(9, 'Services', '', 3, 0, 0, 'list', 'news', '', 1, 20, '', '', '', '', '', 'en-us'),
-(10, 'Cases', '', 3, 0, 0, 'photo_list', 'news', '', 1, 45, '', '', '', '', '', 'en-us'),
-(11, 'Contract us', '', 4, 0, 0, 'contact', '', '', 1, 55, '', '', '', '', '&lt;p&gt;联系方式&lt;/p&gt;', 'en-us'),
-(12, 'News', '', 3, 0, 0, 'list', 'news', '', 1, 30, '', '', '', '', '', 'en-us'),
-(13, 'Partner', '', 3, 0, 0, 'list', 'news', '', 0, 50, '', '', '', '', '', 'en-us'),
-(14, 'Home', 'Home', 1, 0, 0, '', '', '', 1, 1, '', '', '', '', '', 'en-us'),
-(15, '常见问题', 'FAQ', 3, 2, 0, 'faq_list', 'faq', '', 1, 30, '', '', '', '', '', 'zh-cn');
+/*Data for the table `wjf_menu` */
 
-DROP TABLE IF EXISTS `yf_model`;
-CREATE TABLE IF NOT EXISTS `yf_model` (
+insert  into `wjf_menu`(`id`,`menu_name`,`menu_enname`,`menu_type`,`menu_url`,`menu_moduleid`,`menu_modelid`,`parentid`,`menu_listtpl`,`menu_newstpl`,`menu_address`,`menu_open`,`listorder`,`menu_img`,`menu_seo_title`,`menu_seo_key`,`menu_seo_des`,`menu_content`,`menu_l`) values
+(1,'首页','home',5,'/index/index/index.html',1,0,0,'','','',1,50,'','index','index','index','','zh-cn'),
+(2,'推荐','hot',5,'/index/index/hot.html',1,0,0,'','','',1,50,'','hot','hot','hot','','zh-cn'),
+(3,'分类','cat',5,'/index/cat/index.html',1,0,0,'','','',1,50,'','cat','cat','cat','','zh-cn'),
+(4,'索引','Indexes',5,'/index/article/index.html',1,0,0,'','','',1,50,'','artice','artice','artice','','zh-cn');
+
+DROP TABLE IF EXISTS `wjf_model`;
+CREATE TABLE IF NOT EXISTS `wjf_model` (
   `model_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '模型ID',
   `model_name` char(30) NOT NULL DEFAULT '' COMMENT '模型标识',
   `model_title` char(30) NOT NULL DEFAULT '' COMMENT '模型名称',
@@ -617,15 +623,38 @@ CREATE TABLE IF NOT EXISTS `yf_model` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='文档模型表' AUTO_INCREMENT=4 ;
 
 
-INSERT INTO `yf_model` (`model_id`, `model_name`, `model_title`, `model_pk`, `model_cid`, `model_order`, `model_sort`, `model_fields`, `model_list`, `model_edit`, `model_indexes`, `search_list`, `create_time`, `update_time`, `model_status`, `model_engine`) VALUES
+INSERT INTO `wjf_model` (`model_id`, `model_name`, `model_title`, `model_pk`, `model_cid`, `model_order`, `model_sort`, `model_fields`, `model_list`, `model_edit`, `model_indexes`, `search_list`, `create_time`, `update_time`, `model_status`, `model_engine`) VALUES
 (1, 'test', '测试模型', 'test_id', 'test_cid', 'test_order', 'test_order', '{"m_text":{"name":"m_text","title":"\\u6587\\u672c\\u5b57\\u6bb5","type":"text","data":"","description":"\\u6587\\u672c\\u5b57\\u6bb5\\u8bf4\\u660e","length":"","rules":"readonly","default":""},"m_map":{"name":"m_map","title":"\\u5730\\u56fe\\u5b57\\u6bb5","type":"baidu_map","data":"","description":"\\u5730\\u56fe\\u5b57\\u6bb5\\u8bf4\\u660e","length":"","rules":"","default":"22,22"},"m_imagefile":{"name":"m_imagefile","title":"\\u5355\\u56fe\\u7247\\u5b57\\u6bb5","type":"imagefile","data":"","description":"\\u5355\\u56fe\\u7247\\u5b57\\u6bb5\\u8bf4\\u660e","length":"","rules":"","default":""},"m_images":{"name":"m_images","title":"\\u591a\\u56fe\\u7247\\u5b57\\u6bb5","type":"images","data":"","description":"\\u591a\\u56fe\\u7247\\u5b57\\u6bb5\\u8bf4\\u660e","length":"","rules":"","default":""},"m_selecttext":{"name":"m_selecttext","title":"\\u9009\\u62e9\\u6587\\u672c","type":"selecttext","data":"auth_group|id|title|id","description":"\\u9009\\u62e9\\u6587\\u672c\\u8bf4\\u660e","length":"","rules":"required","default":""},"m_cur":{"name":"m_cur","title":"\\u8d27\\u5e01\\u5b57\\u6bb5","type":"currency","data":"","description":"\\u8d27\\u5e01\\u5b57\\u6bb5\\u8bf4\\u660e","length":"","rules":"unsigned","default":"22"},"m_long":{"name":"m_long","title":"\\u957f\\u6574\\u6570\\u5b57\\u6bb5","type":"large_number","data":"","description":"\\u957f\\u6574\\u6570\\u5b57\\u6bb5\\u8bf4\\u660e","length":"","rules":"","default":"0"},"m_int":{"name":"m_int","title":"\\u6574\\u6570\\u5b57\\u6bb5","type":"number","data":"","description":"\\u6574\\u6570\\u5b57\\u6bb5\\u8bf4\\u660e","length":"","rules":"required","default":"11"},"m_datatime":{"name":"m_datatime","title":"\\u65e5\\u671f\\u65f6\\u95f4\\u5b57\\u6bb5","type":"datetime","data":"","description":"\\u65e5\\u671f\\u65f6\\u95f4\\u5b57\\u6bb5","length":"","rules":"","default":""},"m_date":{"name":"m_date","title":"\\u65e5\\u671f\\u5b57\\u6bb5","type":"date","data":"","description":"\\u65e5\\u671f\\u5b57\\u6bb5\\u8bf4\\u660e","length":"","rules":"","default":""},"m_selectnumber":{"name":"m_selectnumber","title":"\\u9009\\u62e9\\u6570\\u5b57\\u5b57\\u6bb5","type":"selectnumber","data":"1:a,2:b,3:c","description":"\\u9009\\u62e9\\u6570\\u5b57\\u5b57\\u6bb5\\u8bf4\\u660e","length":"","rules":"readonly","default":""},"m_richtext":{"name":"m_richtext","title":"\\u5bcc\\u6587\\u672c\\u5b57\\u6bb5","type":"richtext","data":"","description":"\\u5bcc\\u6587\\u672c\\u5b57\\u6bb5\\u8bf4\\u660e","length":"","rules":"","default":""},"m_bigtext":{"name":"m_bigtext","title":"\\u6587\\u672c\\u57df\\u5b57\\u6bb5","type":"bigtext","data":"","description":"\\u6587\\u672c\\u57df\\u5b57\\u6bb5\\u8bf4\\u660e","length":"","rules":"","default":""},"m_switch":{"name":"m_switch","title":"\\u5f00\\u5173\\u5b57\\u6bb5","type":"switch","data":"","description":"\\u5f00\\u5173\\u5b57\\u6bb5\\u8bf4\\u660e","length":"","rules":"","default":"0"},"m_check":{"name":"m_check","title":"\\u591a\\u9009\\u6846\\u5b57\\u6bb5","type":"checkbox","data":"diyflag|diyflag_id|diyflag_name|diyflag_order","description":"\\u591a\\u9009\\u6846\\u5b57\\u6bb5\\u8bf4\\u660e","length":"","rules":"","default":""}}', 'test_id,m_selecttext,m_date,m_switch,m_imagefile', '', '', '', 1482231462, 1482402443, 1, 'MyISAM'),
 (2, 'faq', '常见问题', 'faq_id', 'faq_cid', 'faq_order', 'faq_order', '{"faq_title":{"name":"faq_title","title":"\\u6807\\u9898","type":"text","data":"","description":"\\u6807\\u9898","length":"","rules":"required","default":""},"faq_answer":{"name":"faq_answer","title":"\\u7b54\\u590d","type":"bigtext","data":"","description":"\\u7b54\\u590d","length":"","rules":"required","default":""}}', '', '', '', '', 1482821043, 1482821382, 1, 'MyISAM'),
 (3, 'payment', '订单支付', 'payment_id', 'payment_cid', 'create_time', 'create_time', '{"out_trade_no":{"name":"out_trade_no","title":"\\u5546\\u54c1\\u8ba2\\u5355","type":"text","data":"","description":"","length":"100","rules":"unique","default":""},"pay_trade_no":{"name":"pay_trade_no","title":"\\u652f\\u4ed8\\u8ba2\\u5355\\u53f7","type":"text","data":"","description":"","length":"100","rules":"unique","default":"NULL"},"money":{"name":"money","title":"\\u8ba2\\u5355\\u91d1\\u989d","type":"currency","data":"","description":"","length":"","rules":"","default":""},"status":{"name":"status","title":"\\u8ba2\\u5355\\u72b6\\u6001","type":"number","data":"","description":"1:\\u5f85\\u652f\\u4ed82:\\u6d4b\\u8bd5\\u8ba2\\u53558:\\u6210\\u529f\\u652f\\u4ed80:\\u5220\\u9664\\u8ba2\\u5355","length":"","rules":"","default":""},"type":{"name":"type","title":"\\u652f\\u4ed8\\u65b9\\u5f0f","type":"text","data":"","description":"","length":"50","rules":"","default":""},"uid":{"name":"uid","title":"\\u4ed8\\u6b3euid","type":"number","data":"","description":"","length":"","rules":"","default":""},"create_time":{"name":"create_time","title":"\\u8ba2\\u5355\\u521b\\u5efa\\u65f6\\u95f4","type":"datetime","data":"","description":"","length":"","rules":"","default":""},"update_time":{"name":"update_time","title":"\\u8ba2\\u5355\\u66f4\\u65b0\\u65f6\\u95f4","type":"datetime","data":"","description":"","length":"","rules":"","default":""},"client_ip":{"name":"client_ip","title":"\\u652f\\u4ed8ip","type":"text","data":"","description":"","length":"50","rules":"","default":""},"product_name":{"name":"product_name","title":"\\u5546\\u54c1\\u540d\\u79f0","type":"text","data":"","description":"","length":"200","rules":"","default":""},"product_body":{"name":"product_body","title":"\\u5546\\u54c1\\u63cf\\u8ff0","type":"text","data":"","description":"","length":"200","rules":"","default":""},"product_url":{"name":"product_url","title":"\\u5546\\u54c1\\u5730\\u5740","type":"text","data":"","description":"","length":"100","rules":"","default":""},"extra_param":{"name":"extra_param","title":"\\u7279\\u6b8a\\u6269\\u5c55","type":"text","data":"","description":"","length":"500","rules":"","default":""}}', 'out_trade_no,pay_trade_no,product_name,money,type,update_time,status', '', '', '', 1483620293, 1483620293, 1, 'MyISAM');
 
--- --------------------------------------------------------
-DROP TABLE IF EXISTS `yf_news`;
-CREATE TABLE IF NOT EXISTS `yf_news` (
+/*Table structure for table `wjf_module` */
+
+DROP TABLE IF EXISTS `wjf_module`;
+
+CREATE TABLE `wjf_module` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '模块主键id',
+  `module_name` char(30) NOT NULL DEFAULT '' COMMENT '模块标识/小写英文',
+  `module_title` char(30) NOT NULL DEFAULT '' COMMENT '模块名称',
+   `module_url` varchar(100) NOT NULL DEFAULT '' COMMENT '模块url',
+  `module_status` tinyint(2) unsigned NOT NULL DEFAULT 1 COMMENT '状态0为隐藏,1为显示',
+  `module_remark` char(30) NOT NULL DEFAULT '' COMMENT '模块用途备注',
+  `update_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='模块表';
+
+/*Data for the table `wjf_module` */
+insert  into `wjf_module`(`id`,`module_name`,`module_title`,`module_url`,`module_status`,`module_remark`,`update_time`) values
+(1,'index','默认模块','index/admin.index/index',1,'默认模块',1508824433),
+(2,'blog','博客模块','blog/admin.index/index',1,'博客模块',1508824484);
+
+/*Table structure for table `wjf_news` */
+
+DROP TABLE IF EXISTS `wjf_news`;
+
+CREATE TABLE `wjf_news` (
   `n_id` int(36) NOT NULL AUTO_INCREMENT,
+  `cat_id` int(36) DEFAULT NULL COMMENT '文章分类',
   `news_title` varchar(255) NOT NULL COMMENT '文章标题',
   `news_titleshort` varchar(100) DEFAULT NULL COMMENT '简短标题',
   `news_columnid` int(11) NOT NULL,
@@ -656,51 +685,20 @@ CREATE TABLE IF NOT EXISTS `yf_news` (
   `news_extra` text COMMENT '扩展字段，json',
   `news_l` varchar(10) NOT NULL DEFAULT 'zh-cn',
   PRIMARY KEY (`n_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=39 ;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
-INSERT INTO `yf_news` (`n_id`, `news_title`, `news_titleshort`, `news_columnid`, `news_columnviceid`, `news_key`, `news_tag`, `news_auto`, `news_source`, `news_content`, `news_scontent`, `news_hits`, `news_like`, `news_img`, `news_pic_type`, `news_pic_allurl`, `news_pic_content`, `news_time`, `listorder`, `news_modified`, `news_flag`, `news_zaddress`, `news_cpprice`, `news_back`, `news_open`, `news_lvtype`, `comment_status`, `comment_count`, `news_extra`, `news_l`) VALUES
-(1, 'ACE后台管理系统', 'ACE后台管理系统', 3, 0, '', '', '1', '悦遇工作室', '<p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px; color: rgb(114, 114, 114); font-family: &#39;Open Sans&#39;, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 24px; white-space: normal; background-color: rgb(255, 255, 255);">测试网址：<a href="http://www.rainfer.cn/ace/index.php?m=admin&c=index&a=index" target="_blank" title="http://www.rainfer.cn/ace/index.php?m=admin&c=index&a=index" style="box-sizing: border-box; color: rgb(4, 136, 205); text-decoration: none;">http://www.rainfer.cn/ace/index.php?m=admin&c=index&a=index</a></p><p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px; color: rgb(114, 114, 114); font-family: &#39;Open Sans&#39;, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 24px; white-space: normal; background-color: rgb(255, 255, 255);">用户名：demo</p><p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px; color: rgb(114, 114, 114); font-family: &#39;Open Sans&#39;, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 24px; white-space: normal; background-color: rgb(255, 255, 255);">密码：123456</p><p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px; color: rgb(114, 114, 114); font-family: &#39;Open Sans&#39;, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 24px; white-space: normal; background-color: rgb(255, 255, 255);">下载:<a href="http://git.oschina.net/rainfer/YFCMF" target="_blank" title="http://git.oschina.net/rainfer/YFCMF" style="box-sizing: border-box; color: rgb(4, 136, 205); text-decoration: none;">http://git.oschina.net/rainfer/YFCMF</a></p><p><img src="http://ohjmksy46.bkt.clouddn.com/image/iwlydy80_cgng0pgmswg584e7fd00b5e5.jpg" style=""/></p><p><img src="http://ohjmksy46.bkt.clouddn.com/image/iwlydwog_2hu7u1cbg6io584e7fce50313.jpg" style=""/></p><p><img src="http://ohjmksy46.bkt.clouddn.com/image/iwlydi0o_4f6h69in0vsw584e7fbb8e163.jpg" style=""/></p><p><img src="http://ohjmksy46.bkt.clouddn.com/image/iwlydgh4_amfzhr162m0584e7fb9097b9.jpg" style=""/></p><p><img src="http://ohjmksy46.bkt.clouddn.com/image/iwlyde5s_63tohbqbcpog584e7fb6c4381.jpg" style=""/></p><p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px; color: rgb(114, 114, 114); font-family: "Open Sans", Helvetica, Arial, sans-serif; font-size: 14px; line-height: 24px; white-space: normal; background-color: rgb(255, 255, 255);"><br/></p>', 'ACE后台管理系统', 203, 0, 'http://ohjmksy46.bkt.clouddn.com/image/iwm4h9a8_2lusiuf7mocg584ea7c853c6e.jpg', 2, '/data/upload/2016-05-06/572c863a052a7.jpghttp://ohjmksy46.bkt.clouddn.com/image/iwm4hdww_1tt5u3ioc2jo584ea7ce3abe4.jpg,http://ohjmksy46.bkt.clouddn.com/image/iwm4hcdc_5zqxgcnh8hkw584ea7ccc0949.jpg,http://ohjmksy46.bkt.clouddn.com/image/iwm4hblk_2m18chvhum04584ea7cb53efc.jpg,http://ohjmksy46.bkt.clouddn.com/image/iwm4ha20_41xswn520d0k584ea7c982448.jpg,http://ohjmksy46.bkt.clouddn.com/image/iwm4h9a8_37gpgidez8is584ea7c86710b.jpg,', '', 1462535538, 50, 0, 'p', '', 0, 0, '1', 0, 1, 0, '{"showdate":1462464000}', 'zh-cn'),
-(10, '设计师一日为师 终身为师', '设计师一日为师 终身为师', 5, 0, '设计师一日为师 终身为师', '', '1', '悦遇工作室', '<p style="white-space: normal;">大家都有这样的感受，在未成为设计师之前，都对“设计师”职业的这三个字非常羡慕，都希望大家称我们为东莞设计师。当客户尊敬的称您为某某设计师时，我们也非常自豪而高兴。但是我希望大家明白，设计师不仅仅只是设计职业的称呼，因为他承担的角色还是设计中的师范作用，所以时刻要记得：设计师一日为师 终身为师。<br/>&nbsp;</p><p style="white-space: normal;">那么到底设计师何以为师呢？为什么要去理解“师”的这个概念呢？其实我是换位思想，即站在客户的角度，充分考虑他为什么要找你做设计的理由？如果搞清楚理由就是找到了自己的设计之师。而自己换位思想，找不到这个师之理由的话，那么自然您还不算是设计师，那就在每天别人叫你设计师的时候，多多思考设计师何以为师？而其中设计师的师，也是需要我们每天去努力工作和学习的，不断的改善提高自己的设计水平和综合素质。让自己从设计员到设计师的蜕变中，对得起设计师可以为师。<br/>&nbsp;&nbsp;</p><p style="white-space: normal;"><strong>要做好设计，先别做坏设计。</strong></p><p style="white-space: normal;">&nbsp;</p><p style="white-space: normal;">这句话是我考虑甚久得出的，虽然貌似很无聊，我却认为非常重要。创业初期的设计朋友，请时刻记得这句话，然后留点空白，让你自己去思考。因为很多人在接单子的时候，只想着是单子是利润，而忽略了这个设计本身造成的好坏。<br/>&nbsp;</p><p style="white-space: normal;">我曾经目睹上海一家策略公司，温州的一个企业找他们做品牌推广项目，该公司派人分析客户企业背景和实际情况，若达不到自己要求，就放弃操作这个项目，即使客户付再多的项目费，也坚持宁愿放弃。我当时不明白，为什么给那么多钱也不做？后来我明白他们公司为什么一直那么成功，因为他们只做好设计，不做坏设计，那是他们保持长期发展的战略和原则。<br/>&nbsp;</p><p style="white-space: normal;">所以在初期创业中，我也在选择客户上开始有了原则，尽量让好的设计找到自己。</p><p style="white-space: normal;">&nbsp;</p><p style="white-space: normal;"><strong>突出就是优势。</strong></p><p style="white-space: normal;">&nbsp;</p><p style="white-space: normal;">&nbsp;</p><p style="white-space: normal;">一定要突出，作为设计师必须要有亮点。现在会鼠标会用软件的人都称自己是设计师，艺术系毕业和设计师人才越来越多，这个行业的竞争激烈也是这个时代的表现之一。大大小小的工作室和设计公司多如牛毛，甚至有人冷笑设计公司现在比WC还要多。这个时候设计师必须要做出自己的独特性，创业的设计师经营公司也要与其他要有差异性，突出就是优势，那非常重要。</p><p style="white-space: normal;">&nbsp;</p><p style="white-space: normal;"><strong>设计没有好与坏，只有对与错。</strong></p><p style="white-space: normal;">&nbsp;</p><p style="white-space: normal;">&nbsp;</p><p style="white-space: normal;">以上我说的好设计和坏设计，自然是设计的前提。而设计有好和坏吗？我更希望大家用对与错来看待这个问题。作为设计师，他不是艺术家和商业师，首先应该是为业主解决实际问题，才是对的设计。不懂设计的人才会到处说这个设计好或者不好，为什么这样说？因为任何一样作品都有他的遗憾，哪怕是大师的五星级宾馆都是有遗憾的，所以不该用好不好来判定。出发点和目的性不同，自然设计的要求和本质也不同，违背了设计本意就失去意义，更何谈好坏？所以在对与错之间去思考设计，会更准确的为客户解决实际问题，找到设计的真谛！</p><p><br/></p>', '大家都有这样的感受，在未成为设计师之前，都对“设计师”职业的这三个字非常羡慕，都希望大家称我们为东莞', 216, 2, 'http://ohjmksy46.bkt.clouddn.com/image/iwm4bemw_4p1w4yzvxfcw584ea6b796e63.jpg', 1, '', '', 1462538523, 50, 0, 'p,d', '', 0, 0, '1', 0, 1, 2, '{"showdate":1462464000}', 'zh-cn'),
-(2, '高级企业网站', '高级企业网站', 3, 0, '高级企业网站', '', '1', '悦遇工作室', '<p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px; color: rgb(114, 114, 114); font-family: &#39;Open Sans&#39;, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 24px; white-space: normal; background-color: rgb(255, 255, 255);">高级企业网站</p><p><img src="http://ohjmksy46.bkt.clouddn.com/image/iwlynzc0_55aanzdwp08w584e81a4a563b.jpg" style=""/></p><p><img src="http://ohjmksy46.bkt.clouddn.com/image/iwlynyk8_1xshv0zxq6ro584e81a33e4c1.jpg" style=""/></p><p><img src="http://ohjmksy46.bkt.clouddn.com/image/iwlynx0o_4a08d6h5uoow584e81a189780.jpg" style=""/></p><p><img src="http://ohjmksy46.bkt.clouddn.com/image/iwlynupc_3sdacafv7o8w584e819e79b9b.jpg" style=""/></p><p><br/></p>', '高级企业网站', 203, 0, 'http://ohjmksy46.bkt.clouddn.com/image/iwm4f5o0_3p4cnfcwga68584ea76676d37.jpg', 2, '/data/upload/2016-05-06/572c8982020a4.jpghttp://ohjmksy46.bkt.clouddn.com/image/iwm4faao_53auzeeb8z8c584ea76ca39e4.jpg,http://ohjmksy46.bkt.clouddn.com/image/iwm4f9iw_252erwau32xw584ea76b44ca9.jpg,http://ohjmksy46.bkt.clouddn.com/image/iwm4f7zc_6inln0u3cj4s584ea769d1752.jpg,http://ohjmksy46.bkt.clouddn.com/image/iwm4f77k_k41mlxegj8g584ea76811f3e.jpg,http://ohjmksy46.bkt.clouddn.com/image/iwm4f5o0_4kqm510d9g8w584ea766930c9.jpg,', '', 1462536578, 50, 0, 'p', '', 0, 0, '1', 0, 1, 0, '{"showdate":1462464000}', 'zh-cn'),
-(3, '志和第三方公司网站', '志和第三方公司网站', 3, 0, '志和第三方公司网站', '', '1', '悦遇工作室', '<p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px; color: rgb(114, 114, 114); font-family: &#39;Open Sans&#39;, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 24px; white-space: normal; background-color: rgb(255, 255, 255);">志和第三方公司网站</p><p><img src="http://ohjmksy46.bkt.clouddn.com/image/iwg8k21s_2ehcpk6ucntw5849395c4d320.jpg" style=""/></p><p><img src="http://ohjmksy46.bkt.clouddn.com/image/iwg8hdlk_5i1aayr4us08584938dfb0c52.jpg" style=""/></p><p><img src="http://ohjmksy46.bkt.clouddn.com/image/iwg8d7wo_6kxpx7xyptkw5849381dd37e6.jpg" style=""/></p><p><br/></p><p><br/></p>', '志和第三方公司网站', 205, 0, 'http://ohjmksy46.bkt.clouddn.com/image/iwm4dbb4_5or075nwo40s584ea710b6c37.jpg', 2, '/data/upload/2016-05-06/572c89f8c6383.jpghttp://ohjmksy46.bkt.clouddn.com/image/iwm4dee8_422efzz8fdog584ea7148261b.jpg,http://ohjmksy46.bkt.clouddn.com/image/iwm4ddmg_3hxo056be2gw584ea71370697.jpg,http://ohjmksy46.bkt.clouddn.com/image/iwm4dcuo_5jtzj2havh4w584ea712b25fd.jpg,http://ohjmksy46.bkt.clouddn.com/image/iwm4dc2w_25ar0eq96yw0584ea71144ff8.jpg,http://ohjmksy46.bkt.clouddn.com/image/iwm4dbb4_68ptyg9t8wco584ea710c8963.jpg,', '', 1462536696, 50, 0, 'p', '', 0, 0, '1', 0, 1, 0, '{"showdate":1462464000}', 'zh-cn'),
-(4, '企业网站开发设计', '企业网站开发设计', 2, 0, '企业网站开发设计', '', '1', '悦遇工作室', '<p style="white-space: normal;"><span style="line-height: 1.75em;">-企业形象/产品网站设计开发</span><br/></p><p style="white-space: normal; line-height: 1.75em;">-集团官方网站设计开发</p><p style="white-space: normal; line-height: 1.75em;">-淘宝/天猫店铺视觉设计</p><p style="white-space: normal; line-height: 1.75em;">-html5+css3</p><p style="white-space: normal; line-height: 1.75em;">-各类型网站设计和制作</p>', '企业网站开发设计', 203, 1, 'http://ohjmksy46.bkt.clouddn.com/image/iwm4aaig_hcedy3x46f4584ea6830f7b6.jpg', 1, '', '', 1462537144, 50, 0, 'c,p', '', 0, 0, '1', 0, 1, 0, '{"showdate":1462464000}', 'zh-cn'),
-(5, '网站UI设计', '网站UI设计', 2, 0, '网站UI设计', '', '1', '悦遇工作室', '<p style="white-space: normal;"><strong><span style="color: rgb(0, 176, 240);">1. 用户研究</span></strong></p><p style="white-space: normal;">用户调研是综合运用现场观察、访谈、问卷调查、焦点小组等方法，获得用户需求及产品使用偏好。使用户的实际需求成为产品设计的导向，使产品更符合用户的习惯、经验和期待。</p><p style="white-space: normal;"><span style="color: rgb(0, 176, 240);"><strong>2. 交互设计</strong></span></p><p style="white-space: normal;">产品的交互流程设计,根据可用性分析结果制定交互方式、操作与跳转流程、结构、布局、信息和其他元素。</p><p style="white-space: normal;"><span style="color: rgb(0, 176, 240);"><strong>3. 界面设计</strong></span></p><p style="white-space: normal;">提供移动设备UI设计、APP界面设计，高品质的网站设计。</p>', '网站UI设计', 200, 2, 'http://ohjmksy46.bkt.clouddn.com/image/iwm4a20w_5fwu72e5ltog584ea678aedfe.jpg', 1, '', '', 1462537217, 50, 0, 'c,p', '', 0, 0, '1', 0, 1, 0, '{"showdate":1462464000}', 'zh-cn'),
-(6, 'ThinkPHP二次开发', 'ThinkPHP二次开发', 2, 0, 'ThinkPHP二次开发', '', '1', '悦遇工作室', '<p style="margin-top: 0px; margin-bottom: 10px; white-space: normal; color: rgb(85, 85, 85); font-family: &#39;Microsoft YaHei&#39;, Lato, &#39;Helvetica Neue&#39;, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; background-color: rgb(255, 255, 255);">专注于ThinkPHP程序项目的二次开发，提供从架构设计、需求分析、设计策划、程序开发，到部署运维全程外包服务。公司拥有强大的技术研发实力、规范的开发流程、丰富的经验，可针对不同行业特点设计解决方案。</p><p style="white-space: normal;"><span style="color: rgb(0, 176, 240);"><strong><span style="font-family: 微软雅黑, &#39;Microsoft YaHei&#39;;">包含：</span></strong></span></p><p style="white-space: normal;"><span style="font-family: 微软雅黑, &#39;Microsoft YaHei&#39;; font-size: 14px;">更改使用thinkphp框架开发的程序;</span></p><p style="white-space: normal;"><span style="font-family: 微软雅黑, &#39;Microsoft YaHei&#39;; font-size: 14px;">使用thinkphp框架开发功能;</span></p><p style="white-space: normal;"><span style="font-family: 微软雅黑, &#39;Microsoft YaHei&#39;; font-size: 14px;">基于thinkphp框架的项目;</span></p><p style="white-space: normal;"><span style="font-family: 微软雅黑, &#39;Microsoft YaHei&#39;; font-size: 14px;">使用thinkphp去访网络中的网站;</span></p>', 'ThinkPHP二次开发', 201, 2, 'http://ohjmksy46.bkt.clouddn.com/image/iwm49rzs_5r8l655x9r40584ea66bb8fc1.jpg', 1, '', '', 1462537270, 50, 0, 'c,p', '', 0, 0, '1', 0, 1, 0, '{"showdate":1462464000}', 'zh-cn'),
-(7, 'WJFCMS的二次开发', 'WJFCMS的二次开发', 2, 0, 'WJFCMS的二次开发', '', '1', '悦遇工作室', '<p style="margin-top: 0px; margin-bottom: 10px; white-space: normal; color: rgb(85, 85, 85); font-family: &#39;Microsoft YaHei&#39;, Lato, &#39;Helvetica Neue&#39;, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; background-color: rgb(255, 255, 255);">WJFCMS是一款基于PHP+MYSQL开发的中文内容管理框架。WJFCMS提出灵活的应用机制，框架自身提供基础的管理功能，而开发者可以根据自身的需求以应用的形式进行扩展。每个应用都能独立的完成自己的任务，也可通过系统调用其他应用进行协同工作。在这种运行机制下，开发商场应用的用户无需关心开发SNS应用时如何工作的，但他们之间又可通过系统本身进行协调，大大的降低了开发成本和沟通成本。</p><p style="margin-top: 0px; margin-bottom: 10px; white-space: normal; color: rgb(85, 85, 85); font-family: &#39;Microsoft YaHei&#39;, Lato, &#39;Helvetica Neue&#39;, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; background-color: rgb(255, 255, 255);"><span style="color: rgb(0, 176, 240);"><strong>包含：</strong></span></p><p style="margin-top: 0px; margin-bottom: 10px; white-space: normal; color: rgb(85, 85, 85); font-family: &#39;Microsoft YaHei&#39;, Lato, &#39;Helvetica Neue&#39;, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; background-color: rgb(255, 255, 255);">基于WJFCMS框架开发项目的程序修改</p><p style="margin-top: 0px; margin-bottom: 10px; white-space: normal; color: rgb(85, 85, 85); font-family: &#39;Microsoft YaHei&#39;, Lato, &#39;Helvetica Neue&#39;, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; background-color: rgb(255, 255, 255);">完善WJFCMS框架的功能</p><p style="white-space: normal;"><span style="color: rgb(85, 85, 85); font-family: &#39;Microsoft YaHei&#39;, Lato, &#39;Helvetica Neue&#39;, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; background-color: rgb(255, 255, 255);">增加WJFCMS的功能模块</span></p><p style="white-space: normal;"><span style="color: rgb(85, 85, 85); font-family: &#39;Microsoft YaHei&#39;, Lato, &#39;Helvetica Neue&#39;, Helvetica, Arial, sans-serif;"><span style="font-size: 14px; line-height: 20px; background-color: rgb(255, 255, 255);">使用WJFCMS重写网站项目</span></span></p>', 'WJFCMS的二次开发', 200, 2, 'http://ohjmksy46.bkt.clouddn.com/image/iwm49ka0_3fshb6agdfac584ea6616e7f8.jpg', 1, '', '', 1462537316, 50, 0, 'c,p', '', 0, 0, '1', 0, 1, 0, '{"showdate":1462464000}', 'zh-cn'),
-(8, 'ThinkPHP、WJFCMS项目插件定制', '插件定制', 2, 0, '插件定制', '', '1', '悦遇工作室', '<p style="margin-top: 0px; margin-bottom: 10px; white-space: normal; color: rgb(85, 85, 85); font-family: &#39;Microsoft YaHei&#39;, Lato, &#39;Helvetica Neue&#39;, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; background-color: rgb(255, 255, 255);"><span style="color: rgb(51, 51, 51); font-family: &#39;Microsoft YaHei&#39;, Arial, Helvetica, sans-serif, Simsun;">插件是用于实现简单的显示及数据处理的功能扩展。插件是可以开启关闭的，但不会影响原有系统的代码；</span></p><p style="margin-top: 0px; margin-bottom: 10px; white-space: normal; color: rgb(85, 85, 85); font-family: &#39;Microsoft YaHei&#39;, Lato, &#39;Helvetica Neue&#39;, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; background-color: rgb(255, 255, 255);"><span style="color: rgb(51, 51, 51); font-family: &#39;Microsoft YaHei&#39;, Arial, Helvetica, sans-serif, Simsun;">通过插件，很方便通过后台安装卸载来达到某种功能，之前WP的成功，很多原因是丰富的主题，功能众多的插件选择。</span></p><p style="margin-top: 0px; margin-bottom: 10px; white-space: normal; color: rgb(85, 85, 85); font-family: &#39;Microsoft YaHei&#39;, Lato, &#39;Helvetica Neue&#39;, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; background-color: rgb(255, 255, 255);"><span style="color: rgb(0, 176, 240);"><strong><span style="font-family: &#39;Microsoft YaHei&#39;, Arial, Helvetica, sans-serif, Simsun;">包含：</span></strong></span></p><p style="margin-top: 0px; margin-bottom: 10px; white-space: normal; color: rgb(85, 85, 85); font-family: &#39;Microsoft YaHei&#39;, Lato, &#39;Helvetica Neue&#39;, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; background-color: rgb(255, 255, 255);"><span style="color: rgb(51, 51, 51); font-family: &#39;Microsoft YaHei&#39;, Arial, Helvetica, sans-serif, Simsun;">ThinkPHP项目的插件定制</span></p><p style="margin-top: 0px; margin-bottom: 10px; white-space: normal; color: rgb(85, 85, 85); font-family: " microsoft="" helvetica="" font-size:="" line-height:="" background-color:=""><span style="color: rgb(51, 51, 51); font-family: &#39;Microsoft YaHei&#39;, Arial, Helvetica, sans-serif, Simsun;">WJFCMS项目的插件定制</span></p>', '插件定制', 204, 2, 'http://ohjmksy46.bkt.clouddn.com/image/iwm49ck8_5ilcpr11gs08584ea657b1448.jpg', 1, '', '', 1462537365, 50, 0, 'c,p', '', 0, 0, '1', 0, 1, 0, '{"showdate":1462464000}', 'zh-cn'),
-(9, 'WJFCMS功能定制', 'WJFCMS功能定制', 2, 0, 'WJFCMS功能定制', '', '1', '悦遇工作室', '<p style="white-space: normal;">针对不同的行业，不同的企业，利用ThinkCMF框架进行开发，根据客户提出的功能需求进行分析，进行设计并开发出专用的功能，用于解决特定的方案。</p><p style="white-space: normal;"><span style="color: rgb(0, 176, 240);"><strong>包含：</strong></span></p><p style="white-space: normal;">已有功能的改进</p><p style="white-space: normal;">增加新的功能</p>', 'WJFCMS功能定制', 211, 2, 'http://ohjmksy46.bkt.clouddn.com/image/iwm491rc_3cfcm5icllyc584ea6496b7ea.jpg', 1, '', '', 1462537410, 50, 0, 'c,p', '', 0, 0, '1', 0, 1, 2, '{"showdate":1462464000}', 'zh-cn'),
-(11, '品牌价值的核心与精髓是品牌设计的灵魂', '品牌价值的核心与精髓是品牌设计的灵魂', 5, 0, '品牌价值的核心与精髓是品牌设计的灵魂', '', '1', '悦遇工作室', '<p style="white-space: normal;">在现代，甭管大的还是小的<strong>东莞设计公司</strong>，大都十分注重<strong>东莞品牌设计</strong>，但放眼看去，市场上的精品又有多少。精品寥寥无几的原因是什么呢？无非两点：1、在进行品牌设计之前，对于品牌的定位不明确；2、有模糊的品牌定位概念后，设计公司的品牌设计作品由公司人员的主观喜好作为判断。</p><p style="white-space: normal;">&nbsp;</p><p style="white-space: normal;">&nbsp; &nbsp; 设计本身必须有思想，有灵魂，有目的。产品是卖给谁的，他们的常规生活方式是什么？希望传达给他们一个什么样的信息？希望他们怎么看这个品牌？我们希望引导他们如何去做？我们如何贴近其真实的内心需求等等。这些问题，不是你喜欢与不喜欢的问题。</p><p style="white-space: normal;">&nbsp;&nbsp;</p><p style="white-space: normal;">&nbsp; &nbsp; 1、明确品牌定位：品牌设计的定位解决的是品牌是什么与不是什么的问题。这个是什么与不是什么，并不是指产品属性，而是指你的品牌代表了什么与不代表什么。</p><p style="white-space: normal;">&nbsp;</p><p style="white-space: normal;">&nbsp; &nbsp; &nbsp;2、突显品牌核心价值：品牌核心价值是品牌设计的精髓与核心，也是品牌的内在驱动力与凝聚力。在产品日渐同质化的趋势下，对消费者最重要的影响因素往往不再是产品实体，而是品牌核心价值所折射出的目标消费者所具有或是向往的生活方式和精神追求，这也是促使消费者保持品牌忠诚的核心力量。</p><p><br/></p>', '在现代，甭管大的还是小的东莞设计公司，大都十分注重东莞品牌设计，但放眼看去，市场上的精品又有多少。精', 212, 4, 'http://ohjmksy46.bkt.clouddn.com/image/iwm4b1io_1jse1fw13mpw584ea6a631cc4.jpg', 1, '', '', 1462539100, 50, 0, 'c,p', '', 0, 0, '1', 0, 1, 10, '{"showdate":1462464000}', 'zh-cn'),
-(12, '东莞品牌设计是冰山一角，却至关重要！', '东莞品牌设计是冰山一角，却至关重要！', 5, 0, '东莞品牌设计是冰山一角，却至关重要！', '', '1', '悦遇工作室', '<p style="margin-top: 0px; margin-bottom: 0px; white-space: normal; padding: 0px; line-height: 25.2px; font-size: 14px; color: rgb(102, 102, 102); font-family: AppleGothic, Arial, &#39;Microsoft Yahei&#39;, Simsun; background-color: rgb(255, 255, 255);">当世界进入品牌竞争的时代，当品牌成为中华大地上商界的热点时，品牌设计也成为人们常挂在嘴边的时髦词汇。有人统计说企业每投在品牌形象设计上1美元，所获得的收益是227美元。如此诱人的投资回报率，无怪乎企业界对品牌设计趋之若鹜。那么，品牌设计究竟是什么？其魅力来自何处？<br/>&nbsp;</p><p style="margin-top: 0px; margin-bottom: 0px; white-space: normal; padding: 0px; line-height: 25.2px; font-size: 14px; color: rgb(102, 102, 102); font-family: AppleGothic, Arial, &#39;Microsoft Yahei&#39;, Simsun; background-color: rgb(255, 255, 255);">1、设计是冰山一角，却至关重要！如果我们把品牌理解成一座冰山。品牌或企业所属的文化制度、员工行为、组织结构、核心技术、营销方式等要素是构成这座冰山的主体，尽管隐于水下，却是品牌发展最强有力的支撑与原动力。</p><p style="margin-top: 0px; margin-bottom: 0px; white-space: normal; padding: 0px; line-height: 25.2px; font-size: 14px; color: rgb(102, 102, 102); font-family: AppleGothic, Arial, &#39;Microsoft Yahei&#39;, Simsun; background-color: rgb(255, 255, 255);">但这一切都必须通过一系列完整有效的视觉设计与品牌推广来被大众所认知。</p>_ueditor_page_break_tag_<p style="margin-top: 0px; margin-bottom: 0px; white-space: normal; padding: 0px; line-height: 25.2px; font-size: 14px; color: rgb(102, 102, 102); font-family: AppleGothic, Arial, &#39;Microsoft Yahei&#39;, Simsun; background-color: rgb(255, 255, 255);"><strong>想想设计究竟有多重要！</strong></p><p style="margin-top: 0px; margin-bottom: 0px; white-space: normal; padding: 0px; line-height: 25.2px; font-size: 14px; color: rgb(102, 102, 102); font-family: AppleGothic, Arial, &#39;Microsoft Yahei&#39;, Simsun; background-color: rgb(255, 255, 255);">2、回归原点，发掘项目或产品的本质所在!设计大师深泽直人的沙发设计原理告诉我们，抛开沙发表象的坐垫、靠背等等，其实本质上它只是一张凳子。设计者则要尽可能单纯的思考，根据所需进行相应的设计。所以我们的建议是凡事不要急于动手，不妨先静下心来，好好想想这个项目或者产品最为显著的特点是什么，它们的目标客户与消费群又是什么……</p><p style="margin-top: 0px; margin-bottom: 0px; white-space: normal; padding: 0px; line-height: 25.2px; font-size: 14px; color: rgb(102, 102, 102); font-family: AppleGothic, Arial, &#39;Microsoft Yahei&#39;, Simsun; text-align: center; background-color: rgb(255, 255, 255);"><br/></p><p style="margin-top: 0px; margin-bottom: 0px; white-space: normal; padding: 0px; line-height: 25.2px; font-size: 14px; color: rgb(102, 102, 102); font-family: AppleGothic, Arial, &#39;Microsoft Yahei&#39;, Simsun; background-color: rgb(255, 255, 255);"><br/></p>_ueditor_page_break_tag_<p style="margin-top: 0px; margin-bottom: 0px; white-space: normal; padding: 0px; line-height: 25.2px; font-size: 14px; color: rgb(102, 102, 102); font-family: AppleGothic, Arial, &#39;Microsoft Yahei&#39;, Simsun; background-color: rgb(255, 255, 255);"><br/><strong>&nbsp;做什么样的设计？</strong></p><p style="margin-top: 0px; margin-bottom: 0px; white-space: normal; padding: 0px; line-height: 25.2px; font-size: 14px; color: rgb(102, 102, 102); font-family: AppleGothic, Arial, &#39;Microsoft Yahei&#39;, Simsun; background-color: rgb(255, 255, 255);">3、简洁、清晰、概念是我们的设计原则！简洁、清晰是以最为简洁直观的方式，达成有效的视觉沟通和传播，拒绝一切不切实际的象征意义与所谓内涵。</p><p style="margin-top: 0px; margin-bottom: 0px; white-space: normal; padding: 0px; line-height: 25.2px; font-size: 14px; color: rgb(102, 102, 102); font-family: AppleGothic, Arial, &#39;Microsoft Yahei&#39;, Simsun; background-color: rgb(255, 255, 255);">概念则是以巧妙独到的设计理念和应用，给人以意外惊喜，使人印象深刻从而有力提升企业形象及文化内涵。</p><p style="margin-top: 0px; margin-bottom: 0px; white-space: normal; padding: 0px; line-height: 25.2px; font-size: 14px; color: rgb(102, 102, 102); font-family: AppleGothic, Arial, &#39;Microsoft Yahei&#39;, Simsun; background-color: rgb(255, 255, 255);">4、为客户做合适的设计！鲁迅先生说穿衣：“……人瘦不要穿黑衣裳，人胖不要穿白衣裳；脚长的女人一定要穿黑鞋子，脚短就一定要穿白鞋子；方格子的衣裳胖人不能穿，但比横格子的还好；横格子的胖人穿上，就把胖子更往两边裂着，更横宽了，胖子要穿竖条子的，竖的把人显得长，横的把人显的宽……”设计亦是如此，合适才好！合适就好！</p><p><br/></p>', '当世界进入品牌竞争的时代，当品牌成为中华大地上商界的热点时，品牌设计也成为人们常挂在嘴边的时髦词汇。', 346, 4, 'http://ohjmksy46.bkt.clouddn.com/image/iwm4anmo_6v5ro7hhqykg584ea694dc9e9.jpg', 1, '', '', 1462539160, 50, 0, 'a,p', '', 0, 0, '1', 0, 1, 49, '{"showdate":1462464000}', 'zh-cn'),
-(13, '东莞某五金厂', '东莞某五金厂', 6, 0, '东莞某五金厂', '', '1', '程小姐', '<p>感谢悦遇工作室按时保证质量的完成了我公司的网站建设,通过此次合作充分体现了悦遇工作室的项目团队在技术上对项目的把握程度,也为今后的合作奠定了基础.悦遇工作室是非常理想的合作伙伴。</p>', '感谢悦遇工作室按时保证质量的完成了我公司的网站建设,通过此次合作充分体现了悦遇工作室的项目团队在技术上对项目的把握程度,也为今后的合作奠定了基础.悦遇工作室是非常理想的合作伙伴。', 200, 0, 'http://ohjmksy46.bkt.clouddn.com/image/iwm4lbw0_35jxhdo6c1k4584ea886655c2.jpg', 2, 'http://ohjmksy46.bkt.clouddn.com/image/iwm4lbw0_3o5ivzzn33s4584ea8867634e.jpg,', '', 1462579633, 50, 0, 'p', '', 0, 0, '1', 0, 1, 0, '{"showdate":1462550400}', 'zh-cn'),
-(14, '志和第三方', '志和第三方', 6, 0, '志和第三方', '', '1', '孙先生', '<p>悦遇工作室是一支年轻的团队,充满朝气的团队,设计实力雄厚的团队,客户精神至上的团队。</p>', '悦遇工作室是一支年轻的团队,充满朝气的团队,设计实力雄厚的团队,客户精神至上的团队。', 200, 0, 'http://ohjmksy46.bkt.clouddn.com/image/iwm4kyrs_tflmiecr5hw584ea8751a45d.jpg', 2, 'http://ohjmksy46.bkt.clouddn.com/image/iwm4kyrs_190vi332wps0584ea87528308.jpg,', '', 1462580217, 50, 0, 'p', '', 0, 0, '1', 0, 1, 0, '{"showdate":1462550400}', 'zh-cn'),
-(15, '学吧网', '学吧网', 6, 0, '学吧网', '', '1', '彭先生', '<p>能顺应客户的需求变化而及时提供合适的解决方法，高效快捷，拥有优秀的服务团队。</p>', '能顺应客户的需求变化而及时提供合适的解决方法，高效快捷，拥有优秀的服务团队。', 200, 0, 'http://ohjmksy46.bkt.clouddn.com/image/iwm4kkvs_1szlprr9ofa8584ea8633a02a.jpg', 2, 'http://ohjmksy46.bkt.clouddn.com/image/iwm4kkvs_2b1htrd6pw2s584ea8634a1fd.jpg,', '', 1462580295, 50, 0, 'p', '', 0, 0, '1', 0, 1, 0, '{"showdate":1462550400}', 'zh-cn'),
-(16, '石龙E家', '石龙E家', 6, 0, '石龙E家', '', '1', '张先生', '<p>在整个项目中尽心尽责,项目团队负责人负责的开发任务均顺利如约完成,院里的领导也都非常满意,感谢悦遇工作室。</p>', '在整个项目中尽心尽责,项目团队负责人负责的开发任务均顺利如约完成,院里的领导也都非常满意,感谢悦遇工作室。', 200, 0, 'http://ohjmksy46.bkt.clouddn.com/image/iwm4k4og_4fk4toirr2io584ea84e8e6ce.jpg', 2, 'http://ohjmksy46.bkt.clouddn.com/image/iwm4k4og_4ziykz4obusk584ea84ea03fa.jpg,', '', 1462580360, 33, 0, 'p', '', 0, 0, '1', 0, 1, 0, '{"showdate":1462550400}', 'zh-cn'),
-(17, '东莞某餐饮公司', '东莞某餐饮公司', 6, 0, '东莞某餐饮公司', '', '1', '谢先生', '<p>悦遇工作室是一支年轻、积极向上的团队，为我公司提供的各类网站服务真正做到了细致周到，让我们感觉很放心。</p>', '悦遇工作室是一支年轻、积极向上的团队，为我公司提供的各类网站服务真正做到了细致周到，让我们感觉很放心。', 200, 0, 'http://ohjmksy46.bkt.clouddn.com/image/iwm4jle0_65nwndh36og8584ea835c5dc7.jpg', 2, 'http://ohjmksy46.bkt.clouddn.com/image/iwm4jle0_6pcvxqfazx0c584ea835d770b.jpg,', '', 1462580412, 11, 0, 'p', '', 0, 0, '1', 0, 1, 0, '{"showdate":1462550400}', 'zh-cn'),
-(18, '广州洁具公司', '广州洁具公司', 6, 0, '广州洁具公司', '', '1', '吴小姐', '<p>悦遇工作室是前期制作还是后期维护，都能做到尽心尽责，是我们满意的合作伙伴。</p>', '悦遇工作室是前期制作还是后期维护，都能做到尽心尽责，是我们满意的合作伙伴。', 200, 0, 'http://ohjmksy46.bkt.clouddn.com/image/iwm4j7i0_375vw8qqbg2s584ea82366cc0.jpg', 2, 'http://ohjmksy46.bkt.clouddn.com/image/iwm4j7i0_3the3kt5h44k584ea8237ab84.jpg,', '', 1462580465, 50, 0, 'p', '', 0, 0, '1', 0, 1, 0, '{"showdate":1462550400}', 'zh-cn'),
-(19, '食品公司网站', '食品公司网站', 6, 0, '食品公司网站', '', '1', '王先生', '<p>悦遇工作室是一只优秀的团队，他们有优良的技术和高品质的服务，在和我公司合作工程中，体现了他们制作大公司网站的实力。</p>', '悦遇工作室是一只优秀的团队，他们有优良的技术和高品质的服务，在和我公司合作工程中，体现了他们制作大公司网站的实力。', 201, 0, 'http://ohjmksy46.bkt.clouddn.com/image/iwm4irao_72rj0hcxk8co584ea80ee3684.jpg', 2, 'http://ohjmksy46.bkt.clouddn.com/image/iwm4is2g_48842mspe6o584ea80f03c64.jpg,', '', 1462580522, 45, 0, 'p', '', 0, 0, '1', 0, 1, 0, '{"showdate":1462550400}', 'zh-cn'),
-(20, 'ACE admin management system', 'ACE admin', 10, 0, 'ACE admin management system', '', '1', 'Rainfer studio', '<p open="" font-size:="" margin-top:="" margin-bottom:="" white-space:="" box-sizing:="" background-color:="" style="white-space: normal; color: rgb(114, 114, 114); line-height: 24px;">test url：<a title="http://www.rainfer.cn/admin.php" href="http://www.rainfer.cn/admin.php" target="_blank" style="color: rgb(4, 136, 205); text-decoration: none; box-sizing: border-box;">http://www.rainfer.cn/admin.php</a></p><p open="" font-size:="" margin-top:="" margin-bottom:="" white-space:="" box-sizing:="" background-color:="" style="white-space: normal; color: rgb(114, 114, 114); line-height: 24px;">name：demo</p><p open="" font-size:="" margin-top:="" margin-bottom:="" white-space:="" box-sizing:="" background-color:="" style="white-space: normal; color: rgb(114, 114, 114); line-height: 24px;">password：123456</p><p open="" font-size:="" margin-top:="" margin-bottom:="" white-space:="" box-sizing:="" background-color:="" style="white-space: normal; color: rgb(114, 114, 114); line-height: 24px;">download:<a title="http://git.oschina.net/rainfer/YFCMF" href="http://git.oschina.net/rainfer/YFCMF" target="_blank" style="color: rgb(4, 136, 205); text-decoration: none; box-sizing: border-box;">http://git.oschina.net/rainfer/YFCMF</a></p><p><img src="http://ohjmksy46.bkt.clouddn.com/image/iwlyde5s_63tohbqbcpog584e7fb6c4381.jpg" style="" title="572c863a0b838.jpg"/></p><p><img src="http://ohjmksy46.bkt.clouddn.com/image/iwlydexk_2djdsc2ix1hc584e7fb74c5a6.jpg" style="" title="572c863a0db61.jpg"/></p><p><img src="http://ohjmksy46.bkt.clouddn.com/image/iwlydgh4_amfzhr162m0584e7fb9097b9.jpg" style="" title="572c863a052a7.jpg"/></p><p><img src="http://ohjmksy46.bkt.clouddn.com/image/iwlydh8w_3dovops8ga80584e7fba6c9fa.jpg" style="" title="572c863a071e7.jpg"/></p><p><img src="http://ohjmksy46.bkt.clouddn.com/image/iwlydi0o_4f6h69in0vsw584e7fbb8e163.jpg" style="" title="572c863a098f8.jpg"/></p><p><img src="http://ohjmksy46.bkt.clouddn.com/image/iwlydjk8_2xllhe3hof6s584e7fbd5e42a.jpg" style="" title="572c863a03366.jpg"/></p><p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px; color: rgb(114, 114, 114);" open="" font-size:="" line-height:="" white-space:="" background-color:=""><br/><a href="http://git.oschina.net/rainfer/YFCMF" target="_blank" title="http://git.oschina.net/rainfer/YFCMF" style="box-sizing: border-box; color: rgb(4, 136, 205); text-decoration: none;"></a><br/></p>', 'ACE admin management system', 205, 0, 'http://ohjmksy46.bkt.clouddn.com/image/iwlyj1v4_22lt905zjzdw584e80be42983.jpg', 2, '/data/upload/2016-05-06/572c863a052a7.jpghttp://ohjmksy46.bkt.clouddn.com/image/iwlye2uo_wt7otgvdm1c584e7fd61d49c.jpg,http://ohjmksy46.bkt.clouddn.com/image/iwlye1b4_2e74rpkmx8n4584e7fd44cf12.jpg,http://ohjmksy46.bkt.clouddn.com/image/iwlye0jc_1xrxaw5z8qn4584e7fd33e487.jpg,http://ohjmksy46.bkt.clouddn.com/image/iwlydyzs_3qudgk0d336s584e7fd1789ba.jpg,http://ohjmksy46.bkt.clouddn.com/image/iwlydy80_cgng0pgmswg584e7fd00b5e5.jpg,http://ohjmksy46.bkt.clouddn.com/image/iwlydwog_2hu7u1cbg6io584e7fce50313.jpg,', '', 1462535538, 50, 0, 'p', '', 0, 0, '1', 0, 1, 0, '{"showdate":1462464000}', 'en-us'),
-(21, 'Advanced enterprise web site', 'Advanced enterprise web site', 10, 0, 'Advanced enterprise web site', '', '1', 'Rainfer studio', '<p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 10px; color: rgb(114, 114, 114); font-family: &#39;Open Sans&#39;, Helvetica, Arial, sans-serif; font-size: 14px; line-height: 24px; white-space: normal; background-color: rgb(255, 255, 255);">Advanced enterprise web site</p><p><img src="http://ohjmksy46.bkt.clouddn.com/image/iwlyldyw_qqu8sx6dan4584e812b17dfa.jpg" style=""/></p><p><img src="http://ohjmksy46.bkt.clouddn.com/image/iwlyld74_1a5euurx4274584e812a2931d.jpg" style=""/></p><p><img src="http://ohjmksy46.bkt.clouddn.com/image/iwlylcfc_4qv2dlmaenqc584e81299883e.jpg" style=""/></p><p><img src="http://ohjmksy46.bkt.clouddn.com/image/iwlylcfc_43c85e29paas584e812983849.jpg" style=""/></p><p><img src="http://ohjmksy46.bkt.clouddn.com/image/iwlyl9c8_3j1aqwncyq80584e812571650.jpg" style=""/></p><p><br/></p>', 'Advanced enterprise web site', 203, 0, 'http://ohjmksy46.bkt.clouddn.com/image/iwlynupc_31ah27if3quc584e819e618e1.jpg', 2, '/data/upload/2016-05-06/572c8982020a4.jpghttp://ohjmksy46.bkt.clouddn.com/image/iwlyo0vk_qxqdghcwkv4584e81a6180b6.jpg,http://ohjmksy46.bkt.clouddn.com/image/iwlynzc0_55aanzdwp08w584e81a4a563b.jpg,http://ohjmksy46.bkt.clouddn.com/image/iwlynyk8_1xshv0zxq6ro584e81a33e4c1.jpg,http://ohjmksy46.bkt.clouddn.com/image/iwlynx0o_4a08d6h5uoow584e81a189780.jpg,http://ohjmksy46.bkt.clouddn.com/image/iwlynupc_3sdacafv7o8w584e819e79b9b.jpg,', '', 1462536578, 50, 0, 'p', '', 0, 0, '1', 0, 1, 0, '{"showdate":1462464000}', 'en-us'),
-(22, 'ChiHe company website', 'ChiHe company website', 10, 0, 'ChiHe company website', '', '1', 'Rainfer studio', '<p><img src="http://ohjmksy46.bkt.clouddn.com/image/iwlyr8m8_7cufq9eu0l8g584e823cec67d.jpg" style="" title="572c89f8c9e1c.jpg"/></p><p><img src="http://ohjmksy46.bkt.clouddn.com/image/iwlyr9e0_euvjiyxldts584e823d0d432.jpg" style="" title="572c89f8c86ab.jpg"/></p><p><img src="http://ohjmksy46.bkt.clouddn.com/image/iwlyra5s_3qy9h4i6hkys584e823e7875d.jpg" style="" title="572c89f8c6383.jpg"/></p><p><img src="http://ohjmksy46.bkt.clouddn.com/image/iwlyraxk_1rum1zyj5b1c584e823f393cf.jpg" style="" title="572c89f8c7323.jpg"/></p><p><img src="http://ohjmksy46.bkt.clouddn.com/image/iwlyrbpc_2hun2r9p80o4584e82405033e.jpg" style="" title="572c89f8cb1a4.jpg"/></p><p><br/></p>', 'ChiHe company website', 205, 0, 'http://ohjmksy46.bkt.clouddn.com/image/iwlyshdc_hz2qdpbeutw584e8276100b5.jpg', 2, '/data/upload/2016-05-06/572c89f8c6383.jpghttp://ohjmksy46.bkt.clouddn.com/image/iwlysjoo_5uzd5tjzktoo584e8279bc539.jpg,http://ohjmksy46.bkt.clouddn.com/image/iwlysiww_5h2whs3ltusk584e8278afeae.jpg,http://ohjmksy46.bkt.clouddn.com/image/iwlysi54_7eby9xxyh3k8584e8277edbb8.jpg,http://ohjmksy46.bkt.clouddn.com/image/iwlyshdc_45hcd16xgdog584e8276856e1.jpg,http://ohjmksy46.bkt.clouddn.com/image/iwlyshdc_10ato2d3edeo584e827620671.jpg,', '', 1462536696, 50, 0, 'p', '', 0, 0, '1', 0, 1, 0, '{"showdate":1462464000}', 'en-us'),
-(23, 'Enterprise website development and design', 'Enterprise website development and design', 9, 0, 'Enterprise website development and design', '', '1', 'Rainfer studio', '<p>- enterprise image / product website design and development</p><p>- Group official website design and development</p><p>Taobao / Tmall store visual design</p><p>-html5+css3</p><p>- Web site design and production</p>', 'Enterprise website development and design', 203, 0, 'http://ohjmksy46.bkt.clouddn.com/image/iwly77xs_6iu4nitx6t8g584e7e96d19e9.jpg', 1, '', '', 1462537144, 50, 0, 'c,p', '', 0, 0, '1', 0, 1, 0, '{"showdate":1462464000}', 'en-us'),
-(24, 'Website UI design', 'Website UI design', 9, 0, 'Website UI design', '', '1', 'Rainfer studio', '<p style="white-space: normal;"><strong><span style="color: rgb(0, 176, 240);">1 user studies</span></strong></p><p style="white-space: normal;">User research is a comprehensive use of field observation, interviews, questionnaires, focus groups and other methods to obtain user needs and product usage preferences. The actual needs of the user to become a guide to product design, so that products more in line with the user&#39;s habits, experience and expectations.</p><p style="white-space: normal;"><span style="color: rgb(0, 176, 240);"><strong>2 Interactive Design</strong></span></p><p style="white-space: normal;">Product interaction process design, based on the analysis of the results of the availability of interactive mode, operation and jump process, structure, layout, information and other elements.</p><p style="white-space: normal;"><span style="color: rgb(0, 176, 240);"><strong>3 interface design</strong></span></p><p style="white-space: normal;">Provide mobile device UI design, APP interface design, high quality web design.</p>', 'Website UI design', 200, 1, 'http://ohjmksy46.bkt.clouddn.com/image/iwly5mu8_59wmqgg8cxwk584e7e4ca9838.jpg', 1, '', '', 1462537217, 50, 0, 'c,p', '', 0, 0, '1', 0, 1, 0, '{"showdate":1462464000}', 'en-us'),
-(25, 'ThinkPHP two development', 'ThinkPHP two development', 9, 0, 'ThinkPHP two development', '', '1', 'Rainfer studio', '<p style="margin-top: 0px; margin-bottom: 10px; white-space: normal; color: rgb(85, 85, 85); font-family: "Microsoft YaHei", Lato, "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; background-color: rgb(255, 255, 255);">Focus on the ThinkPHP program two development projects, to provide from the architecture design, needs analysis, design planning, program development, to the deployment of operation and maintenance of the whole outsourcing services. The company has strong technical research and development strength, standardized development process, rich experience, can design solutions for different industries.</p><p style="white-space: normal;"><span style="color: rgb(0, 176, 240);"><strong><span style="font-family: 微软雅黑, "Microsoft YaHei";">Contain：</span></strong></span></p><p style="white-space: normal;"><span style="font-family: 微软雅黑, "Microsoft YaHei"; font-size: 14px;"></span></p><p style="white-space: normal;">Change the use of the ThinkPHP framework for the development of the program;</p><p style="white-space: normal;">Use ThinkPHP framework development capabilities;</p><p style="white-space: normal;">Project based on ThinkPHP framework;</p><p style="white-space: normal;">Use ThinkPHP to visit the web site;</p>', 'ThinkPHP two development', 201, 1, 'http://ohjmksy46.bkt.clouddn.com/image/iwly33sg_274wp4ptqxog584e7dd646a37.jpg', 1, '', '', 1462537270, 50, 0, 'c,p', '', 0, 0, '1', 0, 1, 0, '{"showdate":1462464000}', 'en-us'),
-(26, 'Two development of WJFCMS', 'Two development of WJFCMS', 9, 0, 'Two development of WJFCMS', '', '1', 'Rainfer studio', '<p style="margin-top: 0px; margin-bottom: 10px; white-space: normal; color: rgb(85, 85, 85); font-family: "Microsoft YaHei", Lato, "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; background-color: rgb(255, 255, 255);">WJFCMS is a PHP+MYSQL based development of the Chinese content management framework. WJFCMS proposes a flexible application mechanism, the framework itself provides the basis of management functions, and developers can be based on their own needs in the form of application to expand. Each application can independently complete its own tasks, but also through the system to call other applications to work together. In this mechanism, the development of shopping application users how to work without concern for the development of SNS application, but they also can be coordinated by the system itself, greatly reducing the development cost and communication cost.</p><p style="margin-top: 0px; margin-bottom: 10px; white-space: normal; color: rgb(85, 85, 85); font-family: "Microsoft YaHei", Lato, "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; background-color: rgb(255, 255, 255);"><span style="color: rgb(0, 176, 240);"><strong>Contain：</strong></span></p><p style="white-space: normal;">Program modification based on WJFCMS framework development project</p><p style="white-space: normal;">Improve the function of WJFCMS framework</p><p style="white-space: normal;">Add WJFCMS function module</p><p style="white-space: normal;">Use WJFCMS to rewrite the website project</p>', 'Two development of WJFCMS', 200, 1, 'http://ohjmksy46.bkt.clouddn.com/image/iwly0vjk_1pvo3gniqf6s584e7d6e373c2.jpg', 1, '', '', 1462537316, 50, 0, 'c,p', '', 0, 0, '1', 0, 1, 0, '{"showdate":1462464000}', 'en-us'),
-(27, 'ThinkPHP, WJFCMS plug customization', 'plug customization', 9, 0, 'plug customization', '', '1', 'Rainfer studio', '<p style="white-space: normal;">The plug-in is used to achieve a simple display and data processing functions. Plug-ins can be turned on and off, but will not affect the original system code;</p><p style="white-space: normal;">Through the plug-in, it is convenient to install and uninstall through the background to achieve a certain function, before the success of WP, a lot of reasons are rich in the theme, a large number of plug-ins to choose.</p><p style="margin-top: 0px; margin-bottom: 10px; white-space: normal; color: rgb(85, 85, 85); font-family: " microsoft="" helvetica="" font-size:="" line-height:="" background-color:=""><span style="color: rgb(51, 51, 51); font-family: " microsoft=""></span><br/></p><p style="margin-top: 0px; margin-bottom: 10px; white-space: normal; color: rgb(85, 85, 85); font-family: " microsoft="" helvetica="" font-size:="" line-height:="" background-color:=""><span style="color: rgb(0, 176, 240);"><strong><span style="font-family: " microsoft="">Contain：</span></strong></span></p><p style="margin-top: 0px; margin-bottom: 10px; white-space: normal; color: rgb(85, 85, 85); font-family: " microsoft="" helvetica="" font-size:="" line-height:="" background-color:=""><span style="color: rgb(51, 51, 51); font-family: " microsoft=""></span></p><p style="white-space: normal;">ThinkPHP project plug-in customization</p><p style="white-space: normal;">WJFCMS project plug-in customization</p>', 'ThinkPHP, WJFCMS plug customization', 204, 1, 'http://ohjmksy46.bkt.clouddn.com/image/iwm4tuzk_4pqkfvi4xcmc584eaa149782d.jpg', 1, '', '', 1462537365, 50, 0, 'c,p', '', 0, 0, '1', 0, 1, 0, '{"showdate":1462464000}', 'en-us'),
-(28, 'WJFCMS function customization', 'WJFCMS function customization', 9, 0, 'WJFCMS function customization', '', '1', 'Rainfer studio', '<p style="white-space: normal;">For different industries, different enterprises, the use of WJFCMS framework for development, according to the customer&#39;s functional requirements analysis, design and develop a dedicated function for the solution of specific programs.</p><p style="white-space: normal;"><span style="color: rgb(0, 176, 240);"><strong>Contain：</strong></span></p><p style="white-space: normal;">Improvement of existing function</p><p style="white-space: normal;">Add new features</p>', 'WJFCMS function customization', 211, 1, 'http://ohjmksy46.bkt.clouddn.com/image/iwlx2tgo_dy8h0zscta0584e77390c73f.jpg', 1, '', '', 1462537410, 50, 0, 'c,p', '', 0, 0, '1', 0, 1, 2, '{"showdate":1462464000}', 'en-us');
-INSERT INTO `yf_news` (`n_id`, `news_title`, `news_titleshort`, `news_columnid`, `news_columnviceid`, `news_key`, `news_tag`, `news_auto`, `news_source`, `news_content`, `news_scontent`, `news_hits`, `news_like`, `news_img`, `news_pic_type`, `news_pic_allurl`, `news_pic_content`, `news_time`, `listorder`, `news_modified`, `news_flag`, `news_zaddress`, `news_cpprice`, `news_back`, `news_open`, `news_lvtype`, `comment_status`, `comment_count`, `news_extra`, `news_l`) VALUES
-(29, 'A teacher for a day is a lifelong learning Designer', 'A teacher for a day is a lifelong learning Designer', 12, 0, 'A teacher for a day is a lifelong learning Designer', '', '1', 'Rainfer studio', '<p>We all have this feeling, before becoming a designer, all of the "designer" career of these three words are very envious, I hope you can call us as Dongguan designer. When the customer is respected as a designer, we are very proud and happy. But I hope you understand, designers not only design the occupation name, because he assumes the role of the teachers in the design or function, so remember the moment: a teacher for a day is a lifelong learning designer.</p><p>What is a designer? Why do you want to understand the concept of "teacher"? In fact, I was transposition thinking, that is, standing in the customer&#39;s point of view, to give full consideration to why he wants to find you to do the design of the reasons? If you find out the reason is to find your own design. While their transposition thought, can not find the reason for the division of words, so naturally you is not the designer, then call you when every designer in others, a lot of thinking how a designer? The designers of the division, but also the need for us to work hard every day and learning, and constantly improve their design level and comprehensive quality. Let oneself from designer to designer&#39;s transformation, the designer can afford a teacher.</p><p>To do the design, don&#39;t spoil the design.</p><p>This sentence is I think a long time to come out, although it seems very boring, I think it is very important. Start the design of the early friends, please always remember this sentence, and then leave a blank, let your own thinking. Because a lot of people in the list, only thinking is the list is a profit, but ignored the design itself caused by the bad.</p><p>I have witnessed a Shanghai strategy of the company, a company in Wenzhou for their brand promotion projects, the company sent to analyze customer business background and the actual situation, if not up to your requirements, give up the operation of the project, even if customers pay more fees, also insisted would give up. I did not understand, why give so much money do not do? I understand why their company has been so successful, because they only do the design, not bad design, that is their long-term development and maintain strategic principles.</p><p>So in the early days of entrepreneurship, I also choose customers to start with the principle, as far as possible to make good design to find their own.</p><p>Highlight is the advantage.</p><p>Must be highlighted, as a designer must have a bright spot. Now the mouse will use the software of the people have said that he is a designer, the Art Department of graduation and designers more and more talent, the industry&#39;s competitive is one of the manifestations of this era. Large and small studio design company and even some people sneer at innumerable, now more than WC design company. At this time the designer must make their own unique, entrepreneurial designers operating companies also want to have differences, and highlight the advantages, it is very important.</p><p>Design is not good or bad, only right and wrong.</p><p>Above I say good design and bad design, nature is the premise of the design. And the design has good and bad? I would like to use the right and wrong to look at this issue. As a designer, he is not an artist and a business division, first of all should be for the owners to solve practical problems, is the design. People who do not understand the design will say that the design is good or not, why do you say that? Because any of the works have his regret, even if it is a master of the five star hotel is a regret, so it is not good to determine. Starting point and purpose of different nature, the nature of the design requirements and the nature is different, contrary to the original intention of the design to lose significance, but also how to talk about good or bad? So in the right and wrong to think about design, will be more accurate for customers to solve practical problems, to find the true meaning of design!</p><p><br/></p>', 'We all have this feeling, before becoming a designer, all of the "designer" career of these three wo', 216, 2, 'http://ohjmksy46.bkt.clouddn.com/image/iwm3i7pk_2bm4soh1lnwg584ea1654aa2d.jpg', 1, '', '', 1462538523, 50, 0, 'p,d', '', 0, 0, '1', 0, 1, 2, '{"showdate":1462464000}', 'en-us'),
-(30, 'The core and essence of brand value is the soul of brand design', 'The core and essence of brand value is the soul of brand design', 12, 0, 'The core and essence of brand value is the soul of brand design', '', '1', 'Rainfer studio', '<p>In modern times, no matter big or small design company in Dongguan, most of Dongguan attaches great importance to brand design, but look, how many products on the market. What are the reasons for this? But two points: 1, before the brand design, brand positioning is not clear; 2, the concept of fuzzy brand positioning, brand design company by the company staff&#39;s subjective preferences as the judgment.</p><p>The design itself must have thought, soul, purpose. The product is sold to whom, what is their normal way of life? Want to convey to them what kind of information? What do you want them to look at the brand? We want to guide them how to do it? How we can close to the true inner need and so on. These problems, not you like and do not like the problem.</p><p>1, clear brand positioning: positioning of brand design is to solve the problem of what the brand is and what is not. What is this and what is not, does not mean the product attributes, but means that your brand represents what does not mean anything.</p><p>2, highlight the core value of the brand: brand core value is the core of brand design and core, but also the intrinsic driving force and cohesion of the brand. In the trend of increasing homogenization of products, the most important factors that affect consumers often is no longer the product entity, but the core value of the brand reflects the target consumers with or way of life and spiritual pursuit, which is to promote consumers to keep the core strength of brand loyalty.</p><p><br/></p>', 'In modern times, no matter big or small design company in Dongguan, most of Dongguan attaches great ', 212, 4, 'http://ohjmksy46.bkt.clouddn.com/image/iwm3gh7k_55qzhrmx3gw8584ea114a5cda.jpg', 1, '', '', 1462539100, 50, 0, 'c,p', '', 0, 0, '1', 0, 1, 10, '{"showdate":1462464000}', 'en-us'),
-(31, 'Dongguan brand design is the tip of the iceberg, but it is essential!', 'Dongguan brand design is the tip of the iceberg, but it is essential!', 12, 0, 'Dongguan brand design is the tip of the iceberg, but it is essential!', '', '1', 'Rainfer studio', '<p>When the world entered the era of brand competition, when the brand has become a hot spot in the business world, brand design has become a popular word in the mouth. There are statistics that each investment enterprises in brand image design on the $1, the profit of $227 So attractive rate of return on investment, it is no wonder that business circles to scramble for the brand design. So, what is the brand design? Where does the charm come from?</p><p>1, design is the tip of the iceberg, but it is very important! If we understand the brand as an iceberg. The elements of brand or the cultural system, employee behavior, organizational structure, core technology, marketing etc. constitute the main body of this iceberg, though hidden in the water, is the most powerful brand development support and impetus.</p><p>But all of this must be recognized by the public through a series of complete and effective visual design and brand promotion.</p><p>Think how important it is!</p><p>2, return to the origin, essence of excavation project or product design principle is! Sofa design Fukazawa Naohito told us, put aside the seat cushion and the backrest sofa appearance and so on, but in fact, it is just a stool. The designer wants to think as much as possible, according to the corresponding design. So our proposal is not to rush things, may wish to calm down, think about this project or product is the most obvious characteristics of what their target customers and consumer groups and what......</p><p>What kind of design do?</p><p>3, simple, clear, the concept is our design principles! Simple, clear is the most concise and intuitive way, to achieve effective visual communication and communication, to reject all unrealistic symbolic meaning and the so-called connotation.</p><p>The concept is the ingenious original design idea and the application, gives the human by the accident pleasantly surprised, causes the human to be impressive thus powerfully promotes the enterprise image and the cultural connotation.</p><p>4, for the customer to do the right design! Mr. Lu Xun says he&#39;s dressed:"...... Thin people don&#39;t wear black clothes, fat people don&#39;t wear white clothes; feet long women must wear black shoes, short legs would wear white shoes; the Plaid Dress fat people can not wear, but better than the cross grid; grid cross fat people wear, put more fat to both sides of the crack with more width, fat should wear vertical stripes, vertical to horizontal is long, the people wide......" Design is also the case, the right is good! Just right!</p>', 'When the world entered the era of brand competition, when the brand has become a hot spot in the bus', 338, 4, 'http://ohjmksy46.bkt.clouddn.com/image/iwm3eqpk_3zlvefll60is584ea0c3802fc.jpg', 1, '', '', 1462539160, 50, 0, 'a,p', '', 0, 0, '1', 0, 1, 49, '{"showdate":1462464000}', 'en-us'),
-(32, 'A hardware factory in Dongguan', 'A hardware factory in Dongguan', 13, 0, 'A hardware factory in Dongguan', '', '1', 'Ms. Cheng', '<p>Thanks to the rain fly on time to ensure the quality of the studio to complete the site construction company, through the cooperation fully reflects the extent of the project team on the rain fly studio project in technology, but also lay a foundation for future cooperation. Rain fly studio is very ideal partner.</p>', 'Thanks to the rain fly on time to ensure the quality of the studio to complete the site construction', 200, 0, 'http://ohjmksy46.bkt.clouddn.com/image/iwm4qcg0_wzzkcazr15w584ea9701d74c.jpg', 2, 'http://ohjmksy46.bkt.clouddn.com/image/iwm3cdu0_589rpl5vr0ws584ea055a80de.jpg,', '', 1462579633, 50, 0, 'p', '', 0, 0, '1', 0, 1, 0, '{"showdate":1462550400}', 'en-us'),
-(33, 'ChiHe company website', 'ChiHe company website', 13, 0, 'ChiHe company website', '', '1', 'Mr. Sun', '<p>Rainfer studio is a young team, full of vigor and vitality of the team, the design of the strength of the team, the spirit of customer first team.</p>', 'Rainfer studio is a young team, full of vigor and vitality of the team, the design of the strength o', 200, 0, 'http://ohjmksy46.bkt.clouddn.com/image/iwm4qlpc_1bheweuwck9w584ea97c2a628.jpg', 2, 'http://ohjmksy46.bkt.clouddn.com/image/iwm3amk8_5mv935witns4584ea003b5156.jpg,', '', 1462580217, 50, 0, 'p', '', 0, 0, '1', 0, 1, 0, '{"showdate":1462550400}', 'en-us'),
-(34, 'Learn net', 'Learn net', 13, 0, 'Learn net', '', '1', 'Mr. Peng', '<p>Be able to adapt to changes in customer needs and provide appropriate solutions in a timely manner, efficient and fast, with excellent service team.</p>', 'Be able to adapt to changes in customer needs and provide appropriate solutions in a timely manner, ', 200, 0, 'http://ohjmksy46.bkt.clouddn.com/image/iwm4qu6w_1buq5730qrgg584ea9872ab70.jpg', 2, 'http://ohjmksy46.bkt.clouddn.com/image/iwm386lk_3094jzd7gskk584e9f9160a10.jpg,', '', 1462580295, 50, 0, 'p', '', 0, 0, '1', 0, 1, 0, '{"showdate":1462550400}', 'en-us'),
-(35, 'Shilong E', 'Shilong E', 13, 0, 'Shilong E', '', '1', 'Mr. Zhang', '<p>All throughout the project development tasks project team responsible, responsible for the completion of the yard were successfully come, leaders are very satisfied, thank the rainfer studio.</p>', 'All throughout the project development tasks project team responsible, responsible for the completio', 200, 0, 'http://ohjmksy46.bkt.clouddn.com/image/iwm4r3g8_46d6d4vzvhk4584ea99386382.jpg', 2, 'http://ohjmksy46.bkt.clouddn.com/image/iwm35zw8_4oytwbkhpjeo584e9f2b96d2c.jpg,', '', 1462580360, 50, 0, 'p', '', 0, 0, '1', 0, 1, 0, '{"showdate":1462550400}', 'en-us'),
-(36, 'A catering company in Dongguan', 'A catering company in Dongguan', 13, 0, 'A catering company in Dongguan', '', '1', 'Mr. Xie', '<p>Rainfer studio is a young, positive team, for our company to provide various types of Web services really do a thorough and thoughtful, so we feel very at ease.</p>', 'Rainfer studio is a young, positive team, for our company to provide various types of Web services r', 200, 0, 'http://ohjmksy46.bkt.clouddn.com/image/iwm4rcpk_263o39wi3n34584ea99f45b71.jpg', 2, 'http://ohjmksy46.bkt.clouddn.com/image/iwm33q3s_2dfrp2likxxc584e9ec14c437.jpg,', '', 1462580412, 22, 0, 'p', '', 0, 0, '1', 0, 1, 0, '{"showdate":1462550400}', 'en-us'),
-(37, 'Guangzhou sanitary ware company', 'Guangzhou sanitary ware company', 13, 0, 'Guangzhou sanitary ware company', '', '1', 'Ms. Wu', '<p>Rainfer studio is pre production or post maintenance, can do their duties, is the satisfaction of our partners.</p>', 'Rainfer studio is pre production or post maintenance, can do their duties, is the satisfaction of ou', 200, 0, 'http://ohjmksy46.bkt.clouddn.com/image/iwm4rkfc_3uuzkenxzmgw584ea9a97bf31.jpg', 2, 'http://ohjmksy46.bkt.clouddn.com/image/iwm31ers_4r2b9ncngdc0584e9e5598b1e.jpg,', '', 1462580465, 50, 0, 'p', '', 0, 0, '1', 0, 1, 0, '{"showdate":1462550400}', 'en-us'),
-(38, 'Food company website', 'Food company website', 13, 0, 'Food company website', '', '1', 'Mr. Wang', '<p>Rainfer studio is an excellent team, they have excellent technology and high quality service, in cooperation with our company project, reflects the strength of their production of large company website.</p>', 'Rainfer studio is an excellent team, they have excellent technology and high quality service, in co', 200, 0, 'http://ohjmksy46.bkt.clouddn.com/image/iwm4rrdc_6t6deo2l0rs4584ea9b2dad96.jpg', 2, 'http://ohjmksy46.bkt.clouddn.com/image/iwm2whaw_5ru3c0ww26g4584e9d6fb9849.jpg,', '', 1462580522, 45, 0, 'p', '', 0, 0, '1', 0, 1, 0, '{"showdate":1462550400}', 'en-us');
+/*Data for the table `wjf_news` */
 
-DROP TABLE IF EXISTS `yf_oauth_user`;
-CREATE TABLE IF NOT EXISTS `yf_oauth_user` (
+insert  into `wjf_news`(`n_id`,`cat_id`,`news_title`,`news_titleshort`,`news_columnid`,`news_columnviceid`,`news_key`,`news_tag`,`news_auto`,`news_source`,`news_content`,`news_scontent`,`news_hits`,`news_like`,`news_img`,`news_pic_type`,`news_pic_allurl`,`news_pic_content`,`news_time`,`listorder`,`news_modified`,`news_flag`,`news_zaddress`,`news_cpprice`,`news_back`,`news_open`,`news_lvtype`,`comment_status`,`comment_count`,`news_extra`,`news_l`) values
+
+(1,NULL,'Linux服务器下PHPMailer发送邮件失败的问题解决','Linux服务器下PHPMailer发送邮件失败的问题解决',2,NULL,'Linux服务器下PHPMailer发送邮件失败的问题解决','','1','WJFCMS','<p>这两天一直在调试PHPMailer发送邮件功能,一直都没有找到问题所在,头都快炸了.本地环境发送邮件没有问题,之前买的虚拟空间里面用的同一套代码,发送也没有问题.但是git到阿里云lunix服务器之后,邮箱就发不了了,<br/>然后查浏览器的报错信息,发现这个</p><p><img src=\"/data/upload/2017-09-23/59c6082d79eeb.png\" title=\"59c6082d79eeb.png\" alt=\"59c6082d79eeb.png\"/></p><p>百度了一下,看了N个帖子,有的说是表单里面用了ajax提交,有的说服务器占用太高,要释放一些内存......</p><p>各个帖子里面说的方法,我都有试一试,但是无果,最后想到了是不是我的环境问题,</p><p>首先,查看了一下,phpinfo,看看相应的扩展有没有打开:<br/></p><p><img src=\"/data/upload/2017-09-23/59c609f25c668.png\" style=\"\" title=\"59c609f25c668.png\"/></p><p><img src=\"/data/upload/2017-09-23/59c609f281b93.png\" style=\"\" title=\"59c609f281b93.png\"/></p><p><img src=\"/data/upload/2017-09-23/59c609f283c36.png\" style=\"\" title=\"59c609f283c36.png\"/></p><p>配置都是正常开启的,应该不是配置问题了,于是我想是不是25端口被占用了?</p><p>到xshell里面 &nbsp;netstat -tnlp 一下</p><p><img src=\"/data/upload/2017-09-23/59c60aaa89641.png\" title=\"59c60aaa89641.png\" alt=\"59c60aaa89641.png\"/></p><p>果然被占用了,查了一下,<span style=\"font-family: tahoma, arial, 宋体; font-size: 14px; background-color: rgb(255, 255, 255);\">465端口（SMTPS）更好用,</span></p><p><span style=\"font-family: tahoma, arial, 宋体; font-size: 14px; background-color: rgb(255, 255, 255);\">465端口（SMTPS）：465端口是为SMTPS（SMTP-over-SSL）协议服务开放的，这是SMTP协议基于SSL安全协议之上的一种变种协议，它继承了SSL安全协议的非对称加密的高度安全可靠性，可防止邮件泄露。SMTPS和SMTP协议一样，也是用来发送邮件的，只是更安全些，防止邮件被黑客截取泄露，还可实现邮件发送者抗抵赖功能。防止发送者发送之后删除已发邮件，拒不承认发送过这样一份邮件。</span></p><p><span style=\"font-family: tahoma, arial, 宋体; font-size: 14px; background-color: rgb(255, 255, 255);\">查看端口是否开启</span></p><p><span style=\"background-color: rgb(255, 255, 255); font-family: tahoma, arial, 宋体; font-size: 14px;\">xshell操作: &nbsp;firewall-cmd --query-port=465/tcp</span></p><p><span style=\"background-color: rgb(255, 255, 255); font-family: tahoma, arial, 宋体; font-size: 14px;\">no&nbsp;</span></p><p><span style=\"background-color: rgb(255, 255, 255); font-family: tahoma, arial, 宋体; font-size: 14px;\">开启: &nbsp;firewall-cmd --add-port=465/tcp</span></p><p><span style=\"background-color: rgb(255, 255, 255); font-family: tahoma, arial, 宋体; font-size: 14px;\">success</span></p><p><span style=\"background-color: rgb(255, 255, 255); font-family: tahoma, arial, 宋体; font-size: 14px;\">截图在这里:</span></p><p><span style=\"background-color: rgb(255, 255, 255); font-family: tahoma, arial, 宋体; font-size: 14px;\"><img src=\"/data/upload/2017-09-23/59c60c0b6d8a7.png\" title=\"59c60c0b6d8a7.png\" alt=\"59c60c0b6d8a7.png\"/></span></p><p><span style=\"background-color: rgb(255, 255, 255); font-family: tahoma, arial, 宋体; font-size: 14px;\">好的,现在修改一下代码<br/></span></p><p><span style=\"background-color: rgb(255, 255, 255); font-family: tahoma, arial, 宋体; font-size: 14px;\"></span></p><pre style=\"background-color:#2b2b2b;color:#a9b7c6;font-family:&#39;Source Code Pro&#39;;font-size:13.5pt;\">$mail->Port&nbsp;=&nbsp;25;</pre><p>改成<span style=\"background-color: rgb(255, 255, 255); font-family: tahoma, arial, 宋体; font-size: 14px;\"></span><br/></p><p></p><pre style=\"background-color:#2b2b2b;color:#a9b7c6;font-family:&#39;Source Code Pro&#39;;font-size:13.5pt;\"><span style=\"color:#9876aa;background-color:#232525;\">$mail</span><span style=\"background-color:#232525;\">-></span><span style=\"color:#9876aa;background-color:#232525;\">SMTPSecure </span><span style=\"background-color:#232525;\">= </span><span style=\"color:#6a8759;background-color:#232525;\">&#39;ssl&#39;</span><span style=\"color:#cc7832;background-color:#232525;\">;<br/></span><span style=\"color:#9876aa;background-color:#232525;\">$mail</span><span style=\"background-color:#232525;\">-></span><span style=\"color:#9876aa;background-color:#232525;\">Port </span><span style=\"background-color:#232525;\">= </span><span style=\"color:#6897bb;background-color:#232525;\">465</span><span style=\"color:#cc7832;background-color:#232525;\">;</span></pre><p><span style=\"background-color: rgb(255, 255, 255); font-family: tahoma, arial, 宋体; font-size: 14px;\"></span>测试结果<br/><img src=\"/data/upload/2017-09-23/59c60d7c55873.png\" title=\"59c60d7c55873.png\" alt=\"59c60d7c55873.png\"/></p><p>OK,被这个问题烦了两天,今天终于解决了!!!</p><p>总结一下,这问题为什么会困扰我这么久呢?</p><p>归根结底是我对linux不够熟悉,好好补知识吧,linux在以后的工作中是必不可少的!</p>','Linux服务器下PHPMailer发送邮件失败的问题解决',230,0,'/data/upload/2017-09-23/59c60ef4df2c3.jpg',1,'','',1506152180,50,0,'d','',0,0,'1',0,1,0,'{\"showdate\":1506096000}','zh-cn'),
+(2,NULL,'phpstorm 输入法中文不同步 phpstorm 输入法不跟随光标解决办法','phpstorm 输入法中文不同步 phpstorm 输入法不跟随光标解决办法',15,NULL,'phpstorm 输入法中文不同步 phpstorm 输入法不跟随光标解决办法','','1','WJFCMS','<p style=\"margin: 10px auto; padding: 0px; list-style-type: none; list-style-image: none; color: rgb(68, 68, 68); font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 14px; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"font-size: 18px;\">昨天刚刚把phpstrom更新到2017.2.4，发现输入法中文输入的时候，候选字没有跟随光标移动。百度了一波,终于找到决方案。</span></p><p style=\"margin: 10px auto; padding: 0px; list-style-type: none; list-style-image: none; color: rgb(68, 68, 68); font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 14px; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"font-size: 18px;\">就是替换phpstorm安装目录下的 jre64文件夹。</span></p><p style=\"margin: 10px auto; padding: 0px; list-style-type: none; list-style-image: none; color: rgb(68, 68, 68); font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 14px; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"font-size: 18px;\">下载&nbsp;</span><a href=\"https://bintray.com/jetbrains/intellij-jdk/download_file?file_path=jbsdk8u112b736.21_windows_x64.tar.gz\" style=\"text-decoration: underline; color: rgb(51, 153, 255); font-size: 18px;\"><span style=\"font-size: 18px;\">https://bintray.com/jetbrains/intellij-jdk/download_file?file_path=jbsdk8u112b736.21_windows_x64.tar.gz</span></a><br/><span style=\"font-size: 18px;\">解压更名&nbsp;<code class=\"inline-code prettyprint prettyprinted\" style=\"font-family: \"Courier New\", Courier, monospace;\">jre64</code>&nbsp; 替换掉安装目录下的jre64，注意是解压的目录直接改成jre64，不是复制其中的jre文件夹改名。<br/><br/>替换前，原jre64目录注意备份!</span></p><p style=\"margin: 10px auto; padding: 0px; list-style-type: none; list-style-image: none; color: rgb(68, 68, 68); font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 14px; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"font-size: 18px;\">重新启动phpstorm，一切正常！谢谢前辈的总结~</span></p><p style=\"margin: 10px auto; padding: 0px; list-style-type: none; list-style-image: none; color: rgb(68, 68, 68); font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 14px; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"font-size: 18px;\"><br/></span></p><p style=\"margin: 10px auto; padding: 0px; list-style-type: none; list-style-image: none; color: rgb(68, 68, 68); font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 14px; white-space: normal; background-color: rgb(255, 255, 255);\"><span style=\"font-size: 18px;\">转载自&nbsp;http://www.cnblogs.com/guohong-hu/p/7258014.html</span></p><p><br/></p>','phpstorm 输入法中文不同步 phpstorm 输入法不跟随光标解决办法',467,0,'',1,'','',1505973463,50,0,'','',0,0,'1',0,1,0,'{\"showdate\":1505923200}','zh-cn'),
+(3,NULL,'php中0,null,empty,空,false,字符串关系的详细介绍','php中0,null,empty,空,false,字符串关系的详细介绍',2,NULL,'php中0,null,empty,空,false,字符串关系的详细介绍','','1','博客园','<p><span style=\"font-size: 16px;\"><span class=\"comment\" style=\"font-family: Consolas, \" courier=\"\" margin:=\"\" padding:=\"\" color:=\"\">//&nbsp;判断&nbsp;0&nbsp;与&nbsp;&#39;&#39;、null、empty、false&nbsp;之间的关系&nbsp;</span><span style=\"color: rgb(192, 192, 192); font-family: Consolas, \" courier=\"\" margin:=\"\" padding:=\"\">&nbsp;&nbsp;</span><br/></span></p><ol start=\"1\" class=\"dp-c list-paddingleft-2\" style=\"padding: 5px 0px; border: none; position: relative; list-style-position: initial; list-style-image: initial; color: rgb(192, 192, 192); font-family: Consolas, \" courier=\"\" font-size:=\"\" white-space:=\"\"><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"vars\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(221, 0, 0);\">$a</span>&nbsp;=&nbsp;0;&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"0&nbsp;与&nbsp;&#39;&#39;、&nbsp;empty、null、false&nbsp;之间的关系：\"</span>;&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">if</span>(<span class=\"vars\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(221, 0, 0);\">$a</span>&nbsp;==&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">&#39;&#39;</span>)&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"0&nbsp;==&nbsp;&#39;&#39;;\"</span>;<span class=\"comment\" style=\"margin: 0px; padding: 0px; color: rgb(119, 119, 119);\">//输出</span><span style=\"color: rgb(192, 192, 192);\">&nbsp;</span>&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">else</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"0&nbsp;!=&nbsp;&#39;&#39;;\"</span>;&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">if</span>(trim(<span class=\"vars\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(221, 0, 0);\">$a</span>)&nbsp;==&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">&#39;&#39;</span>)&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"trim(0)&nbsp;==&nbsp;&#39;&#39;;\"</span>;&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">else</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"trim(0)&nbsp;!=&nbsp;&#39;&#39;;\"</span>;&nbsp;<span style=\"color: rgb(119, 119, 119);\">//输出,因为<span style=\"color: rgb(137, 211, 54);\">trim(0)为字符串&#39;0&#39;</span></span>&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">if</span>(strval(<span class=\"vars\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(221, 0, 0);\">$a</span>)&nbsp;==&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">&#39;&#39;</span>)&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"strval(0)&nbsp;==&nbsp;&#39;&#39;;\"</span>;&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">else</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"strval(0)&nbsp;!=&nbsp;&#39;&#39;;\"</span>;&nbsp;<span style=\"color: rgb(119, 119, 119);\">//输出</span>&nbsp;&nbsp;<span class=\"refname\" style=\"color: rgb(51, 51, 51); font-family: \"Fira Sans\", \"Source Sans Pro\", Helvetica, Arial, sans-serif; background-color: rgb(242, 242, 242);\">strval</span><span style=\"color: rgb(51, 51, 51); font-family: \"Fira Sans\", \"Source Sans Pro\", Helvetica, Arial, sans-serif; background-color: rgb(242, 242, 242);\">&nbsp;—&nbsp;</span><span class=\"dc-title\" style=\"color: rgb(51, 51, 51); font-family: \"Fira Sans\", \"Source Sans Pro\", Helvetica, Arial, sans-serif; background-color: rgb(242, 242, 242);\">获取变量的字符串值</span></span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"comment\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(119, 119, 119);\">//0==&#39;&#39;,trim(0)!=&#39;&#39;,strval(0)!=&#39;&#39;&nbsp;不是空字符串</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">if</span>(<span class=\"vars\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(221, 0, 0);\">$a</span>&nbsp;===&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">&#39;&#39;</span>)&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"0&nbsp;===&nbsp;&#39;&#39;;\"</span>;&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">else</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"0&nbsp;!===&nbsp;&#39;&#39;;\"</span>;&nbsp;&nbsp;<span style=\"color: rgb(119, 119, 119);\">//输出 还比较类型</span>&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"comment\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(119, 119, 119);\">//0!===&#39;&#39;</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">if</span>(empty(<span class=\"vars\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(221, 0, 0);\">$a</span>))&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"0&nbsp;is&nbsp;empty;\"</span>;&nbsp;<span style=\"color: rgb(119, 119, 119);\">//输出</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">else</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"0&nbsp;is&nbsp;not&nbsp;empty;\"</span>;&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"comment\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(119, 119, 119);\">//0&nbsp;is&nbsp;empty</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">if</span>(is_null(<span class=\"vars\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(221, 0, 0);\">$a</span>))&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"0&nbsp;is&nbsp;null;\"</span>;&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">else</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"0&nbsp;is&nbsp;not&nbsp;null;\"</span>;&nbsp;&nbsp;<span style=\"color: rgb(119, 119, 119);\">//输出</span>&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"comment\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(119, 119, 119);\">//0&nbsp;is&nbsp;not&nbsp;null</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">if</span>(is_numeric(<span class=\"vars\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(221, 0, 0);\">$a</span>))&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"0&nbsp;is&nbsp;numeric;\"</span>;&nbsp;<span style=\"color: rgb(119, 119, 119);\">//输出</span><span style=\"color: rgb(192, 192, 192);\">&nbsp;</span>如果$a=&#39;0&#39;,则结果相反&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">else</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"0&nbsp;is&nbsp;not&nbsp;numeric;\"</span>;&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"comment\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(119, 119, 119);\">//0&nbsp;is numeric</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">if</span>(is_string(<span class=\"vars\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(221, 0, 0);\">$a</span>))&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"0&nbsp;is&nbsp;string;\"</span>;&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">else</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"0&nbsp;is&nbsp;not&nbsp;string;\"</span>;&nbsp;<span style=\"color: rgb(119, 119, 119);\">//输出</span><span style=\"color: rgb(192, 192, 192);\">&nbsp;</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"comment\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(119, 119, 119);\">//0&nbsp;is&nbsp;not&nbsp;string</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">if</span>(!<span class=\"vars\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(221, 0, 0);\">$a</span>)&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"0&nbsp;is&nbsp;false;\"</span>;&nbsp;<span style=\"color: rgb(119, 119, 119);\">//输出</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">else</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"0&nbsp;is&nbsp;not&nbsp;false;\"</span>;&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"comment\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(119, 119, 119);\">//0&nbsp;is&nbsp;false</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"comment\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(119, 119, 119);\">//&nbsp;判断&nbsp;&#39;&#39;&nbsp;和&nbsp;0、null、empty、false&nbsp;之间的关系&nbsp;</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"vars\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(221, 0, 0);\">$a</span>&nbsp;=&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">&#39;&#39;</span>;&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"&#39;&#39;&nbsp;和&nbsp;0、empty、null、false&nbsp;之间的关系：\"</span>;&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">if</span>(<span class=\"vars\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(221, 0, 0);\">$a</span>&nbsp;==&nbsp;0)&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"&#39;&#39;&nbsp;==&nbsp;0;\"</span>;&nbsp;<span style=\"color: rgb(192, 192, 192);\">&nbsp;</span><span style=\"color: rgb(119, 119, 119);\">//输出</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">else</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"&#39;&#39;&nbsp;!=&nbsp;0;\"</span>;&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">if</span>(intval(<span class=\"vars\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(221, 0, 0);\">$a</span>)&nbsp;==&nbsp;0)&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"intval(&#39;&#39;)&nbsp;==&nbsp;0;\"</span>;&nbsp;&nbsp;<span style=\"color: rgb(119, 119, 119);\">//输出</span>&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">else</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"intval(&#39;&#39;)&nbsp;!=&nbsp;0;\"</span>;&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">if</span>(empty(<span class=\"vars\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(221, 0, 0);\">$a</span>))&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"&#39;&#39;&nbsp;is&nbsp;empty;\"</span>;&nbsp;<span style=\"color: rgb(119, 119, 119);\">//输出</span><span style=\"color: rgb(192, 192, 192);\">&nbsp;</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">else</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"&#39;&#39;&nbsp;is&nbsp;not&nbsp;empty;\"</span>;&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">if</span>(is_null(<span class=\"vars\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(221, 0, 0);\">$a</span>))&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"&#39;&#39;&nbsp;is&nbsp;null;\"</span>;&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">else</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"&#39;&#39;&nbsp;is&nbsp;not&nbsp;null;\"</span>;<span style=\"color: rgb(119, 119, 119);\">//输出</span><span style=\"color: rgb(192, 192, 192);\">&nbsp;</span>&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">if</span>(is_numeric(<span class=\"vars\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(221, 0, 0);\">$a</span>))&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"&#39;&#39;&nbsp;is&nbsp;numeric;\"</span>;&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">else</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"&#39;&#39;&nbsp;is&nbsp;not&nbsp;numeric;\"</span>;&nbsp;<span style=\"color: rgb(119, 119, 119);\">//输出</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">if</span>(is_string(<span class=\"vars\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(221, 0, 0);\">$a</span>))&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"&#39;&#39;&nbsp;is&nbsp;string;\"</span>;&nbsp;<span style=\"color: rgb(119, 119, 119);\">//输出</span><span style=\"color: rgb(192, 192, 192);\">&nbsp;</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">else</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"&#39;&#39;&nbsp;is&nbsp;not&nbsp;string;\"</span>;&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">if</span>(!<span class=\"vars\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(221, 0, 0);\">$a</span>)&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"&#39;&#39;&nbsp;is&nbsp;false;\"</span>;&nbsp;<span style=\"color: rgb(119, 119, 119);\">//输出</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">else</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"&#39;&#39;&nbsp;is&nbsp;not&nbsp;false;\"</span>;&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"comment\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(119, 119, 119);\">//&nbsp;判断&nbsp;null&nbsp;和&nbsp;&#39;&#39;、0、empty、false&nbsp;之间的关系&nbsp;</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"vars\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(221, 0, 0);\">$a</span>&nbsp;=&nbsp;null;&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"null&nbsp;和&nbsp;&#39;&#39;、0、empty、false&nbsp;之间的关系：\"</span>;&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">if</span>(<span class=\"vars\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(221, 0, 0);\">$a</span>&nbsp;==&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">&#39;&#39;</span>)&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"null&nbsp;==&nbsp;&#39;&#39;;\"</span>;&nbsp;<span style=\"color: rgb(119, 119, 119);\">//输出</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">else</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"null&nbsp;!=&nbsp;&#39;&#39;;\"</span>;&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">if</span>(<span class=\"vars\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(221, 0, 0);\">$a</span>&nbsp;==&nbsp;0)&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"null&nbsp;==&nbsp;0;\"</span>;&nbsp;<span style=\"color: rgb(119, 119, 119);\">//输出</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">else</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"null&nbsp;!=&nbsp;0;\"</span>;&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">if</span>(<span class=\"vars\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(221, 0, 0);\">$a</span>&nbsp;===&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">&#39;&#39;</span>)&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"null&nbsp;===&nbsp;&#39;&#39;;\"</span>;&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">else</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"null&nbsp;!===&nbsp;&#39;&#39;;\"</span>;&nbsp;<span style=\"color: rgb(119, 119, 119);\">//输出</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">if</span>(<span class=\"vars\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(221, 0, 0);\">$a</span>&nbsp;===&nbsp;0)&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"null&nbsp;===&nbsp;0;\"</span>;&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">else</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"null&nbsp;!===&nbsp;0;\"</span>;&nbsp;<span style=\"color: rgb(119, 119, 119);\">//输出</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">if</span>(strval(<span class=\"vars\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(221, 0, 0);\">$a</span>)&nbsp;==&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">&#39;&#39;</span>)&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"strval(null)&nbsp;==&nbsp;&#39;&#39;;\"</span>;&nbsp;<span style=\"color: rgb(119, 119, 119);\">//输出</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">else</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"strval(null)&nbsp;!=&nbsp;&#39;&#39;;\"</span>;&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">if</span>(intval(<span class=\"vars\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(221, 0, 0);\">$a</span>)&nbsp;==&nbsp;0)&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"intval(null)&nbsp;==&nbsp;0;\"</span>;&nbsp;<span style=\"color: rgb(119, 119, 119);\">//输出</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">else</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"intval(null)&nbsp;!=&nbsp;0;\"</span>;&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">if</span>(empty(<span class=\"vars\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(221, 0, 0);\">$a</span>))&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"null&nbsp;is&nbsp;empty;\"</span>;&nbsp;<span style=\"color: rgb(119, 119, 119);\">//输出</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">else</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"null&nbsp;is&nbsp;not&nbsp;empty;\"</span>;&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">if</span>(is_numeric(<span class=\"vars\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(221, 0, 0);\">$a</span>))&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"null&nbsp;is&nbsp;numeric;\"</span>;&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">else</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"null&nbsp;is&nbsp;not&nbsp;numeric;\"</span>;&nbsp;<span style=\"color: rgb(119, 119, 119);\">//输出</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">if</span>(is_string(<span class=\"vars\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(221, 0, 0);\">$a</span>))&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"null&nbsp;is&nbsp;string;\"</span>;&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">else</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"null&nbsp;is&nbsp;not&nbsp;string;\"</span>;&nbsp;<span style=\"color: rgb(119, 119, 119);\">//输出</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">if</span>(!<span class=\"vars\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(221, 0, 0);\">$a</span>)&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"null&nbsp;is&nbsp;false;\"</span>;&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">}&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\"><span class=\"keyword\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(51, 153, 255); font-weight: bold;\">else</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">{&nbsp;&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;<span class=\"string\" style=\"font-size: 16px; margin: 0px; padding: 0px; color: rgb(137, 211, 54);\">\"null&nbsp;is&nbsp;not&nbsp;false;\"</span>;&nbsp;<span style=\"color: rgb(119, 119, 119);\">//输出</span>&nbsp;&nbsp;</span></p></li><li><p><span style=\"margin: 0px; padding: 0px; font-size: 16px;\">} &nbsp;</span></p></li></ol><p><br/></p>','php中0,null,empty,空,false,字符串关系的详细介绍',462,0,'',1,'','',1505720626,50,0,'','',0,0,'1',0,1,0,'{\"showdate\":1505664000}','zh-cn'),
+(4,NULL,'thinkPHP数据库关联笔记','thinkPHP数据库关联笔记',2,NULL,'thinkPHP数据库关联笔记','','1','wjf','<h3 data-line=\"111\" class=\"line\" style=\"box-sizing: inherit; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; padding: 0px; font-family: \" microsoft=\"\" helvetica=\"\" line-height:=\"\" margin:=\"\" 0px=\"\" font-weight:=\"\" font-size:=\"\" color:=\"\" white-space:=\"\" background-color:=\"\"><span style=\"font-size: 16px;\">thinkphp官方给的文档不好理解,尤其是belongTo和hasOne两个很常用,而且参数也差不多,我每次用thinkphp模型关联的时候都要试着打印一下结果才知道哪样写才是对的,所以在这里记录一下,方便下次用的时候查阅!</span></h3><h3 data-line=\"111\" class=\"line\" style=\"box-sizing: inherit; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; padding: 0px; font-family: \" microsoft=\"\" helvetica=\"\" line-height:=\"\" margin:=\"\" 0px=\"\" font-weight:=\"\" font-size:=\"\" color:=\"\" white-space:=\"\" background-color:=\"\"><span style=\"color: rgb(0, 0, 0); font-size: 24px;\">定义相对的关联&nbsp;belongsTo</span></h3><h3 microsoft=\"\" helvetica=\"\" line-height:=\"\" margin:=\"\" font-weight:=\"\" font-size:=\"\" color:=\"\" white-space:=\"\" style=\"white-space: normal; box-sizing: inherit; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; padding: 0px;\">belongsTo(&#39;要关联模型名&#39;,&#39;外键名<span style=\"color: rgb(255, 0, 0);\">(本模型中的字段)</span>&#39;,&#39;关联表主键名<span style=\"color: rgb(255, 0, 0);\">(要关联模型的对应字段)</span>&#39;,[&#39;模型别名定义&#39;],&#39;join类型&#39;);</h3><p><span style=\"font-size: 24px;\">模型定义:</span><br/></p><pre class=\"brush:php;toolbar:false\">namespace&nbsp;app\\home\\model;\r\n\r\nclass&nbsp;News&nbsp;extends&nbsp;Base{&nbsp;&nbsp;&nbsp;&nbsp;\r\n&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;user()\r\n&nbsp;&nbsp;&nbsp;&nbsp;{\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;$this->belongsTo(&#39;MemberList&#39;,&#39;news_auto&#39;,&nbsp;&#39;member_list_id&#39;);\r\n&nbsp;&nbsp;&nbsp;&nbsp;}\r\n}</pre><p><span style=\"font-size: 24px;\">控制器中调用用例:</span><br/></p><pre class=\"brush:php;toolbar:false\">namespace&nbsp;app\\home\\controller;\r\n\r\nuse&nbsp;think\\Db;\r\nuse&nbsp;\\app\\home\\model\\News;\r\n\r\nclass&nbsp;Article&nbsp;extends&nbsp;Base\r\n{\r\n&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;index()\r\n&nbsp;&nbsp;&nbsp;&nbsp;{\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$art&nbsp;=&nbsp;News::get(41);\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;$art->user->member_list_username;\r\n&nbsp;&nbsp;&nbsp;&nbsp;}\r\n}</pre><h3 data-line=\"111\" class=\"line\" style=\"white-space: normal; box-sizing: inherit; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; padding: 0px; font-family: \" microsoft=\"\" helvetica=\"\" line-height:=\"\" margin:=\"\" 0px=\"\" font-weight:=\"\" font-size:=\"\" color:=\"\" background-color:=\"\"><span style=\"color: rgb(0, 0, 0); font-size: 24px;\">定义关联 hasOne</span></h3><h3 microsoft=\"\" helvetica=\"\" line-height:=\"\" margin:=\"\" font-weight:=\"\" font-size:=\"\" color:=\"\" white-space:=\"\" style=\"white-space: normal; box-sizing: inherit; -webkit-tap-highlight-color: transparent; text-size-adjust: none; -webkit-font-smoothing: antialiased; padding: 0px;\">hasOne(&#39;要关联模型名&#39;,&#39;外键名<span style=\"color: rgb(255, 0, 0);\">(要关联模型的对应字段)</span>&#39; , &#39;主键名<span style=\"color: rgb(255, 0, 0);\">(本模型中的字段)</span>&#39;,[&#39;模型别名定义&#39;],&#39;join类型&#39;);</h3><p><span style=\"font-size: 24px;\">模型定义:</span></p><pre class=\"brush:php;toolbar:false\">namespace&nbsp;app\\report\\model;\r\n\r\nclass&nbsp;User&nbsp;extends&nbsp;BaseModel\r\n{\r\n&nbsp;&nbsp;&nbsp;&nbsp;/**\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;一对一关联Business模型\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;@return&nbsp;\\think\\model\\relation\\HasOne\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/\r\n&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;business()\r\n&nbsp;&nbsp;&nbsp;&nbsp;{\r\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;$this->hasOne(&#39;Business&#39;,&nbsp;&#39;id&#39;,&nbsp;&#39;business_id&#39;);\r\n&nbsp;&nbsp;&nbsp;&nbsp;}\r\n}</pre><p><span style=\"font-size: 24px;\"></span><br/></p>','thinkPHP数据库关联笔记',569,0,'',1,'','',1505727708,50,0,'d','',0,0,'1',0,1,0,'{\"showdate\":1505664000}','zh-cn'),
+(5,NULL,'centos7下安装多版本python3.6',NULL,18,NULL,'centos7下安装多版本python3.6','','1','魏佳君','<p><span style=\"color: rgb(63, 63, 63); font-family: \"microsoft yahei\"; font-size: 15px; background-color: rgb(255, 255, 255);\"></span></p><p class=\"p1\" style=\"margin-top: 0px; margin-bottom: 0px; padding: 0px; color: rgb(85, 85, 85); white-space: normal; background-color: rgb(255, 255, 255); font-family: Arial; font-size: 14px;\"><strong>说明：</strong></p><p class=\"p1\" style=\"margin-top: 0px; margin-bottom: 0px; padding: 0px; color: rgb(85, 85, 85); white-space: normal; background-color: rgb(255, 255, 255); font-family: Arial; font-size: 14px;\">centos7下默认安装python2.7.5版本，因为系统环境有依赖默认安装的python2.7.5版本，所以我们不能替换安装系统默认安装Python2.7.5。</p><p class=\"p1\" style=\"margin-top: 0px; margin-bottom: 0px; padding: 0px; color: rgb(85, 85, 85); white-space: normal; background-color: rgb(255, 255, 255); font-family: Arial; font-size: 14px;\">所以需要共存安装多版本python3.6.2.</p><p><span style=\"color: rgb(63, 63, 63); font-family: \"microsoft yahei\"; font-size: 15px; background-color: rgb(255, 255, 255);\"></span>下载python3.6.2(地址可能已经无效,自己去官网下载相应版本)<br/></p><p><span style=\"background-color: rgb(0, 0, 0); color: rgb(255, 255, 255);\">[root@localhost ~]#&nbsp;</span><span style=\"background-color: rgb(0, 0, 0); color: rgb(255, 255, 255);\">wget &nbsp;</span><span style=\"background-color: rgb(0, 0, 0); color: rgb(255, 255, 255); text-decoration: underline;\"><a href=\"https://www.python.org/ftp/python/3.6.0/Python-3.6.2.tgz\" _src=\"https://www.python.org/ftp/python/3.6.0/Python-3.6.2.tgz\" style=\"background-color: rgb(0, 0, 0); color: rgb(255, 255, 255); text-decoration: underline;\">https://www.python.org/ftp/python/3.6.2/Python-3.6.2.tgz</a>&nbsp;</span></p><p>解压</p><p><span style=\"background-color: rgb(0, 0, 0); color: rgb(255, 255, 255);\">[root@localhost ~]#tar zxvf &nbsp;Python-3.6.2.tgz&nbsp;</span></p><p><span style=\"color: rgb(85, 85, 85); font-family: SimSun; font-size: 14px; background-color: rgb(255, 255, 255);\">进入目录<br/></span></p><p><span style=\"background-color: rgb(0, 0, 0); color: rgb(255, 255, 255);\">[root@localhost ~]#cd&nbsp;Python-3.6.2&nbsp;</span></p><p><span style=\"color: rgb(85, 85, 85); font-family: SimSun; font-size: 14px; background-color: rgb(255, 255, 255);\"><span style=\"color: rgb(85, 85, 85); font-family: SimSun; font-size: 14px; background-color: rgb(255, 255, 255);\">自定义安装目录<br/></span></span></p><p><span style=\"background-color: rgb(0, 0, 0); color: rgb(255, 255, 255);\">[root@localhost Python-3.6.2]#./configure --prefix=/usr/lib/python3.6&nbsp;</span></p><p><span style=\"color: rgb(85, 85, 85); font-family: SimSun; font-size: 14px; background-color: rgb(255, 255, 255);\"><span style=\"color: rgb(85, 85, 85); font-family: SimSun; font-size: 14px; background-color: rgb(255, 255, 255);\"><span style=\"color: rgb(51, 51, 51); font-family: SimSun; font-size: 14px; text-align: justify; white-space: pre-wrap; background-color: rgb(250, 250, 252);\">这个时候安装晕倒问题了,不会往下走,</span></span></span></p><p><span style=\"color: rgb(85, 85, 85); font-family: SimSun; font-size: 14px; background-color: rgb(255, 255, 255);\"><span style=\"color: rgb(85, 85, 85); font-family: SimSun; font-size: 14px; background-color: rgb(255, 255, 255);\"><span style=\"color: rgb(51, 51, 51); font-family: SimSun; font-size: 14px; text-align: justify; white-space: pre-wrap; background-color: rgb(250, 250, 252);\">错误:<a href=\"http://blog.csdn.net/duguduchong/article/details/8699774\" style=\"color: rgb(0, 0, 0); text-decoration: none; font-family: \"Microsoft YaHei\"; font-size: 20px; white-space: normal; background-color: rgb(255, 255, 255);\">configure: error: no acceptable C compiler found in $PATH</a></span></span></span></p><p><font color=\"#555555\" face=\"SimSun\"><span style=\"font-size: 14px; background-color: rgb(255, 255, 255);\">百度了一下,是<span style=\"color: rgb(51, 51, 51); font-family: \"PingFang SC\", \"Lantinghei SC\", \"Microsoft YaHei\", arial, 宋体, sans-serif, tahoma; font-size: 14px; background-color: rgb(255, 255, 255);\">没有安装gcc包。</span></span></font></p><p><font color=\"#555555\" face=\"SimSun\"><span style=\"font-size: 14px; background-color: rgb(255, 255, 255);\"><span style=\"color: rgb(51, 51, 51); font-family: \"PingFang SC\", \"Lantinghei SC\", \"Microsoft YaHei\", arial, 宋体, sans-serif, tahoma; font-size: 14px; background-color: rgb(255, 255, 255);\">安装gcc包</span></span></font></p><p><span style=\"background-color: rgb(0, 0, 0); color: rgb(255, 255, 255);\">[root@localhost Python-3.6.2]#yum install gcc&nbsp;</span></p><p><font color=\"#555555\" face=\"SimSun\"><span style=\"font-size: 14px; background-color: rgb(255, 255, 255);\"><span style=\"color: rgb(51, 51, 51); font-family: \"PingFang SC\", \"Lantinghei SC\", \"Microsoft YaHei\", arial, 宋体, sans-serif, tahoma; font-size: 14px; background-color: rgb(255, 255, 255);\"><span style=\"color: rgb(51, 51, 51); font-family: Arial; font-size: 14px; background-color: rgb(255, 255, 255);\">再继续我们的py安装</span></span></span></font></p><p><span style=\"background-color: rgb(0, 0, 0); color: rgb(255, 255, 255);\">[root@localhost Python-3.6.2]#./configu</span><span style=\"background-color: rgb(0, 0, 0); color: rgb(255, 255, 255);\">re --prefix=/usr/lib/python3.6</span><span style=\"background-color: rgb(0, 0, 0); color: rgb(255, 255, 255);\">&nbsp;</span></p><p><font color=\"#555555\" face=\"SimSun\"><span style=\"font-size: 14px; background-color: rgb(255, 255, 255);\"><span style=\"color: rgb(51, 51, 51); font-family: \"PingFang SC\", \"Lantinghei SC\", \"Microsoft YaHei\", arial, 宋体, sans-serif, tahoma; font-size: 14px; background-color: rgb(255, 255, 255);\"><span style=\"color: rgb(51, 51, 51); font-family: Arial; font-size: 14px; background-color: rgb(255, 255, 255);\">执行成功&nbsp;</span></span></span></font></p><p><font color=\"#555555\" face=\"SimSun\"><span style=\"font-size: 14px; background-color: rgb(255, 255, 255);\"><span style=\"color: rgb(51, 51, 51); font-family: \"PingFang SC\", \"Lantinghei SC\", \"Microsoft YaHei\", arial, 宋体, sans-serif, tahoma; font-size: 14px; background-color: rgb(255, 255, 255);\"><span style=\"color: rgb(51, 51, 51); font-family: Arial; font-size: 14px; background-color: rgb(255, 255, 255);\"><span style=\"color: rgb(85, 85, 85); font-family: SimSun; font-size: 14px; text-align: justify; white-space: pre-wrap; background-color: rgb(255, 255, 255);\">解决在python中按键盘上下键乱码的问题</span></span></span></span></font></p><p><font color=\"#555555\" face=\"SimSun\"><span style=\"font-size: 14px; background-color: rgb(255, 255, 255);\"><span style=\"color: rgb(51, 51, 51); font-family: \"PingFang SC\", \"Lantinghei SC\", \"Microsoft YaHei\", arial, 宋体, sans-serif, tahoma; font-size: 14px; background-color: rgb(255, 255, 255);\"><span style=\"color: rgb(51, 51, 51); font-family: Arial; font-size: 14px; background-color: rgb(255, 255, 255);\"></span></span></span></font></p><p><span style=\"background-color: rgb(0, 0, 0); color: rgb(255, 255, 255);\">[root@localhost Python-3.6.2]# vim ./Modules/Setup&nbsp;</span></p><p><font color=\"#555555\" face=\"SimSun\"><span style=\"font-size: 14px; background-color: rgb(255, 255, 255);\"><span style=\"color: rgb(51, 51, 51); font-family: \"PingFang SC\", \"Lantinghei SC\", \"Microsoft YaHei\", arial, 宋体, sans-serif, tahoma; font-size: 14px; background-color: rgb(255, 255, 255);\"><span style=\"color: rgb(51, 51, 51); font-family: Arial; font-size: 14px; background-color: rgb(255, 255, 255);\"></span></span></span></font>把<span style=\"color: rgb(51, 51, 51); font-family: SimSun; font-size: 14px; text-align: justify; white-space: pre-wrap; background-color: rgb(255, 255, 255);\">#readline readline.c -lreadline -ltermcap前面的#去掉,保存退出</span></p><p><span style=\"color: rgb(51, 51, 51); font-family: SimSun; font-size: 14px; text-align: justify; white-space: pre-wrap; background-color: rgb(255, 255, 255);\"><span style=\"color: rgb(51, 51, 51); font-family: SimSun; font-size: 14px; text-align: justify; white-space: pre-wrap; background-color: rgb(250, 250, 252);\">因为不是覆盖安装所以使用make altinstall进行安装</span></span></p><p><span style=\"background-color: rgb(0, 0, 0); color: rgb(255, 255, 255);\">[root@localhost Python-3.6.2]# make && make altinstall&nbsp;</span></p><p><span style=\"color: rgb(51, 51, 51); font-family: SimSun; font-size: 14px; text-align: justify; white-space: pre-wrap; background-color: rgb(255, 255, 255);\">如果安装过程中出现:&nbsp;</span><span style=\"font-size: 16px;\"><strong><span style=\"color: rgb(51, 51, 51); font-family: SimSun; text-align: justify; white-space: pre-wrap; background-color: rgb(250, 250, 252);\">致命错误：readline/readline.h：没有那个文件或目录</span></strong></span></p><p><span style=\"color: rgb(51, 51, 51); font-family: SimSun; font-size: 14px; text-align: justify; white-space: pre-wrap; background-color: rgb(255, 255, 255);\">执行下面命令</span></p><p><span style=\"font-size: 16px;\"><strong><span style=\"color: rgb(51, 51, 51); font-family: SimSun; text-align: justify; white-space: pre-wrap; background-color: rgb(250, 250, 252);\"></span></strong></span></p><p><span style=\"background-color: rgb(0, 0, 0); color: rgb(255, 255, 255);\">[root@localhost Python-3.6.2]# yum install libtermcap-devel ncurses-devel libevent-devel readline-devel&nbsp;</span></p><p><span style=\"color: rgb(51, 51, 51); font-family: SimSun; font-size: 14px; text-align: justify; white-space: pre-wrap; background-color: rgb(255, 255, 255);\">完成之后继续执行</span></p><p><span style=\"color: rgb(51, 51, 51); font-family: SimSun; font-size: 14px; text-align: justify; white-space: pre-wrap; background-color: rgb(255, 255, 255);\"><span style=\"background-color: rgb(146, 208, 80);\"></span></span><span style=\"background-color: rgb(0, 0, 0); color: rgb(255, 255, 255);\">[root@localhost Python-3.6.2]#&nbsp;make && make altinstall </span></p><p><span style=\"font-size: 16px;\"><strong><span style=\"color: rgb(51, 51, 51); font-family: SimSun; text-align: justify; white-space: pre-wrap; background-color: rgb(250, 250, 252);\"></span></strong></span><span style=\"color: rgb(51, 51, 51); font-family: SimSun; font-size: 14px; text-align: justify; white-space: pre-wrap; background-color: rgb(255, 255, 255);\">添加软连接</span></p><p><span style=\"background-color: rgb(0, 0, 0); color: rgb(255, 255, 255); text-decoration: underline;\">[root@localhost Python-3.6.2]# &nbsp;ln -s -f /usr/lib/python3.6/bin/python3.6 /usr/bin/python3.6 </span></p><p><span style=\"color: rgb(51, 51, 51); font-family: SimSun; font-size: 14px; text-align: justify; white-space: pre-wrap; background-color: rgb(255, 255, 255);\"><span style=\"color: rgb(51, 51, 51); font-family: SimSun; font-size: 14px; text-align: justify; white-space: pre-wrap; background-color: rgb(250, 250, 252);\"><span style=\"color: rgb(51, 51, 51); font-family: SimSun; font-size: 14px; text-align: justify; white-space: pre-wrap; background-color: rgb(250, 250, 252);\">看到这个结果,大功告成</span></span></span></p><p><span style=\"color: rgb(51, 51, 51); font-family: SimSun; font-size: 14px; text-align: justify; white-space: pre-wrap; background-color: rgb(255, 255, 255);\"><span style=\"color: rgb(51, 51, 51); font-family: SimSun; font-size: 14px; text-align: justify; white-space: pre-wrap; background-color: rgb(250, 250, 252);\"><span style=\"color: rgb(51, 51, 51); font-family: SimSun; font-size: 14px; text-align: justify; white-space: pre-wrap; background-color: rgb(250, 250, 252);\"></span></span></span></p><p><span style=\"background-color: rgb(0, 0, 0); color: rgb(255, 255, 255);\">[root@localhost Python-3.6.2]# python</span></p><p><span style=\"background-color: rgb(0, 0, 0); color: rgb(255, 255, 255);\">Python 2.7.5 (default, Nov &nbsp;6 2016, 00:28:07)&nbsp;</span></p><p><span style=\"background-color: rgb(0, 0, 0); color: rgb(255, 255, 255);\">[GCC 4.8.5 20150623 (Red Hat 4.8.5-11)] on linux2</span></p><p><span style=\"background-color: rgb(0, 0, 0); color: rgb(255, 255, 255);\">Type \"help\", \"copyright\", \"credits\" or \"license\" for more information.</span></p><p><span style=\"background-color: rgb(0, 0, 0); color: rgb(255, 255, 255);\">>>> exit()</span></p><p><span style=\"background-color: rgb(0, 0, 0); color: rgb(255, 255, 255);\">[root@localhost Python-3.6.2]# python3.6</span></p><p><span style=\"background-color: rgb(0, 0, 0); color: rgb(255, 255, 255);\">Python 3.6.2 (default, Sep 26 2017, 23:31:07)&nbsp;</span></p><p><span style=\"background-color: rgb(0, 0, 0); color: rgb(255, 255, 255);\">[GCC 4.8.5 20150623 (Red Hat 4.8.5-16)] on linux</span></p><p><span style=\"background-color: rgb(0, 0, 0); color: rgb(255, 255, 255);\">Type \"help\", \"copyright\", \"credits\" or \"license\" for more information.</span></p><p><span style=\"background-color: rgb(0, 0, 0); color: rgb(255, 255, 255);\">>>> exit()</span></p><p><span style=\"background-color: rgb(0, 0, 0); color: rgb(255, 255, 255);\">[root@localhost Python-3.6.2]#</span>&nbsp;</p><p><span style=\"color: rgb(51, 51, 51); font-family: SimSun; font-size: 14px; text-align: justify; white-space: pre-wrap; background-color: rgb(255, 255, 255);\"><span style=\"color: rgb(51, 51, 51); font-family: SimSun; font-size: 14px; text-align: justify; white-space: pre-wrap; background-color: rgb(250, 250, 252);\"><span style=\"color: rgb(51, 51, 51); font-family: SimSun; font-size: 14px; text-align: justify; white-space: pre-wrap; background-color: rgb(250, 250, 252);\">好了,这样就有两种python在我们的centos7中运行了,你可以随心所欲的切换版本!<br/></span></span></span><br/></p>','centos7下安装多版本python3.6',218,1,'',1,'','',1506440766,50,0,'','',0,0,'1',0,1,0,'{\"showdate\":1506440766}','zh-cn');
+
+DROP TABLE IF EXISTS `wjf_oauth_user`;
+CREATE TABLE IF NOT EXISTS `wjf_oauth_user` (
   `id` int(20) NOT NULL AUTO_INCREMENT,
   `oauth_from` varchar(20) NOT NULL COMMENT '用户来源key',
   `name` varchar(30) NOT NULL COMMENT '第三方昵称',
@@ -719,8 +717,8 @@ CREATE TABLE IF NOT EXISTS `yf_oauth_user` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='第三方用户表' AUTO_INCREMENT=1 ;
 
 
-DROP TABLE IF EXISTS `yf_options`;
-CREATE TABLE IF NOT EXISTS `yf_options` (
+DROP TABLE IF EXISTS `wjf_options`;
+CREATE TABLE IF NOT EXISTS `wjf_options` (
   `option_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `option_name` varchar(64) NOT NULL COMMENT '配置名',
   `option_value` longtext NOT NULL COMMENT '配置值',
@@ -729,16 +727,25 @@ CREATE TABLE IF NOT EXISTS `yf_options` (
   PRIMARY KEY (`option_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='全站配置表' AUTO_INCREMENT=7 ;
 
-INSERT INTO `yf_options` (`option_id`, `option_name`, `option_value`, `autoload`, `option_l`) VALUES
-(1, 'email_options', '{"email_open":"0","email_rename":"","email_name":"","email_smtpname":"","smtpsecure":"","smtp_port":"","email_emname":"","email_pwd":""}', 1, 'zh-cn'),
-(2, 'active_options', '{"email_active":"0","email_title":"WJFCMS\\u8d26\\u53f7\\u6fc0\\u6d3b\\u901a\\u77e5","email_tpl":"<p>\\u672c\\u90ae\\u4ef6\\u6765\\u81ea<a href=\\"http:\\/\\/www.rainfer.cn\\/\\" style=\\"white-space: normal;\\">YFCMF<\\/a><br style=\\"white-space: normal;\\"\\/><br style=\\"white-space: normal;\\"\\/>&nbsp; &nbsp;<strong style=\\"white-space: normal;\\">---------------<\\/strong><br style=\\"white-space: normal;\\"\\/>&nbsp; &nbsp;<strong style=\\"white-space: normal;\\">\\u5e10\\u53f7\\u6fc0\\u6d3b\\u8bf4\\u660e<\\/strong><br style=\\"white-space: normal;\\"\\/>&nbsp; &nbsp;<strong style=\\"white-space: normal;\\">---------------<\\/strong><br style=\\"white-space: normal;\\"\\/><br style=\\"white-space: normal;\\"\\/>&nbsp; &nbsp; \\u5c0a\\u656c\\u7684<span style=\\"font-family: Arial; color: rgb(51, 51, 51); line-height: 18px; background-color: rgb(255, 255, 255);\\">#username#\\uff0c\\u60a8\\u597d\\u3002<\\/span>\\u5982\\u679c\\u60a8\\u662fYFCMF\\u7684\\u65b0\\u7528\\u6237\\uff0c\\u6216\\u5728\\u4fee\\u6539\\u60a8\\u7684\\u6ce8\\u518cEmail\\u65f6\\u4f7f\\u7528\\u4e86\\u672c\\u5730\\u5740\\uff0c\\u6211\\u4eec\\u9700\\u8981\\u5bf9\\u60a8\\u7684\\u5730\\u5740\\u6709\\u6548\\u6027\\u8fdb\\u884c\\u9a8c\\u8bc1\\u4ee5\\u907f\\u514d\\u5783\\u573e\\u90ae\\u4ef6\\u6216\\u5730\\u5740\\u88ab\\u6ee5\\u7528\\u3002<br style=\\"white-space: normal;\\"\\/>&nbsp; &nbsp; \\u60a8\\u53ea\\u9700\\u70b9\\u51fb\\u4e0b\\u9762\\u7684\\u94fe\\u63a5\\u5373\\u53ef\\u6fc0\\u6d3b\\u60a8\\u7684\\u5e10\\u53f7\\uff1a<br style=\\"white-space: normal;\\"\\/>&nbsp; &nbsp;&nbsp;<a title=\\"\\" href=\\"http:\\/#link#\\" target=\\"_self\\" style=\\"white-space: normal;\\">http:\\/\\/#link#<\\/a><br style=\\"white-space: normal;\\"\\/>&nbsp; &nbsp; (\\u5982\\u679c\\u4e0a\\u9762\\u4e0d\\u662f\\u94fe\\u63a5\\u5f62\\u5f0f\\uff0c\\u8bf7\\u5c06\\u8be5\\u5730\\u5740\\u624b\\u5de5\\u7c98\\u8d34\\u5230\\u6d4f\\u89c8\\u5668\\u5730\\u5740\\u680f\\u518d\\u8bbf\\u95ee)<br style=\\"white-space: normal;\\"\\/>&nbsp; &nbsp; \\u611f\\u8c22\\u60a8\\u7684\\u8bbf\\u95ee\\uff0c\\u795d\\u60a8\\u4f7f\\u7528\\u6109\\u5feb\\uff01<br style=\\"white-space: normal;\\"\\/><br style=\\"white-space: normal;\\"\\/>&nbsp; &nbsp; \\u6b64\\u81f4<br style=\\"white-space: normal;\\"\\/>&nbsp; &nbsp; YFCMF \\u7ba1\\u7406\\u56e2\\u961f.<\\/p>"}', 1, 'zh-cn'),
-(3, 'weixin_options', '{"wesys_name":"","wesys_id":"","wesys_number":"","wesys_appid":"","wesys_appsecret":"","wesys_type":"2"}', 1, 'zh-cn'),
-(4, 'email_options', '{"email_open":"0","email_rename":"","email_name":"","email_smtpname":"","smtpsecure":"","smtp_port":"","email_emname":"","email_pwd":""}', 1, 'en-us'),
-(5, 'active_options', '{"email_active":"0","email_title":"WJFCMS Account activation notification","email_tpl":"<p>This email comes from&nbsp;<a href=\\"http:\\/\\/www.rainfer.cn\\/\\" style=\\"white-space: normal;\\">WJFCMS<\\/a><br style=\\"white-space: normal;\\"\\/><br style=\\"white-space: normal;\\"\\/>&nbsp; &nbsp;<strong style=\\"white-space: normal;\\">---------------<\\/strong><br style=\\"white-space: normal;\\"\\/>&nbsp; &nbsp;<strong style=\\"white-space: normal;\\">Account activation description<\\/strong><br style=\\"white-space: normal;\\"\\/>&nbsp; &nbsp;<strong style=\\"white-space: normal;\\">---------------<\\/strong><br style=\\"white-space: normal;\\"\\/><br style=\\"white-space: normal;\\"\\/>Dear&nbsp;<span style=\\"font-family: Arial; color: rgb(51, 51, 51); line-height: 18px; background-color: rgb(255, 255, 255);\\">#username#,<\\/span><\\/p><p>&nbsp;If you are a new user of WJFCMS, or use this address when modifying your registration Email, we need to verify your address validity in order to avoid spam or address abuse.<\\/p><p>&nbsp;You only need to click the link below to activate your account:&nbsp; &nbsp;&nbsp;<\\/p><p><a title=\\"\\" href=\\"http:\\/#link#\\" target=\\"_self\\" style=\\"white-space: normal;\\">http:\\/\\/#link#<\\/a><br style=\\"white-space: normal;\\"\\/>&nbsp;(If it is not linked to the form, please paste the address manually into the browser address bar to access.)<\\/p><p>&nbsp;Thank you for your visit, I wish you a happy!&nbsp; &nbsp;&nbsp;<\\/p><p><br\\/><\\/p><p>Best regards!<\\/p><p><br style=\\"white-space: normal;\\"\\/>&nbsp; &nbsp; WJFCMS management team<\\/p>"}', 1, 'en-us'),
-(6, 'weixin_options', '{"wesys_name":"","wesys_id":"","wesys_number":"","wesys_appid":"","wesys_appsecret":"","wesys_type":"2"}', 1, 'en-us');
+INSERT INTO `wjf_options` (`option_id`, `option_name`, `option_value`, `autoload`, `option_l`) VALUES
+(1,'email_options','{\"email_open\":\"1\",\"email_rename\":\"\\u60a6\\u9047\\u79d1\\u6280\",\"email_name\":\"184521508@qq.com\",\"email_smtpname\":\"smtp.qq.com\",\"smtpsecure\":\"\",\"smtp_port\":\"25\",\"email_emname\":\"root\",\"email_pwd\":\"root\"}',1,'zh-cn'),
 
-DROP TABLE IF EXISTS `yf_plug_ad`;
-CREATE TABLE IF NOT EXISTS `yf_plug_ad` (
+(2,'active_options','{\"email_title\":\"\\u60a6\\u9047\\u8d26\\u53f7\\u6fc0\\u6d3b\\u901a\\u77e5\",\"email_tpl\":\"<p>\\u672c\\u90ae\\u4ef6\\u6765\\u81ea\\u60a6\\u9047\\u535a\\u5ba2<br style=\\\"white-space: normal;\\\"\\/><br style=\\\"white-space: normal;\\\"\\/>&nbsp; &nbsp;<strong style=\\\"white-space: normal;\\\">---------------<\\/strong><br style=\\\"white-space: normal;\\\"\\/>&nbsp; &nbsp;<strong style=\\\"white-space: normal;\\\">\\u5e10\\u53f7\\u6fc0\\u6d3b\\u8bf4\\u660e<\\/strong><br style=\\\"white-space: normal;\\\"\\/>&nbsp; &nbsp;<strong style=\\\"white-space: normal;\\\">---------------<\\/strong><br style=\\\"white-space: normal;\\\"\\/><br style=\\\"white-space: normal;\\\"\\/>&nbsp; &nbsp; \\u5c0a\\u656c\\u7684<span style=\\\"font-family: Arial; color: rgb(51, 51, 51); line-height: 18px; background-color: rgb(255, 255, 255);\\\">#username#\\uff0c\\u60a8\\u597d\\u3002<\\/span>\\u5982\\u679c\\u60a8\\u662f\\u60a6\\u9047\\u535a\\u5ba2\\u7684\\u65b0\\u7528\\u6237\\uff0c\\u6216\\u5728\\u4fee\\u6539\\u60a8\\u7684\\u6ce8\\u518cEmail\\u65f6\\u4f7f\\u7528\\u4e86\\u672c\\u5730\\u5740\\uff0c\\u6211\\u4eec\\u9700\\u8981\\u5bf9\\u60a8\\u7684\\u5730\\u5740\\u6709\\u6548\\u6027\\u8fdb\\u884c\\u9a8c\\u8bc1\\u4ee5\\u907f\\u514d\\u5783\\u573e\\u90ae\\u4ef6\\u6216\\u5730\\u5740\\u88ab\\u6ee5\\u7528\\u3002<br style=\\\"white-space: normal;\\\"\\/>&nbsp; &nbsp; \\u60a8\\u53ea\\u9700\\u70b9\\u51fb\\u4e0b\\u9762\\u7684\\u94fe\\u63a5\\u5373\\u53ef\\u6fc0\\u6d3b\\u60a8\\u7684\\u5e10\\u53f7\\uff1a<br style=\\\"white-space: normal;\\\"\\/>&nbsp; &nbsp;&nbsp;<a title=\\\"\\\" href=\\\"http:\\/#link#\\\" target=\\\"_self\\\" style=\\\"white-space: normal;\\\">http:\\/\\/#link#<\\/a><br style=\\\"white-space: normal;\\\"\\/>&nbsp; &nbsp; (\\u5982\\u679c\\u4e0a\\u9762\\u4e0d\\u662f\\u94fe\\u63a5\\u5f62\\u5f0f\\uff0c\\u8bf7\\u5c06\\u8be5\\u5730\\u5740\\u624b\\u5de5\\u7c98\\u8d34\\u5230\\u6d4f\\u89c8\\u5668\\u5730\\u5740\\u680f\\u518d\\u8bbf\\u95ee)<br style=\\\"white-space: normal;\\\"\\/>&nbsp; &nbsp; \\u611f\\u8c22\\u60a8\\u7684\\u8bbf\\u95ee\\uff0c\\u795d\\u60a8\\u4f7f\\u7528\\u6109\\u5feb\\uff01<br style=\\\"white-space: normal;\\\"\\/><br style=\\\"white-space: normal;\\\"\\/>&nbsp; &nbsp; \\u6b64\\u81f4<br style=\\\"white-space: normal;\\\"\\/>&nbsp; &nbsp;\\u60a6\\u9047\\u535a\\u5ba2 \\u7ad9\\u957f.<\\/p>\"}',1,'zh-cn'),
+
+(3,'weixin_options','{\"wesys_name\":\"\",\"wesys_id\":\"\",\"wesys_number\":\"\",\"wesys_appid\":\"\",\"wesys_appsecret\":\"\",\"wesys_type\":\"2\"}',1,'zh-cn'),
+
+(4,'email_options','{\"email_open\":\"0\",\"email_rename\":\"\",\"email_name\":\"\",\"email_smtpname\":\"\",\"smtpsecure\":\"\",\"smtp_port\":\"\",\"email_emname\":\"\",\"email_pwd\":\"\"}',1,'en-us'),
+
+(5,'active_options','{\"email_active\":\"0\",\"email_title\":\"WJFCMS Account activation notification\",\"email_tpl\":\"<p>This email comes from&nbsp;<a href=\\\"http:\\/\\/www.meetoyou.com\\/\\\" style=\\\"white-space: normal;\\\">WJFCMS<\\/a><br style=\\\"white-space: normal;\\\"\\/><br style=\\\"white-space: normal;\\\"\\/>&nbsp; &nbsp;<strong style=\\\"white-space: normal;\\\">---------------<\\/strong><br style=\\\"white-space: normal;\\\"\\/>&nbsp; &nbsp;<strong style=\\\"white-space: normal;\\\">Account activation description<\\/strong><br style=\\\"white-space: normal;\\\"\\/>&nbsp; &nbsp;<strong style=\\\"white-space: normal;\\\">---------------<\\/strong><br style=\\\"white-space: normal;\\\"\\/><br style=\\\"white-space: normal;\\\"\\/>Dear&nbsp;<span style=\\\"font-family: Arial; color: rgb(51, 51, 51); line-height: 18px; background-color: rgb(255, 255, 255);\\\">#username#,<\\/span><\\/p><p>&nbsp;If you are a new user of WJFCMS, or use this address when modifying your registration Email, we need to verify your address validity in order to avoid spam or address abuse.<\\/p><p>&nbsp;You only need to click the link below to activate your account:&nbsp; &nbsp;&nbsp;<\\/p><p><a title=\\\"\\\" href=\\\"http:\\/#link#\\\" target=\\\"_self\\\" style=\\\"white-space: normal;\\\">http:\\/\\/#link#<\\/a><br style=\\\"white-space: normal;\\\"\\/>&nbsp;(If it is not linked to the form, please paste the address manually into the browser address bar to access.)<\\/p><p>&nbsp;Thank you for your visit, I wish you a happy!&nbsp; &nbsp;&nbsp;<\\/p><p><br\\/><\\/p><p>Best regards!<\\/p><p><br style=\\\"white-space: normal;\\\"\\/>&nbsp; &nbsp; WJFCMS management team<\\/p>\"}',1,'en-us'),
+
+(6,'weixin_options','{\"wesys_name\":\"\",\"wesys_id\":\"\",\"wesys_number\":\"\",\"wesys_appid\":\"\",\"wesys_appsecret\":\"\",\"wesys_type\":\"2\"}',1,'en-us'),
+
+(7,'site_options','{\"site_name\":\"\\u60a6\\u9047\\u79d1\\u6280\",\"site_host\":\"http:\\/\\/www.meetoyou.com\\/\",\"site_tpl\":\"default\",\"site_tpl_m\":\"default\",\"site_icp\":\"\\u95fdICP\\u590705920592\\u53f7-2\",\"site_tongji\":\"\",\"site_copyright\":\"\\u60a6\\u9047\\u79d1\\u6280\",\"site_co_name\":\"\\u60a6\\u9047\\u79d1\\u6280\\u6709\\u9650\\u516c\\u53f8\",\"site_address\":\"\\u798f\\u5efa\\u7701\\u53a6\\u95e8\\u5e02\\u96c6\\u7f8e\\u533a\\u8f6f\\u4ef6\\u56ed\\u4e09\\u671f\",\"map_lat\":\"23.029759\",\"map_lng\":\"113.752114\",\"site_tel\":\"+86 13015920170\",\"site_admin_email\":\"1937832819@qq.com\",\"site_qq\":\"1937832819\",\"site_seo_title\":\"\\u60a6\\u9047\",\"site_seo_keywords\":\"\\u60a6\\u9047\\u535a\\u5ba2\",\"site_seo_description\":\"\\u6b22\\u8fce\\u6765\\u5230\\u60a6\\u9047\\u535a\\u5ba2,\\u5e0c\\u671b\\u60a8\\u80fd\\u5728\\u8fd9\\u5f97\\u5230\\u6536\\u83b7!\",\"site_logo\":\"\\/data\\/upload\\/2017-08-30\\/59a6b36cc9f2a.png\"}',1,'zh-cn'),
+
+(8,'site_options','            {\n            		\"site_name\":\"WJFCMF内容管理框架\",\n					\"site_host\":\"http://www.meetoyou.com/\",\n					\"site_tpl\":\"default\",\n					\"site_tpl_m\":\"default\",\n					\"site_icp\":\"\",\n					\"site_tongji\":\"\",\n					\"site_copyright\":\"\",\n					\"site_co_name\":\"\",\n					\"site_address\":\"\",\n					\"map_lat\":\"23.029759\",\n					\"map_lng\":\"113.752114\",\n					\"site_tel\":\"+86 769 8888 8888\",\n					\"site_admin_email\":\"1937832819@qq.com\",\n					\"site_qq\":\"81818832\",\n					\"site_seo_title\":\"WJFCMF内容管理框架\",\n					\"site_seo_keywords\":\"WJFCMF\",\n					\"site_seo_description\":\"WJFCMF是一款用于快速开发的内容管理框架\",\n					\"site_logo\":\"http://ohjmksy46.bkt.clouddn.com/image/iw7sxvxs_6n9tgd6cbu4o58417156d5943.png\"\n        }\n		',1,'en-us');
+
+DROP TABLE IF EXISTS `wjf_plug_ad`;
+CREATE TABLE IF NOT EXISTS `wjf_plug_ad` (
   `plug_ad_id` int(11) NOT NULL AUTO_INCREMENT,
   `plug_ad_name` varchar(50) NOT NULL DEFAULT '' COMMENT '广告名称',
   `plug_ad_adtypeid` tinyint(5) NOT NULL COMMENT '所属位置',
@@ -754,27 +761,29 @@ CREATE TABLE IF NOT EXISTS `yf_plug_ad` (
   `plug_ad_butt` int(5) NOT NULL COMMENT '广告内部对接人员（自己的员工）',
   `plug_ad_l` varchar(10) NOT NULL DEFAULT 'zh-cn',
   PRIMARY KEY (`plug_ad_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
-INSERT INTO `yf_plug_ad` (`plug_ad_id`, `plug_ad_name`, `plug_ad_adtypeid`, `plug_ad_checkid`, `plug_ad_js`, `plug_ad_pic`, `plug_ad_url`, `plug_ad_content`, `plug_ad_addtime`, `plug_ad_order`, `plug_ad_open`, `plug_ad_depid`, `plug_ad_butt`, `plug_ad_l`) VALUES
-(1, '为什么选择我们？', 1, 1, '', 'http://ohjmksy46.bkt.clouddn.com/image/iw7upo8g_706ml271j1s858417cf6e11a9.jpg', '', '深厚的技术力量\r\n丰富的行业经验\r\n高效的作业流程\r\n完善的服务体系\r\n众多的成功案例', 1451356484, 50, 1, 0, 0, 'zh-cn'),
-(2, '我们能帮您哪些？', 1, 1, '', 'http://ohjmksy46.bkt.clouddn.com/image/iw7uq7iw_17vba6gddvdw58417d0f2728b.jpg', '', '企业网站开发设计\r\n网站UI设计\r\nThinkPHP二次开发\r\nThinkCMF二次开发\r\nTP插件开发定制\r\nThinkCMF功能定制', 1462533829, 50, 1, 0, 0, 'zh-cn'),
-(3, 'Why do you choose us?', 1, 1, '', 'http://ohjmksy46.bkt.clouddn.com/image/iw7upo8g_706ml271j1s858417cf6e11a9.jpg', '', 'Profound technical strength\nRich experience in the industry\nEfficient operation process\nPerfect service system\nA large number of successful cases', 1451356484, 50, 1, 0, 0, 'en-us'),
-(4, 'What can we do for you?', 1, 1, '', 'http://ohjmksy46.bkt.clouddn.com/image/iw7uq7iw_17vba6gddvdw58417d0f2728b.jpg', '', 'Enterprise website development and design\nWebsite UI design\nThinkPHP two development\nWJFCMS two development\nTP plug-in development\nWJFCMS function customization', 1462533829, 50, 1, 0, 0, 'en-us');
+/*Data for the table `wjf_plug_ad` */
 
-DROP TABLE IF EXISTS `yf_plug_adtype`;
-CREATE TABLE IF NOT EXISTS `yf_plug_adtype` (
+insert  into `wjf_plug_ad`(`plug_ad_id`,`plug_ad_name`,`plug_ad_adtypeid`,`plug_ad_checkid`,`plug_ad_js`,`plug_ad_pic`,`plug_ad_url`,`plug_ad_content`,`plug_ad_addtime`,`plug_ad_order`,`plug_ad_open`,`plug_ad_depid`,`plug_ad_butt`,`plug_ad_l`) values
+(1,'购物商城',2,1,'','','http://shop.meetoyou.com','购物商城',1505978589,1,1,0,0,'zh-cn');
+
+DROP TABLE IF EXISTS `wjf_plug_adtype`;
+CREATE TABLE IF NOT EXISTS `wjf_plug_adtype` (
   `plug_adtype_id` tinyint(5) NOT NULL AUTO_INCREMENT,
   `plug_adtype_name` varchar(50) NOT NULL DEFAULT '' COMMENT '广告位名称',
   `plug_adtype_order` int(11) NOT NULL COMMENT '广告位排序',
   PRIMARY KEY (`plug_adtype_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
-INSERT INTO `yf_plug_adtype` (`plug_adtype_id`, `plug_adtype_name`, `plug_adtype_order`) VALUES
-(1, '首页图片轮播', 50);
+/*Data for the table `wjf_plug_adtype` */
 
-DROP TABLE IF EXISTS `yf_plug_files`;
-CREATE TABLE IF NOT EXISTS `yf_plug_files` (
+insert  into `wjf_plug_adtype`(`plug_adtype_id`,`plug_adtype_name`,`plug_adtype_order`) values
+(1,'首页图片轮播',50),
+(2,'广告赞助',50);
+
+DROP TABLE IF EXISTS `wjf_plug_files`;
+CREATE TABLE IF NOT EXISTS `wjf_plug_files` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `uptime` int(10) unsigned NOT NULL DEFAULT '0',
   `filesize` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '文件大小',
@@ -784,8 +793,8 @@ CREATE TABLE IF NOT EXISTS `yf_plug_files` (
   KEY `path` (`path`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-DROP TABLE IF EXISTS `yf_plug_link`;
-CREATE TABLE IF NOT EXISTS `yf_plug_link` (
+DROP TABLE IF EXISTS `wjf_plug_link`;
+CREATE TABLE IF NOT EXISTS `wjf_plug_link` (
   `plug_link_id` int(5) NOT NULL AUTO_INCREMENT,
   `plug_link_name` varchar(50) NOT NULL COMMENT '链接名称',
   `plug_link_url` varchar(200) NOT NULL COMMENT '链接URL',
@@ -799,28 +808,27 @@ CREATE TABLE IF NOT EXISTS `yf_plug_link` (
   PRIMARY KEY (`plug_link_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
-INSERT INTO `yf_plug_link` (`plug_link_id`, `plug_link_name`, `plug_link_url`, `plug_link_target`, `plug_link_typeid`, `plug_link_qq`, `plug_link_order`, `plug_link_addtime`, `plug_link_open`, `plug_link_l`) VALUES
-(1, '悦遇工作室', 'http://www.meetoyou.com', '_blank', 1, 'eee', '50', 1460260482, 1, 'zh-cn'),
-(2, '悦遇工作室', 'http://www.meetoyou.com', '_blank', 2, '81818832', '50', 1460362536, 1, 'zh-cn'),
-(3, 'WJFCMS', 'http://www.meetoyou.com', '_blank', 1, '', '50', 1461909470, 1, 'zh-cn'),
-(4, 'viajy studio', 'http://www.meetoyou.com', '_blank', 1, 'eee', '50', 1460260482, 1, 'en-us'),
-(5, 'Vijay studio', 'http://www.meetoyou.com', '_blank', 2, '81818832', '50', 1460362536, 1, 'en-us'),
-(6, 'WJFCMS', 'http://www.meetoyou.com', '_blank', 1, '', '50', 1461909470, 1, 'en-us');
+INSERT INTO `wjf_plug_link` (`plug_link_id`, `plug_link_name`, `plug_link_url`, `plug_link_target`, `plug_link_typeid`, `plug_link_qq`, `plug_link_order`, `plug_link_addtime`, `plug_link_open`, `plug_link_l`) VALUES
+(2,'wjf','http://www.meetoyou.com','_blank',2,'1937832819','50',1460362536,1,'zh-cn'),
 
-DROP TABLE IF EXISTS `yf_plug_linktype`;
-CREATE TABLE IF NOT EXISTS `yf_plug_linktype` (
+(3,'悦遇科技官网','http://www.meetoyou.com','_self',1,'1937832819','50',1461909470,1,'zh-cn'),
+
+(6,'悦遇商城','http://shop.meetoyou.com','_blank',1,'1937832819','50',1461909470,1,'zh-cn');
+
+DROP TABLE IF EXISTS `wjf_plug_linktype`;
+CREATE TABLE IF NOT EXISTS `wjf_plug_linktype` (
   `plug_linktype_id` tinyint(4) NOT NULL AUTO_INCREMENT,
   `plug_linktype_name` varchar(30) NOT NULL COMMENT '所属栏目名称',
   `plug_linktype_order` varchar(10) NOT NULL COMMENT '排序',
   PRIMARY KEY (`plug_linktype_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
-INSERT INTO `yf_plug_linktype` (`plug_linktype_id`, `plug_linktype_name`, `plug_linktype_order`) VALUES
+INSERT INTO `wjf_plug_linktype` (`plug_linktype_id`, `plug_linktype_name`, `plug_linktype_order`) VALUES
 (1, '首页', '1'),
 (2, '新闻中心', '50');
 
-DROP TABLE IF EXISTS `yf_plug_sug`;
-CREATE TABLE IF NOT EXISTS `yf_plug_sug` (
+DROP TABLE IF EXISTS `wjf_plug_sug`;
+CREATE TABLE IF NOT EXISTS `wjf_plug_sug` (
   `plug_sug_id` int(11) NOT NULL AUTO_INCREMENT,
   `plug_sug_name` varchar(200) NOT NULL DEFAULT '' COMMENT '留言人姓名',
   `plug_sug_email` varchar(50) NOT NULL DEFAULT '' COMMENT '留言邮箱',
@@ -831,8 +839,8 @@ CREATE TABLE IF NOT EXISTS `yf_plug_sug` (
   PRIMARY KEY (`plug_sug_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-DROP TABLE IF EXISTS `yf_region`;
-CREATE TABLE IF NOT EXISTS `yf_region` (
+DROP TABLE IF EXISTS `wjf_region`;
+CREATE TABLE IF NOT EXISTS `wjf_region` (
   `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `pid` smallint(5) unsigned NOT NULL DEFAULT '0',
   `name` varchar(120) NOT NULL DEFAULT '0',
@@ -840,7 +848,7 @@ CREATE TABLE IF NOT EXISTS `yf_region` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3726 ;
 
-INSERT INTO `yf_region` (`id`, `pid`, `name`, `type`) VALUES
+INSERT INTO `wjf_region` (`id`, `pid`, `name`, `type`) VALUES
 (1, 0, '中国', 0),
 (2, 1, '北京', 1),
 (3, 1, '安徽', 1),
@@ -2804,7 +2812,7 @@ INSERT INTO `yf_region` (`id`, `pid`, `name`, `type`) VALUES
 (1961, 233, '湾里区', 3),
 (1962, 233, '青山湖区', 3),
 (1963, 233, '红谷滩新区', 3);
-INSERT INTO `yf_region` (`id`, `pid`, `name`, `type`) VALUES
+INSERT INTO `wjf_region` (`id`, `pid`, `name`, `type`) VALUES
 (1964, 233, '昌北区', 3),
 (1965, 233, '高新区', 3),
 (1966, 233, '南昌县', 3),
@@ -4252,41 +4260,36 @@ INSERT INTO `yf_region` (`id`, `pid`, `name`, `type`) VALUES
 (3408, 3401, '肥西县', 3),
 (3409, 0, '国外', 0);
 
-DROP TABLE IF EXISTS `yf_route`;
-CREATE TABLE IF NOT EXISTS `yf_route` (
+DROP TABLE IF EXISTS `wjf_route`;
+CREATE TABLE IF NOT EXISTS `wjf_route` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '路由id',
   `full_url` varchar(255) DEFAULT NULL COMMENT '完整url， 如：portal/list/index?id=1',
   `url` varchar(255) DEFAULT NULL COMMENT '实际显示的url',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   `listorder` int(5) DEFAULT '0' COMMENT '排序，优先级，越小优先级越高',
   `status` tinyint(1) DEFAULT '1' COMMENT '状态，1：启用 ;0：不启用',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='url路由表' AUTO_INCREMENT=8 ;
 
-INSERT INTO `yf_route` (`id`, `full_url`, `url`, `listorder`, `status`) VALUES
-(1, 'home/Listn/index?id=1', 'about', 0, 1),
-(2, 'home/Listn/index?id=8', 'about_en', 0, 1),
-(3, 'home/Listn/index?id=4', 'contacts', 0, 1),
-(4, 'home/Listn/index?id=11', 'contacts_en', 0, 1),
-(5, 'home/Listn/index', 'list/:id', 0, 1),
-(6, 'home/News/index', 'news/:id', 0, 1),
-(7, 'home/Index/index', '/', 0, 1);
-
-
-DROP TABLE IF EXISTS `yf_source`;
-CREATE TABLE IF NOT EXISTS `yf_source` (
+DROP TABLE IF EXISTS `wjf_source`;
+CREATE TABLE IF NOT EXISTS `wjf_source` (
   `source_id` tinyint(5) NOT NULL AUTO_INCREMENT,
   `source_name` varchar(30) NOT NULL,
   `source_order` int(11) NOT NULL,
   PRIMARY KEY (`source_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
-INSERT INTO `yf_source` (`source_id`, `source_name`, `source_order`) VALUES
-(1, '悦遇工作室', 2),
-(2, 'ThinkPHP', 10),
-(3, 'Rainfer studio', 1);
+INSERT INTO `wjf_source` (`source_id`, `source_name`, `source_order`) VALUES
+(1,'悦遇工作室',2),
 
-DROP TABLE IF EXISTS `yf_test`;
-CREATE TABLE IF NOT EXISTS `yf_test` (
+(2,'Vijay',10),
+
+(3,'wjf',1),
+
+(4,'魏佳君',3);
+
+DROP TABLE IF EXISTS `wjf_test`;
+CREATE TABLE IF NOT EXISTS `wjf_test` (
   `test_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `test_order` int(3) unsigned DEFAULT '50' COMMENT '默认排序字段',
   `test_cid` int(3) unsigned NOT NULL DEFAULT '0' COMMENT '前台栏目id',
@@ -4309,21 +4312,8 @@ CREATE TABLE IF NOT EXISTS `yf_test` (
   PRIMARY KEY (`test_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
 
-
-
-INSERT INTO `yf_test` (`test_id`, `test_order`, `test_cid`, `m_text`, `m_map_lng`, `m_map_lat`, `m_imagefile`, `m_images`, `m_selecttext`, `m_cur`, `m_long`, `m_int`, `m_datatime`, `m_date`, `m_selectnumber`, `m_richtext`, `m_bigtext`, `m_switch`, `m_check`) VALUES
-(2, 45, 1, '文本测试数据文本测试数据文本测试数据文本测试数据文本测试数据', 22, 22, 'http://ohjmksy46.bkt.clouddn.com/image/iw7u817c_3ljeuzemth44584179bf73a10.jpg', 'http://ohjmksy46.bkt.clouddn.com/image/iw7u817c_3ljeuzemth44584179bf73a10.jpg,http://ohjmksy46.bkt.clouddn.com/image/iw7u817c_3ljeuzemth44584179bf73a10.jpg,http://ohjmksy46.bkt.clouddn.com/image/iw7u817c_3ljeuzemth44584179bf73a10.jpg', '1', 22, 9999999999999, 8888888, 1486563521, 1486483200, 1, '<p>当世界进入品牌竞争的时代，当品牌成为中华大地上商界的热点时，品牌设计也成为人们常挂在嘴边的时髦词汇。有人统计说企业每投在品牌形象设计上1美元，所获得的收益是227美元。如此诱人的投资回报率，无怪乎企业界对品牌设计趋之若鹜。那么，品牌设计究竟是什么？其魅力来自何处？\n \n1、设计是冰山一角，却至关重要！如果我们把品牌理解成一座冰山。品牌或企业所属的文化制度、员工行为、组织结构、核心技术、营销方式等要素是构成这座冰山的主体，尽管隐于水下，却是品牌发展最强有力的支撑与原动力。\n但这一切都必须通过一系列完整有效的视觉设计与品牌推广来被大众所认知。</p>', '当世界进入品牌竞争的时代，当品牌成为中华大地上商界的热点时，品牌设计也成为人们常挂在嘴边的时髦词汇。', 1, '1,2,5,6'),
-(3, 11, 2, '文本测试数据文本测试数据文本测试数据文本测试数据文本测试数据', 22, 22, 'http://ohjmksy46.bkt.clouddn.com/image/iw7u817c_3ljeuzemth44584179bf73a10.jpg', 'http://ohjmksy46.bkt.clouddn.com/image/iw7u817c_3ljeuzemth44584179bf73a10.jpg,http://ohjmksy46.bkt.clouddn.com/image/iw7u817c_3ljeuzemth44584179bf73a10.jpg,http://ohjmksy46.bkt.clouddn.com/image/iw7u817c_3ljeuzemth44584179bf73a10.jpg', '1', 22, 9999999999999, 8888888, 1486563521, 1486563521, 1, '当世界进入品牌竞争的时代，当品牌成为中华大地上商界的热点时，品牌设计也成为人们常挂在嘴边的时髦词汇。有人统计说企业每投在品牌形象设计上1美元，所获得的收益是227美元。如此诱人的投资回报率，无怪乎企业界对品牌设计趋之若鹜。那么，品牌设计究竟是什么？其魅力来自何处？\r\n \r\n1、设计是冰山一角，却至关重要！如果我们把品牌理解成一座冰山。品牌或企业所属的文化制度、员工行为、组织结构、核心技术、营销方式等要素是构成这座冰山的主体，尽管隐于水下，却是品牌发展最强有力的支撑与原动力。\r\n但这一切都必须通过一系列完整有效的视觉设计与品牌推广来被大众所认知。', '当世界进入品牌竞争的时代，当品牌成为中华大地上商界的热点时，品牌设计也成为人们常挂在嘴边的时髦词汇。', 0, '1,2,5,6'),
-(4, 22, 3, '文本测试数据文本测试数据文本测试数据文本测试数据文本测试数据', 22, 22, 'http://ohjmksy46.bkt.clouddn.com/image/iw7u817c_3ljeuzemth44584179bf73a10.jpg', 'http://ohjmksy46.bkt.clouddn.com/image/iw7u817c_3ljeuzemth44584179bf73a10.jpg,http://ohjmksy46.bkt.clouddn.com/image/iw7u817c_3ljeuzemth44584179bf73a10.jpg,http://ohjmksy46.bkt.clouddn.com/image/iw7u817c_3ljeuzemth44584179bf73a10.jpg', '1', 22, 9999999999999, 8888888, 1486563521, 1486563521, 1, '当世界进入品牌竞争的时代，当品牌成为中华大地上商界的热点时，品牌设计也成为人们常挂在嘴边的时髦词汇。有人统计说企业每投在品牌形象设计上1美元，所获得的收益是227美元。如此诱人的投资回报率，无怪乎企业界对品牌设计趋之若鹜。那么，品牌设计究竟是什么？其魅力来自何处？\r\n \r\n1、设计是冰山一角，却至关重要！如果我们把品牌理解成一座冰山。品牌或企业所属的文化制度、员工行为、组织结构、核心技术、营销方式等要素是构成这座冰山的主体，尽管隐于水下，却是品牌发展最强有力的支撑与原动力。\r\n但这一切都必须通过一系列完整有效的视觉设计与品牌推广来被大众所认知。', '当世界进入品牌竞争的时代，当品牌成为中华大地上商界的热点时，品牌设计也成为人们常挂在嘴边的时髦词汇。', 1, '1,2,5,6'),
-(5, 33, 4, '文本测试数据文本测试数据文本测试数据文本测试数据文本测试数据', 22, 22, 'http://ohjmksy46.bkt.clouddn.com/image/iw7u817c_3ljeuzemth44584179bf73a10.jpg', 'http://ohjmksy46.bkt.clouddn.com/image/iw7u817c_3ljeuzemth44584179bf73a10.jpg,http://ohjmksy46.bkt.clouddn.com/image/iw7u817c_3ljeuzemth44584179bf73a10.jpg,http://ohjmksy46.bkt.clouddn.com/image/iw7u817c_3ljeuzemth44584179bf73a10.jpg', '1', 22, 9999999999999, 8888888, 1486563521, 1486563521, 1, '当世界进入品牌竞争的时代，当品牌成为中华大地上商界的热点时，品牌设计也成为人们常挂在嘴边的时髦词汇。有人统计说企业每投在品牌形象设计上1美元，所获得的收益是227美元。如此诱人的投资回报率，无怪乎企业界对品牌设计趋之若鹜。那么，品牌设计究竟是什么？其魅力来自何处？\r\n \r\n1、设计是冰山一角，却至关重要！如果我们把品牌理解成一座冰山。品牌或企业所属的文化制度、员工行为、组织结构、核心技术、营销方式等要素是构成这座冰山的主体，尽管隐于水下，却是品牌发展最强有力的支撑与原动力。\r\n但这一切都必须通过一系列完整有效的视觉设计与品牌推广来被大众所认知。', '当世界进入品牌竞争的时代，当品牌成为中华大地上商界的热点时，品牌设计也成为人们常挂在嘴边的时髦词汇。', 0, '1,2,5,6'),
-(6, 44, 5, '文本测试数据文本测试数据文本测试数据文本测试数据文本测试数据', 22, 22, 'http://ohjmksy46.bkt.clouddn.com/image/iw7u817c_3ljeuzemth44584179bf73a10.jpg', 'http://ohjmksy46.bkt.clouddn.com/image/iw7u817c_3ljeuzemth44584179bf73a10.jpg,http://ohjmksy46.bkt.clouddn.com/image/iw7u817c_3ljeuzemth44584179bf73a10.jpg,http://ohjmksy46.bkt.clouddn.com/image/iw7u817c_3ljeuzemth44584179bf73a10.jpg', '1', 22, 9999999999999, 8888888, 1486563521, 1486563521, 1, '当世界进入品牌竞争的时代，当品牌成为中华大地上商界的热点时，品牌设计也成为人们常挂在嘴边的时髦词汇。有人统计说企业每投在品牌形象设计上1美元，所获得的收益是227美元。如此诱人的投资回报率，无怪乎企业界对品牌设计趋之若鹜。那么，品牌设计究竟是什么？其魅力来自何处？\r\n \r\n1、设计是冰山一角，却至关重要！如果我们把品牌理解成一座冰山。品牌或企业所属的文化制度、员工行为、组织结构、核心技术、营销方式等要素是构成这座冰山的主体，尽管隐于水下，却是品牌发展最强有力的支撑与原动力。\r\n但这一切都必须通过一系列完整有效的视觉设计与品牌推广来被大众所认知。', '当世界进入品牌竞争的时代，当品牌成为中华大地上商界的热点时，品牌设计也成为人们常挂在嘴边的时髦词汇。', 1, '1,2,5,6'),
-(7, 50, 6, '文本测试数据文本测试数据文本测试数据文本测试数据文本测试数据', 22, 22, 'http://ohjmksy46.bkt.clouddn.com/image/iw7u817c_3ljeuzemth44584179bf73a10.jpg', 'http://ohjmksy46.bkt.clouddn.com/image/iw7u817c_3ljeuzemth44584179bf73a10.jpg,http://ohjmksy46.bkt.clouddn.com/image/iw7u817c_3ljeuzemth44584179bf73a10.jpg,http://ohjmksy46.bkt.clouddn.com/image/iw7u817c_3ljeuzemth44584179bf73a10.jpg', '1', 22, 9999999999999, 8888888, 1486563521, 1486563521, 1, '当世界进入品牌竞争的时代，当品牌成为中华大地上商界的热点时，品牌设计也成为人们常挂在嘴边的时髦词汇。有人统计说企业每投在品牌形象设计上1美元，所获得的收益是227美元。如此诱人的投资回报率，无怪乎企业界对品牌设计趋之若鹜。那么，品牌设计究竟是什么？其魅力来自何处？\r\n \r\n1、设计是冰山一角，却至关重要！如果我们把品牌理解成一座冰山。品牌或企业所属的文化制度、员工行为、组织结构、核心技术、营销方式等要素是构成这座冰山的主体，尽管隐于水下，却是品牌发展最强有力的支撑与原动力。\r\n但这一切都必须通过一系列完整有效的视觉设计与品牌推广来被大众所认知。', '当世界进入品牌竞争的时代，当品牌成为中华大地上商界的热点时，品牌设计也成为人们常挂在嘴边的时髦词汇。', 0, '1,2,5,6'),
-(10, 47, 7, '文本测试数据文本测试数据文本测试数据文本测试数据文本测试数据', 22, 22, 'http://ohjmksy46.bkt.clouddn.com/image/iw7u817c_3ljeuzemth44584179bf73a10.jpg', 'http://ohjmksy46.bkt.clouddn.com/image/iw7u817c_3ljeuzemth44584179bf73a10.jpg,http://ohjmksy46.bkt.clouddn.com/image/iw7u817c_3ljeuzemth44584179bf73a10.jpg,http://ohjmksy46.bkt.clouddn.com/image/iw7u817c_3ljeuzemth44584179bf73a10.jpg', '1', 22, 9999999999999, 8888888, 1486563521, 1486563521, 1, '当世界进入品牌竞争的时代，当品牌成为中华大地上商界的热点时，品牌设计也成为人们常挂在嘴边的时髦词汇。有人统计说企业每投在品牌形象设计上1美元，所获得的收益是227美元。如此诱人的投资回报率，无怪乎企业界对品牌设计趋之若鹜。那么，品牌设计究竟是什么？其魅力来自何处？\r\n \r\n1、设计是冰山一角，却至关重要！如果我们把品牌理解成一座冰山。品牌或企业所属的文化制度、员工行为、组织结构、核心技术、营销方式等要素是构成这座冰山的主体，尽管隐于水下，却是品牌发展最强有力的支撑与原动力。\r\n但这一切都必须通过一系列完整有效的视觉设计与品牌推广来被大众所认知。', '当世界进入品牌竞争的时代，当品牌成为中华大地上商界的热点时，品牌设计也成为人们常挂在嘴边的时髦词汇。', 0, '1,2,5,6'),
-(12, 50, 8, '文本测试数据文本测试数据文本测试数据文本测试数据文本测试数据', 22, 22, 'http://ohjmksy46.bkt.clouddn.com/image/iw7u817c_3ljeuzemth44584179bf73a10.jpg', 'http://ohjmksy46.bkt.clouddn.com/image/iw7u817c_3ljeuzemth44584179bf73a10.jpg,http://ohjmksy46.bkt.clouddn.com/image/iw7u817c_3ljeuzemth44584179bf73a10.jpg,http://ohjmksy46.bkt.clouddn.com/image/iw7u817c_3ljeuzemth44584179bf73a10.jpg', '1', 22, 9999999999999, 8888888, 1486563521, 1486563521, 1, '当世界进入品牌竞争的时代，当品牌成为中华大地上商界的热点时，品牌设计也成为人们常挂在嘴边的时髦词汇。有人统计说企业每投在品牌形象设计上1美元，所获得的收益是227美元。如此诱人的投资回报率，无怪乎企业界对品牌设计趋之若鹜。那么，品牌设计究竟是什么？其魅力来自何处？\r\n \r\n1、设计是冰山一角，却至关重要！如果我们把品牌理解成一座冰山。品牌或企业所属的文化制度、员工行为、组织结构、核心技术、营销方式等要素是构成这座冰山的主体，尽管隐于水下，却是品牌发展最强有力的支撑与原动力。\r\n但这一切都必须通过一系列完整有效的视觉设计与品牌推广来被大众所认知。', '当世界进入品牌竞争的时代，当品牌成为中华大地上商界的热点时，品牌设计也成为人们常挂在嘴边的时髦词汇。', 0, '1,2,5,6'),
-(13, 50, 2, '', 22, 22, 'http://ohjmksy46.bkt.clouddn.com/image/ix66veqg_5sgky011nh0c58612b67ba135.png', 'http://ohjmksy46.bkt.clouddn.com/image/ix66vilc_6cgtqvbo9cg858612b6ccbef1.png,http://ohjmksy46.bkt.clouddn.com/image/ix66vilc_63fw80lz0dgk58612b6cc41f1.png,', '1', 22, 0, 11, 1482762857, 1482681600, 1, '', '', 0, '');
-
-DROP TABLE IF EXISTS `yf_web_log`;
-CREATE TABLE IF NOT EXISTS `yf_web_log` (
+DROP TABLE IF EXISTS `wjf_web_log`;
+CREATE TABLE IF NOT EXISTS `wjf_web_log` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '日志主键',
   `uid` smallint(5) unsigned NOT NULL COMMENT '用户id',
   `ip` char(15) NOT NULL COMMENT '访客ip',
@@ -4346,8 +4336,8 @@ CREATE TABLE IF NOT EXISTS `yf_web_log` (
   KEY `method` (`method`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='网站日志' AUTO_INCREMENT=1 ;
 
-DROP TABLE IF EXISTS `yf_we_mats`;
-CREATE TABLE IF NOT EXISTS `yf_we_mats` (
+DROP TABLE IF EXISTS `wjf_we_mats`;
+CREATE TABLE IF NOT EXISTS `wjf_we_mats` (
   `mats_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `mats_name` varchar(100) NOT NULL DEFAULT '' COMMENT '素材名',
   `mats_type` varchar(10) NOT NULL DEFAULT 'image' COMMENT '素材类型',
@@ -4363,25 +4353,25 @@ CREATE TABLE IF NOT EXISTS `yf_we_mats` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
 
 --
--- 转存表中的数据 `yf_we_mats`
+-- 转存表中的数据 `wjf_we_mats`
 --
 
-INSERT INTO `yf_we_mats` (`mats_id`, `mats_name`, `mats_type`, `url_lc`, `news_content`, `news_index`, `video_content`, `media_id`, `url`, `create_time`, `update_time`) VALUES
+INSERT INTO `wjf_we_mats` (`mats_id`, `mats_name`, `mats_type`, `url_lc`, `news_content`, `news_index`, `video_content`, `media_id`, `url`, `create_time`, `update_time`) VALUES
 (1, 'girl.jpg', 'image', '', '', 0, NULL, 'KdpdmrH0vQi-14__8hxsuNGesZG3wQgnf9zajn4nw9w', 'http://mmbiz.qpic.cn/mmbiz/gLO17UPS6FS2xsypf378iaNhWacZ1G1UplZYWEYfwvuU6Ont96b1roYsCNFwaRrSaKTPCUdBK9DgEHicsKwWCBRQ/0', 1483622035, 1483622035),
 (2, 'boy.jpg', 'image', '', '', 0, NULL, 'KdpdmrH0vQi-14__8hxsuOhetEVshLk7MTCoTIrUjeE', 'http://mmbiz.qpic.cn/mmbiz_jpg/bBGqHGSmX13NZvOgT9cdygib8icSngXfAvVmbvUg530cgoVHLAvAibp7ETfNNfoJpFIujnDTUA928rUulaC3icPm2w/0?wx_fmt=jpeg', 1483618551, 1483618551),
 (3, '标题', 'video', '', '', 0, NULL, 'KdpdmrH0vQi-14__8hxsuD_SIO-sM4B8jsiNHByhtDA', '', 1483621917, 1483621917),
 (4, 'a.mp3', 'voice', '', '', 0, NULL, 'KdpdmrH0vQi-14__8hxsuJhtMm36AWCjujVrnOQy-Kk', '', 1483619629, 1483619629),
-(5, '图文', 'news', '', '{"title":"\\u56fe\\u6587","author":"rainfer","digest":"\\u5355\\u56fe\\u6587\\u6d88\\u606f\\u624d\\u6709\\u6458\\u8981","content":"<p><img src=\\"http:\\/\\/mmbiz.qpic.cn\\/mmbiz_jpg\\/bBGqHGSmX13NZvOgT9cdygib8icSngXfAvVmbvUg530cgoVHLAvAibp7ETfNNfoJpFIujnDTUA928rUulaC3icPm2w\\/0?wx_fmt=jpeg\\" alt=\\"0?wx_fmt=jpeg\\"\\/><\\/p><p>\\u56fe\\u6587\\u6d88\\u606f\\u7684\\u5177\\u4f53\\u5185\\u5bb9\\uff0c\\u652f\\u6301HTML\\u6807\\u7b7e<\\/p><p><img src=\\"http:\\/\\/mmbiz.qpic.cn\\/mmbiz\\/gLO17UPS6FS2xsypf378iaNhWacZ1G1UplZYWEYfwvuU6Ont96b1roYsCNFwaRrSaKTPCUdBK9DgEHicsKwWCBRQ\\/0\\" alt=\\"0\\"\\/><\\/p>","content_source_url":"http:\\/\\/www.rainfer.cn","thumb_media_id":"KdpdmrH0vQi-14__8hxsuNGesZG3wQgnf9zajn4nw9w","show_cover_pic":0,"url":"http:\\/\\/mp.weixin.qq.com\\/s?__biz=MzIzMzM4NDg0MQ==&mid=100000007&idx=1&sn=9cb9083207911fc248bea6096d332a2e&chksm=68873fe15ff0b6f7904c35344049ed50e28fddab949318a81b8c806681b6fb2b90e25bae4fa5#rd","thumb_url":"http:\\/\\/mmbiz.qpic.cn\\/mmbiz_jpg\\/bBGqHGSmX13NZvOgT9cdygib8icSngXfAvibLwibW4jwgOaedmdejP2vvug6ZLcZsGIV8rmiaRHwMhibpFWkE0fLU1qA\\/0?wx_fmt=jpeg"}', 0, NULL, 'KdpdmrH0vQi-14__8hxsuMAdAzRcc0BgrPlVD_jrsmw', '', 1483622501, 1483711027),
+(5, '图文', 'news', '', '{"title":"\\u56fe\\u6587","author":"wjf","digest":"\\u5355\\u56fe\\u6587\\u6d88\\u606f\\u624d\\u6709\\u6458\\u8981","content":"<p><img src=\\"http:\\/\\/mmbiz.qpic.cn\\/mmbiz_jpg\\/bBGqHGSmX13NZvOgT9cdygib8icSngXfAvVmbvUg530cgoVHLAvAibp7ETfNNfoJpFIujnDTUA928rUulaC3icPm2w\\/0?wx_fmt=jpeg\\" alt=\\"0?wx_fmt=jpeg\\"\\/><\\/p><p>\\u56fe\\u6587\\u6d88\\u606f\\u7684\\u5177\\u4f53\\u5185\\u5bb9\\uff0c\\u652f\\u6301HTML\\u6807\\u7b7e<\\/p><p><img src=\\"http:\\/\\/mmbiz.qpic.cn\\/mmbiz\\/gLO17UPS6FS2xsypf378iaNhWacZ1G1UplZYWEYfwvuU6Ont96b1roYsCNFwaRrSaKTPCUdBK9DgEHicsKwWCBRQ\\/0\\" alt=\\"0\\"\\/><\\/p>","content_source_url":"http:\\/\\/www.meetoyou.com","thumb_media_id":"KdpdmrH0vQi-14__8hxsuNGesZG3wQgnf9zajn4nw9w","show_cover_pic":0,"url":"http:\\/\\/mp.weixin.qq.com\\/s?__biz=MzIzMzM4NDg0MQ==&mid=100000007&idx=1&sn=9cb9083207911fc248bea6096d332a2e&chksm=68873fe15ff0b6f7904c35344049ed50e28fddab949318a81b8c806681b6fb2b90e25bae4fa5#rd","thumb_url":"http:\\/\\/mmbiz.qpic.cn\\/mmbiz_jpg\\/bBGqHGSmX13NZvOgT9cdygib8icSngXfAvibLwibW4jwgOaedmdejP2vvug6ZLcZsGIV8rmiaRHwMhibpFWkE0fLU1qA\\/0?wx_fmt=jpeg"}', 0, NULL, 'KdpdmrH0vQi-14__8hxsuMAdAzRcc0BgrPlVD_jrsmw', '', 1483622501, 1483711027),
 (6, 'test', 'image', '', NULL, 0, NULL, 'KdpdmrH0vQi-14__8hxsuEE5FPTRd6TL_mb_-oZHJ_M', 'http://mmbiz.qpic.cn/mmbiz_jpg/bBGqHGSmX10B1cCLzD5Vg16ZSlSyOQJtjoKHVib0W5XicyjEqibb0NmLvX18LG6wLxwDc1TpaQx54c6RH6ty4yXfQ/0?wx_fmt=jpeg', 1483776570, 1483776570),
 (7, '测试声音', 'voice', '', NULL, 0, NULL, 'KdpdmrH0vQi-14__8hxsuOfyREwfA3efqZ32Sfck70s', '', 1483776641, 1483776641),
 (8, '测试视频', 'video', '', NULL, 0, '{"title":"\\u89c6\\u9891\\u6807\\u9898","introduction":"\\u89c6\\u9891\\u63cf\\u8ff0"}', 'KdpdmrH0vQi-14__8hxsuHOJUm63PtG7qRJxTwzbkmk', '', 1483776792, 1483776792),
 (9, '测试缩略图', 'thumb', '', NULL, 0, NULL, 'KdpdmrH0vQi-14__8hxsuNnDHsNXliG-ck9AEumsssw', '', 1483776876, 1483776876),
-(10, '图文1', 'news', '', '{"title":"\\u56fe\\u65871","thumb_media_id":"KdpdmrH0vQi-14__8hxsuPcF4KagNmpPbDxkYsgKtxA","author":"\\u56fe\\u65871","digest":"\\u56fe\\u65871","show_cover_pic":"1","content_source_url":"http:\\/\\/www.rainfer.cn","content":"<p>asdfsdf<\\/p><p><img src=\\"http:\\/\\/mmbiz.qpic.cn\\/mmbiz_jpg\\/bBGqHGSmX10B1cCLzD5Vg16ZSlSyOQJtUjU6ich2ciaRayUqJV06jl2OKFDxDzJ3APXw7E7pbR27DkZWibRz54seQ\\/0\\" title=\\"5870a3b014020.jpg\\" alt=\\"5870a3b014020.jpg\\"\\/><\\/p><p><img src=\\"http:\\/\\/mmbiz.qpic.cn\\/mmbiz\\/gLO17UPS6FS2xsypf378iaNhWacZ1G1UplZYWEYfwvuU6Ont96b1roYsCNFwaRrSaKTPCUdBK9DgEHicsKwWCBRQ\\/0\\" style=\\"\\"\\/><\\/p><p><br\\/><\\/p>"}', 0, NULL, 'KdpdmrH0vQi-14__8hxsuJVMs7ryz_4oPHpWz43-ZcQ', '', 1483776950, 1483776950),
+(10, '图文1', 'news', '', '{"title":"\\u56fe\\u65871","thumb_media_id":"KdpdmrH0vQi-14__8hxsuPcF4KagNmpPbDxkYsgKtxA","author":"\\u56fe\\u65871","digest":"\\u56fe\\u65871","show_cover_pic":"1","content_source_url":"http:\\/\\/www.meetoyou.com","content":"<p>asdfsdf<\\/p><p><img src=\\"http:\\/\\/mmbiz.qpic.cn\\/mmbiz_jpg\\/bBGqHGSmX10B1cCLzD5Vg16ZSlSyOQJtUjU6ich2ciaRayUqJV06jl2OKFDxDzJ3APXw7E7pbR27DkZWibRz54seQ\\/0\\" title=\\"5870a3b014020.jpg\\" alt=\\"5870a3b014020.jpg\\"\\/><\\/p><p><img src=\\"http:\\/\\/mmbiz.qpic.cn\\/mmbiz\\/gLO17UPS6FS2xsypf378iaNhWacZ1G1UplZYWEYfwvuU6Ont96b1roYsCNFwaRrSaKTPCUdBK9DgEHicsKwWCBRQ\\/0\\" style=\\"\\"\\/><\\/p><p><br\\/><\\/p>"}', 0, NULL, 'KdpdmrH0vQi-14__8hxsuJVMs7ryz_4oPHpWz43-ZcQ', '', 1483776950, 1483776950),
 (11, 'test2', 'image', '', NULL, 0, NULL, 'KdpdmrH0vQi-14__8hxsuJT5egvgUxI4nQaKlJ1VwdY', 'http://mmbiz.qpic.cn/mmbiz_png/bBGqHGSmX10B1cCLzD5Vg16ZSlSyOQJtmX2EsuiaVkWTBj4MfNiabvTsOZatPDe3hrXIEG0gz1xlT1oalTJkhFAw/0?wx_fmt=png', 1483782052, 1483782052);
 
 -- --------------------------------------------------------
-DROP TABLE IF EXISTS `yf_we_menu`;
-CREATE TABLE IF NOT EXISTS `yf_we_menu` (
+DROP TABLE IF EXISTS `wjf_we_menu`;
+CREATE TABLE IF NOT EXISTS `wjf_we_menu` (
   `we_menu_id` tinyint(11) NOT NULL AUTO_INCREMENT,
   `we_menu_name` varchar(20) NOT NULL COMMENT '菜单名称',
   `we_menu_leftid` int(11) NOT NULL COMMENT '菜单上级ID',
@@ -4393,22 +4383,18 @@ CREATE TABLE IF NOT EXISTS `yf_we_menu` (
   PRIMARY KEY (`we_menu_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
-INSERT INTO `yf_we_menu` (`we_menu_id`, `we_menu_name`, `we_menu_leftid`, `we_menu_type`, `we_menu_typeval`, `we_menu_open`, `we_menu_order`, `we_menu_l`) VALUES
-(1, '菜单1', 0, 1, '', 1, 0, 'zh-cn'),
-(2, '公司简介', 1, 2, 'http://www.thinkphp.cn/', 1, 50, 'zh-cn'),
-(4, '菜单二', 0, 1, '', 1, 50, 'zh-cn'),
-(5, '菜单三', 0, 1, '', 1, 50, 'zh-cn'),
-(6, '二级菜单', 4, 1, '', 1, 50, 'zh-cn'),
-(7, '三级菜单', 5, 1, '', 1, 50, 'zh-cn'),
-(8, '联系我们', 1, 1, '', 1, 50, 'zh-cn');
+INSERT INTO `wjf_we_menu` (`we_menu_id`, `we_menu_name`, `we_menu_leftid`, `we_menu_type`, `we_menu_typeval`, `we_menu_open`, `we_menu_order`, `we_menu_l`) VALUES
+(56,'悦',0,1,'http://www.meetoyou.com',1,10,'zh-cn'),
+
+(57,'遇',0,1,'http://www.meetoyou.com',1,20,'zh-cn');
 
 -- --------------------------------------------------------
 
 --
--- 表的结构 `yf_we_pic`
+-- 表的结构 `wjf_we_pic`
 --
-DROP TABLE IF EXISTS `yf_we_pic`;
-CREATE TABLE IF NOT EXISTS `yf_we_pic` (
+DROP TABLE IF EXISTS `wjf_we_pic`;
+CREATE TABLE IF NOT EXISTS `wjf_we_pic` (
   `pic_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `url` varchar(255) DEFAULT '' COMMENT '素材url',
   `mtime` int(11) NOT NULL COMMENT '上传时间',
@@ -4416,10 +4402,10 @@ CREATE TABLE IF NOT EXISTS `yf_we_pic` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19 ;
 
 --
--- 转存表中的数据 `yf_we_pic`
+-- 转存表中的数据 `wjf_we_pic`
 --
 
-INSERT INTO `yf_we_pic` (`pic_id`, `url`, `mtime`) VALUES
+INSERT INTO `wjf_we_pic` (`pic_id`, `url`, `mtime`) VALUES
 (1, 'http://mmbiz.qpic.cn/mmbiz/gLO17UPS6FS2xsypf378iaNhWacZ1G1UplZYWEYfwvuU6Ont96b1roYsCNFwaRrSaKTPCUdBK9DgEHicsKwWCBRQ/0', 1483622035),
 (2, 'http://mmbiz.qpic.cn/mmbiz_jpg/bBGqHGSmX13NZvOgT9cdygib8icSngXfAvVmbvUg530cgoVHLAvAibp7ETfNNfoJpFIujnDTUA928rUulaC3icPm2w/0?wx_fmt=jpeg', 1483618551),
 (7, 'http://mmbiz.qpic.cn/mmbiz_png/bBGqHGSmX10eyug9GJeVX5A8wuzcia8fUD0Ff9n81k9c0ZhA99xrMlVeLyhqEVlQ1I7zVBibrnzaPt4IAJqLL3pA/0', 1483704413),
@@ -4439,10 +4425,10 @@ INSERT INTO `yf_we_pic` (`pic_id`, `url`, `mtime`) VALUES
 -- --------------------------------------------------------
 
 --
--- 表的结构 `yf_we_reply`
+-- 表的结构 `wjf_we_reply`
 --
-DROP TABLE IF EXISTS `yf_we_reply`;
-CREATE TABLE IF NOT EXISTS `yf_we_reply` (
+DROP TABLE IF EXISTS `wjf_we_reply`;
+CREATE TABLE IF NOT EXISTS `wjf_we_reply` (
   `we_reply_id` int(11) NOT NULL AUTO_INCREMENT,
   `we_reply_key` varchar(255) NOT NULL COMMENT '关键字',
   `we_reply_type` varchar(20) NOT NULL,
@@ -4455,21 +4441,8 @@ CREATE TABLE IF NOT EXISTS `yf_we_reply` (
   PRIMARY KEY (`we_reply_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
 
---
--- 转存表中的数据 `yf_we_reply`
---
-
-INSERT INTO `yf_we_reply` (`we_reply_id`, `we_reply_key`, `we_reply_type`, `we_replytext_content`, `we_reply_addtime`, `we_reply_open`, `we_replynews`, `we_replyimage_mediaid`, `we_replyvoice_mediaid`) VALUES
-(1, 'WJFCMS', 'text', '轻量级企业网站管理系统 运行环境:PHP5.4+, MySQL5.0', 1466497576, 1, '', '', ''),
-(2, 'kk', 'news', '', 1483711089, 1, '{"title":"tttt","description":"aaaaa","url":"http:\\/\\/www.rainfer.cn","image":"http:\\/\\/mmbiz.qpic.cn\\/mmbiz_jpg\\/bBGqHGSmX10eyug9GJeVX5A8wuzcia8fU2o4hwr63JMdRqSdoiapTEHWuz9TqibY0c7hvonRjdK5ZkegcEpsiaZTtA\\/0"}', '', ''),
-(3, 'ff', 'image', '', 1483712501, 1, '', 'KdpdmrH0vQi-14__8hxsuMAdAzRcc0BgrPlVD_jrsmw', ''),
-(4, 'girl', 'image', '', 1483712585, 1, '', 'KdpdmrH0vQi-14__8hxsuNGesZG3wQgnf9zajn4nw9w', ''),
-(5, 'tw', 'news', '', 1483776982, 1, '{"title":"asdf","description":"asdf","url":"http:\\/\\/www.rainfer.cn","image":"http:\\/\\/mmbiz.qpic.cn\\/mmbiz_jpg\\/bBGqHGSmX10B1cCLzD5Vg16ZSlSyOQJtjoKHVib0W5XicyjEqibb0NmLvX18LG6wLxwDc1TpaQx54c6RH6ty4yXfQ\\/0?wx_fmt=jpeg"}', '', ''),
-(10, 'subscribe', 'news', '', 1483783147, 1, '{"title":"\\u6b22\\u8fce\\u60a8\\u7684\\u5173\\u6ce8!","description":"\\u6b22\\u8fce\\u60a8\\u7684\\u5173\\u6ce8!","url":"http:\\/\\/www.rainfer.cn","image":"http:\\/\\/mmbiz.qpic.cn\\/mmbiz_png\\/bBGqHGSmX10B1cCLzD5Vg16ZSlSyOQJtmX2EsuiaVkWTBj4MfNiabvTsOZatPDe3hrXIEG0gz1xlT1oalTJkhFAw\\/0?wx_fmt=png"}', '', ''),
-(12, '下载地址', 'text', 'https://git.oschina.net/rainfer/YFCMF', 1483784536, 1, '', '', '');
-
-DROP TABLE IF EXISTS `yf_payment`;
-CREATE TABLE IF NOT EXISTS `yf_payment` (
+DROP TABLE IF EXISTS `wjf_payment`;
+CREATE TABLE IF NOT EXISTS `wjf_payment` (
   `payment_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `out_trade_no` varchar(100) DEFAULT '' COMMENT '商品订单',
   `pay_trade_no` varchar(100) DEFAULT NULL COMMENT '支付订单号',

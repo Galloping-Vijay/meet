@@ -7,12 +7,12 @@
 <html> <!--<![endif]-->
 <head>
     <meta charset="utf-8">
-    <title>{$menu.menu_seo_title|default=$site_seo_title} {$site_name}</title>
-    <meta name="keywords" content="{$menu.menu_seo_key|default=$site_seo_keywords}"/>
-    <meta name="description" content="{$menu.menu_seo_des|default=$site_seo_description}">
+    <title>{$menu.menu_seo_title|default='WJFCMS安装'} {$site_name|default='WJFCMS'}</title>
+    <meta name="keywords" content="{$menu.menu_seo_key|default='WJFCMS'}"/>
+    <meta name="description" content="{$menu.menu_seo_des|default='WJFCMS系统'}">
     {include file="public:head" /}
     <script src="__PUBLIC__/others/jquery.min-1.12.1.js"></script>
-    <script src="__PUBLIC__/layer/layer_<?php echo $lang; ?>.js"></script>
+    <script src="__PUBLIC__/layer/layer_zh-cn.js"></script>
 </head>
 <body class="about page">
 <div class="wrap">
@@ -28,7 +28,7 @@
     var url = "{:$url}";
     layer.msg(massage, {
         icon: code,
-        time: wait + '000' //2秒关闭（如果不配置，默认是3秒）
+        time: wait + '000', //2秒关闭（如果不配置，默认是3秒）
     }, function () {
         self.location = url;
     });

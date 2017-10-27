@@ -1,17 +1,21 @@
 <?php
 // +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK ]
+// | ${NAME}.
 // +----------------------------------------------------------------------
-// | Copyright (c) 2006~2016 http://thinkphp.cn All rights reserved.
+// | Copyright (c) 2016 http://www.abc3210.com, All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
+// | Author: wjf <1937832819@qq.com> 2017/10/26
 // +----------------------------------------------------------------------
-// | Author: liu21st <liu21st@gmail.com>
-// +----------------------------------------------------------------------
-
 //调用extend的路由类
 $Route = new \Route;
-$Route->route_rule();
-return [
-	//也可以这里添加路由规则
+$route_array = $Route->route_array();
+$route_more = [
+    //也可以这里添加路由规则
+    '__domain__' => [
+        'blog' => 'blog',
+
+    ],
+    'baidu_verify_5BvCfjWUag'=>'index/tools/baiduVerify',
 ];
+$route = array_merge($route_more, $route_array);
+return $route;

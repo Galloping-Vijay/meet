@@ -1,0 +1,9 @@
+{Wjf:get model="admin/Module" field="id,module_url,module_title" module_status="1" order='id desc' cache='300'}
+{foreach $data as $key=>$val}
+<li class="green">
+    <a href="/{$val['module_url']}" target="">
+        {$val.module_title}
+    </a>
+</li>
+{/foreach}
+{/Wjf:get}

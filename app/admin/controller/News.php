@@ -10,7 +10,7 @@ namespace app\admin\controller;
 
 use think\Db;
 use app\admin\model\News as NewsModel;
-use app\admin\model\Cat;
+use app\admin\model\Cat as CatModel;
 
 class News extends Base
 {
@@ -99,7 +99,7 @@ class News extends Base
         $this->assign('menu', $menu_text);
         $diyflag = Db::name('diyflag')->select();
         $source = Db::name('source')->select();
-        $newsCat = Cat::cat_all();
+        $newsCat = CatModel::cat_all();
         $this->assign('news_columnid', $news_columnid);
         $this->assign('source', $source);
         $this->assign('newsCat', $newsCat);
@@ -252,7 +252,7 @@ class News extends Base
         $this->assign('menu', $menu_text);
         $diyflag = Db::name('diyflag')->select();
         $source = Db::name('source')->select();//来源
-        $newsCat = Cat::cat_all();
+        $newsCat = CatModel::cat_all();
         $this->assign('source', $source);
         $this->assign('newsCat', $newsCat);
         $this->assign('news_extra', $news_extra);

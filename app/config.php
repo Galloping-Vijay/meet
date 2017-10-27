@@ -61,7 +61,7 @@ $configs = [
     // +----------------------------------------------------------------------
 
     // 默认模块名
-    'default_module' => 'home',
+    'default_module' => 'index',
     // 禁止访问模块
     'deny_module_list' => ['common'],
     // 默认控制器名
@@ -141,6 +141,8 @@ $configs = [
         'taglib_begin' => '{',
         // 标签库标签结束标记
         'taglib_end' => '}',
+        // 预先加载的标签库
+        'taglib_pre_load' => 'app\\common\\taglib\\Wjf',
     ],
     'view_replace_str' => [
         '__ROOT__' => $basename,
@@ -149,8 +151,6 @@ $configs = [
         '__UPLOAD__' => $basename . '/data/upload',
     ],
     // 默认跳转页面对应的模板文件
-    /* 'dispatch_success_tmpl'  => THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl',
-     'dispatch_error_tmpl'    => ROOT_PATH . 'public/yfcmf/dispatch_jump.html',*/
     'dispatch_success_tmpl' => ROOT_PATH . 'public/default_jump/jump.html',
     'dispatch_error_tmpl' => ROOT_PATH . 'public/default_jump/jump.html',
 
@@ -160,7 +160,7 @@ $configs = [
     // +----------------------------------------------------------------------
 
     // 异常页面的模板文件
-    'exception_tmpl' => ROOT_PATH . 'public/yfcmf/error.html',
+    'exception_tmpl' => ROOT_PATH . 'public/default_jump/error.html',
 
     // 错误显示信息,非调试模式有效
     'error_message' => '页面错误！请稍后再试～',
@@ -269,11 +269,6 @@ if (file_exists($file = ROOT_PATH . "data/conf/config.php")) {
     $configs = array_merge($configs, include($file));
 }
 //调试模式,错误模板保持TP默认public/default_jump/jump
-/*if($configs['app_debug']){
-    $configs['dispatch_success_tmpl']= THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl';
-    $configs['dispatch_error_tmpl']= THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl';
-    $configs['exception_tmpl']= THINK_PATH . 'tpl' . DS . 'think_exception.tpl';
-}*/
 if ($configs['app_debug']) {
     $configs['dispatch_success_tmpl'] = ROOT_PATH . 'public/default_jump/jump.html';
     $configs['dispatch_error_tmpl'] = ROOT_PATH . 'public/default_jump/jump.html';

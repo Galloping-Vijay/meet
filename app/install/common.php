@@ -1,7 +1,6 @@
 <?php
 /*
 *	测试是否可写
-*	rainfer <81818832@qq.com>
 */
 function testwrite($d)
 {
@@ -19,7 +18,6 @@ function testwrite($d)
 }
 /*
 *	建立文件夹
-*	rainfer <81818832@qq.com>
 */
 function create_dir($path)
 {
@@ -51,7 +49,6 @@ function dir_path($path)
 }
 /*
 *	执行sql文件
-*	rainfer <81818832@qq.com>
 */
 function execute_sql($db,$file,$tablepre)
 {
@@ -60,7 +57,7 @@ function execute_sql($db,$file,$tablepre)
     $sql = str_replace("\r", "\n", $sql);
     $sql = explode(";\n", $sql);
     //替换表前缀
-    $default_tablepre = "yf_";
+    $default_tablepre = "wjf_";
     $sql = str_replace(" `{$default_tablepre}", " `{$tablepre}", $sql);
     //开始安装
     showmsg('开始安装数据库...');
@@ -85,7 +82,6 @@ function execute_sql($db,$file,$tablepre)
 }
 /*
 *	更新系统设置
-*	rainfer <81818832@qq.com>
 */
 function update_site_configs($db,$table_prefix)
 {
@@ -125,7 +121,6 @@ helllo;
 }
 /*
 *	创建管理员
-*	rainfer <81818832@qq.com>
 */
 function create_admin_account($db,$table_prefix)
 {
@@ -150,7 +145,6 @@ hello;
 
 /*
 *	写入配置
-*	rainfer <81818832@qq.com>
 */
 function create_config($config)
 {

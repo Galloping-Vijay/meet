@@ -75,7 +75,7 @@ function nav_menu($mid = 1, $isCache = true)
 {
     $live_menu = cache('live_menu');
     if ($isCache == false || empty($live_menu)) {
-        $live_menu = \think\Db::name('menu')->where('menu_moduleid', $mid)->select();
+        $live_menu = \think\Db::name('menu')->where('menu_moduleid', $mid)->order('id', 'asc')->select();
         cache('live_menu', $live_menu);
     }
     return $live_menu;

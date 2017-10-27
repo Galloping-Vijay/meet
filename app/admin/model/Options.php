@@ -25,7 +25,7 @@ class Options extends Model
 		$tpls=cache('tpls_'.$lang);
 		if(empty($tpls)){
             $sys=self::get_options('site_options',$lang);
-			$arr=list_file(APP_PATH.'home/view/'.$sys['site_tpl'],'*.html');
+			$arr=list_file(APP_PATH.'index/view/'.$sys['site_tpl'],'*.html');
 			$tpls=array();
 			foreach($arr as $v){
 				$tpls[]=basename($v['filename'],'.html');
@@ -41,7 +41,7 @@ class Options extends Model
     {
         $themes=cache('themes');
         if(empty($themes)){
-            $arr=list_file(APP_PATH.'home/view/');
+            $arr=list_file(APP_PATH.'index/view/');
             foreach($arr as $v){
                 if($v['isDir'] && strtolower($v['filename']!='public')){
                     $themes[]=$v['filename'];

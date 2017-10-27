@@ -1,0 +1,34 @@
+<div class="col-md-4 box cat-info-right">
+    <form action="{:url('index/article/search')}" class="search-ajaxform" method="post">
+        <div class="info-search">
+            <div class="input-group">
+                <input name="keyword" type="text" value="" class="form-control" placeholder="请输入内容">
+                <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+                    </span>
+            </div><!-- /input-group -->
+        </div>
+    </form>
+    <div class="info-cat">
+        <h3>分类导航</h3>
+        {Wjf:get model="admin/Cat" field="cat_id,cat_name" status="1" order='cat_order desc,cat_id desc' cache='300'}
+        {foreach $data as $key=>$val}
+        <a class="info-cat-a" href="{:Url('/index/cat/info',['cat_id'=>$val['cat_id']])}">{$val.cat_name}</a>
+        {/foreach}
+        {/Wjf:get}
+    </div>
+    <div class="info-cat">
+        <h3>广告赞助</h3>
+        <div class="ads-img row">
+            {Wjf:ads name="ad_sponsor" cid="2" /}
+            {foreach name="ad_sponsor" item="vo"}
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <a href="{$vo.plug_ad_url}" target="_blank">
+                    <img class="img-thumbnail" alt="" src="{$vo.plug_ad_pic|default='__PUBLIC__/img/ads-small.jpg'}">
+                    <em>{$vo.plug_ad_name}</em>
+                </a>
+            </div>
+            {/foreach}
+        </div>
+    </div>
+</div>

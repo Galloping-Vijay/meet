@@ -30,7 +30,7 @@ class Model extends Base
     public function model_list()
     {
         $models = Db::name('model')->order('create_time desc')->select();
-        $admin_rule = Db::name('auth_rule')->order('sort')->select();
+        $admin_rule = Db::name('auth_rule')->where('module_id', 0)->order('sort')->select();
         $admin_rule = menu_left($admin_rule);
         $this->assign('admin_rule', $admin_rule);
         $this->assign('models', $models);
@@ -66,19 +66,20 @@ class Model extends Base
             $this->error('参数错误', url('admin/Model/model_list'));
         } else {
             //添加顶级菜单
-            $rst = Db::name('auth_rule')->where('name', 'Model/cmslist?id=' . $model_id)->find();
+            $rst = Db::name('auth_rule')->where('module_id', 0)->where('name', 'Model/cmslist?id=' . $model_id)->find();
             if (empty($rst)) {
                 $admin_rule_pid = input('admin_rule_pid', 0, 'intval');
                 if ($admin_rule_pid == 0) {
                     $level = 0;
                 } else {
-                    $rule_pid = Db::name('auth_rule')->find($admin_rule_pid);
+                    $rule_pid = Db::name('auth_rule')->where('module_id', 0)->find($admin_rule_pid);
                     $level = $rule_pid['level'];
                 }
                 //不存在
                 $sldata = array(
                     'name' => 'Model',
                     'title' => input('menu_name', $model['model_title']),
+                    'module_id' => 0,
                     'css' => input('css', 'fa-list'),
                     'pid' => $admin_rule_pid,
                     'level' => $level + 1,
@@ -100,6 +101,7 @@ class Model extends Base
                     if ($pid2) {
                         $sldata = array(
                             'name' => 'admin/Model/cmsrunadd',
+                            'module_id' => 0,
                             'title' => '增加操作',
                             'pid' => $pid2,
                             'level' => $level + 3,
@@ -115,6 +117,7 @@ class Model extends Base
                     $sldata = array(
                         'name' => 'admin/Model/cmslist?id=' . $model_id,
                         'title' => $model['model_title'] . '列表',
+                        'module_id' => 0,
                         'pid' => $pid1,
                         'level' => $level + 2,
                         'sort' => 10,
@@ -124,12 +127,12 @@ class Model extends Base
                     if ($pid2) {
                         //删除、状态、编辑显示、编辑操作、排序、全部删除
                         $sldata = [
-                            ['name' => 'admin/Model/cmsdel', 'title' => '删除操作', 'pid' => $pid2, 'level' => $level + 3, 'status' => 0, 'addtime' => time()],
-                            ['name' => 'admin/Model/cmsstate', 'title' => '状态操作', 'pid' => $pid2, 'level' => $level + 3, 'status' => 0, 'addtime' => time()],
-                            ['name' => 'admin/Model/cmsorder', 'title' => '排序操作', 'pid' => $pid2, 'level' => $level + 3, 'status' => 0, 'addtime' => time()],
-                            ['name' => 'admin/Model/cmsalldel', 'title' => '全部删除', 'pid' => $pid2, 'level' => $level + 3, 'status' => 0, 'addtime' => time()],
-                            ['name' => 'admin/Model/cmsedit', 'title' => '编辑显示', 'pid' => $pid2, 'level' => $level + 3, 'status' => 0, 'addtime' => time()],
-                            ['name' => 'admin/Model/cmsrunedit', 'title' => '编辑操作', 'pid' => $pid2, 'level' => $level + 3, 'status' => 0, 'addtime' => time()],
+                            ['name' => 'admin/Model/cmsdel', 'module_id' => 0, 'title' => '删除操作', 'pid' => $pid2, 'level' => $level + 3, 'status' => 0, 'addtime' => time()],
+                            ['name' => 'admin/Model/cmsstate', 'module_id' => 0, 'title' => '状态操作', 'pid' => $pid2, 'level' => $level + 3, 'status' => 0, 'addtime' => time()],
+                            ['name' => 'admin/Model/cmsorder', 'module_id' => 0, 'title' => '排序操作', 'pid' => $pid2, 'level' => $level + 3, 'status' => 0, 'addtime' => time()],
+                            ['name' => 'admin/Model/cmsalldel', 'module_id' => 0, 'title' => '全部删除', 'pid' => $pid2, 'level' => $level + 3, 'status' => 0, 'addtime' => time()],
+                            ['name' => 'admin/Model/cmsedit', 'module_id' => 0, 'title' => '编辑显示', 'pid' => $pid2, 'level' => $level + 3, 'status' => 0, 'addtime' => time()],
+                            ['name' => 'admin/Model/cmsrunedit', 'module_id' => 0, 'title' => '编辑操作', 'pid' => $pid2, 'level' => $level + 3, 'status' => 0, 'addtime' => time()],
                         ];
                         Db::name('auth_rule')->insertAll($sldata);
                         Cache::clear();
@@ -180,15 +183,15 @@ class Model extends Base
             $rst = Db::name('model')->where('model_id', $model_id)->delete();
             //删权限菜单
             if ($rst !== false) {
-                $rule = Db::name('auth_rule')->where('name', 'Model/cmslist?id=' . $model_id)->find();
+                $rule = Db::name('auth_rule')->where('module_id', 0)->where('name', 'Model/cmslist?id=' . $model_id)->find();
                 if ($rule) {
                     $pid = $rule['pid'];//顶级菜单
-                    $arr = Db::name('auth_rule')->select();
+                    $arr = Db::name('auth_rule')->where('module_id', 0)->select();
                     $tree = new \Tree();
                     $tree->init($arr, ['parentid' => 'pid']);
                     $arrTree = $tree->get_childs($arr, $pid, true, true);
                     if ($arrTree) {
-                        Db::name('auth_rule')->where('id', 'in', $arrTree)->delete();
+                        Db::name('auth_rule')->where('id', 'in', $arrTree)->where('module_id', 0)->delete();
                         Cache::clear();
                     }
                 }

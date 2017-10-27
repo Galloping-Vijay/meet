@@ -609,8 +609,8 @@ class Sys extends Base
 		$pid=input('pid',0);
 		$level=input('level',0);
 		$id_str=input('id','pid');
-		$admin_rule=Db::name('auth_rule')->where('pid',$pid)->order('sort')->select();
-        $admin_rule_all=Db::name('auth_rule')->order('sort')->select();
+		$admin_rule=Db::name('auth_rule')->where('module_id',0)->where('pid',$pid)->order('sort')->select();
+        $admin_rule_all=Db::name('auth_rule')->where('module_id',0)->order('sort')->select();
 		$arr = menu_left($admin_rule,'id','pid','─',$pid,$level,$level*20);
         $arr_all = menu_left($admin_rule_all,'id','pid','─',0,$level,$level*20);
 		$this->assign('admin_rule',$arr);
@@ -629,7 +629,7 @@ class Sys extends Base
 	{
 		$pid=input('pid',0);
 		//全部规则
-		$admin_rule_all=Db::name('auth_rule')->order('sort')->select();
+		$admin_rule_all=Db::name('auth_rule')->where('module_id',0)->order('sort')->select();
 		$arr = menu_left($admin_rule_all);
 		$this->assign('admin_rule',$arr);
 		$this->assign('pid',$pid);
@@ -643,7 +643,7 @@ class Sys extends Base
 		if(!request()->isAjax()){
 			$this->error('提交方式不正确',url('admin/Sys/admin_rule_list'));
 		}else{
-			$pid=Db::name('auth_rule')->where(array('id'=>input('pid')))->field('level')->find();
+			$pid=Db::name('auth_rule')->where('module_id',0)->where(array('id'=>input('pid')))->field('level')->find();
 			$level=$pid['level']+1;
 			$name=input('name');
 			$name=AuthRule::check_name($name,$level);
@@ -651,6 +651,7 @@ class Sys extends Base
 				$sldata=array(
 					'name'=>$name,
 					'title'=>input('title'),
+					'module_id' => 0,
 					'status'=>input('status',0,'intval'),
 					'sort'=>input('sort',50,'intval'),
 					'pid'=>input('pid'),
@@ -673,15 +674,15 @@ class Sys extends Base
 	public function admin_rule_state()
 	{
 		$id=input('x');
-		$statusone=Db::name('auth_rule')->where(array('id'=>$id))->value('status');//判断当前状态情况
+		$statusone=Db::name('auth_rule')->where('module_id',0)->where(array('id'=>$id))->value('status');//判断当前状态情况
 		if($statusone==1){
 			$statedata = array('status'=>0);
-			Db::name('auth_rule')->where(array('id'=>$id))->setField($statedata);
+			Db::name('auth_rule')->where('module_id',0)->where(array('id'=>$id))->setField($statedata);
 			Cache::clear();
 			$this->success('状态禁止');
 		}else{
 			$statedata = array('status'=>1);
-			Db::name('auth_rule')->where(array('id'=>$id))->setField($statedata);
+			Db::name('auth_rule')->where('module_id',0)->where(array('id'=>$id))->setField($statedata);
 			Cache::clear();
 			$this->success('状态开启');
 		}
@@ -726,11 +727,11 @@ class Sys extends Base
 	public function admin_rule_edit()
 	{
 		//全部规则
-		$admin_rule_all=Db::name('auth_rule')->order('sort')->select();
+		$admin_rule_all=Db::name('auth_rule')->where('module_id',0)->order('sort')->select();
 		$arr = menu_left($admin_rule_all);
 		$this->assign('admin_rule',$arr);
 		//待编辑规则
-		$admin_rule=Db::name('auth_rule')->where(array('id'=>input('id')))->find();
+		$admin_rule=Db::name('auth_rule')->where('module_id',0)->where(array('id'=>input('id')))->find();
 		$this->assign('rule',$admin_rule);
 		return $this->fetch();
 	}
@@ -740,11 +741,11 @@ class Sys extends Base
 	public function admin_rule_copy()
 	{
 		//全部规则
-		$admin_rule_all=Db::name('auth_rule')->order('sort')->select();
+		$admin_rule_all=Db::name('auth_rule')->where('module_id',0)->order('sort')->select();
 		$arr = menu_left($admin_rule_all);
 		$this->assign('admin_rule',$arr);
 		//待编辑规则
-		$admin_rule=Db::name('auth_rule')->where(array('id'=>input('id')))->find();
+		$admin_rule=Db::name('auth_rule')->where('module_id',0)->where(array('id'=>input('id')))->find();
 		$this->assign('rule',$admin_rule);
 		return $this->fetch();
 	}
@@ -763,7 +764,7 @@ class Sys extends Base
 			$level_diff=0;
 			//判断是否更改了pid
 			if($pid!=$old_pid){
-				$level=Db::name('auth_rule')->where('id',$pid)->value('level')+1;
+				$level=Db::name('auth_rule')->where('module_id',0)->where('id',$pid)->value('level')+1;
 				$level_diff=($level>$old_level)?($level-$old_level):($old_level-$level);
 			}else{
 				$level=$old_level;
@@ -773,6 +774,7 @@ class Sys extends Base
 				$sldata=array(
 					'id'=>input('id',1,'intval'),
 					'name'=>$name,
+					'module_id' => 0,
 					'title'=>input('title'),
 					'status'=>input('status',0,'intval'),
                     'notcheck'=>input('notcheck',0,'intval'),
@@ -785,15 +787,15 @@ class Sys extends Base
 				if($rst!==false){
 					if($pid!=$old_pid){
 						//更新子孙级菜单的level
-						$auth_rule=Db::name('auth_rule')->order('sort')->select();
+						$auth_rule=Db::name('auth_rule')->where('module_id',0)->order('sort')->select();
 						$tree=new \Tree();
 						$tree->init($auth_rule,['parentid'=>'pid']);
 						$ids=$tree->get_childs($auth_rule,$sldata['id'],true,false);
 						if($ids){
 							if($level>$old_level){
-								Db::name('auth_rule')->where('id','in',$ids)->setInc('level',$level_diff);
+								Db::name('auth_rule')->where('module_id',0)->where('id','in',$ids)->setInc('level',$level_diff);
 							}else{
-								Db::name('auth_rule')->where('id','in',$ids)->setDec('level',$level_diff);
+								Db::name('auth_rule')->where('module_id',0)->where('id','in',$ids)->setDec('level',$level_diff);
 							}
 						}
 					}
@@ -813,12 +815,12 @@ class Sys extends Base
 	public function admin_rule_del()
 	{
         $pid=input('id');
-        $arr=Db::name('auth_rule')->select();
+        $arr=Db::name('auth_rule')->where('module_id',0)->select();
         $tree=new \Tree();
         $tree->init($arr,['parentid'=>'pid']);
         $arrTree=$tree->get_childs($arr,$pid,true,true);
         if($arrTree){
-            $rst=Db::name('auth_rule')->where('id','in',$arrTree)->delete();
+            $rst=Db::name('auth_rule')->where('module_id',0)->where('id','in',$arrTree)->delete();
             if($rst!==false){
                 Cache::clear();
                 $this->success('权限删除成功',url('admin/Sys/admin_rule_list'));

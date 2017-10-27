@@ -1,10 +1,8 @@
 <?php
 // +----------------------------------------------------------------------
-// | YFCMF [ WE CAN DO IT MORE SIMPLE ]
+// | Copyright (c) 2016 http://www.meetoyou.com, All rights reserved.
 // +----------------------------------------------------------------------
-// | Copyright (c) 2015-2016 http://www.rainfer.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Author: rainfer <81818832@qq.com>
+// | Author: wjf <1937832819@qq.com> 2017-10-08
 // +----------------------------------------------------------------------
 use think\Db;
 use think\Request;
@@ -125,14 +123,14 @@ function format_bytes($size, $delimiter = '')
 /**
  * 版本检测
  * @return string
- * @author rainfer <81818832@qq.com>
+* @author wjf
  */
 function checkVersion()
 {
     if (extension_loaded('curl')) {
-        $url = 'http://www.yfcmf.net/index.php?m=home&c=upgrade&a=check';
+        $url = '';
         $params = array(
-            'version' => config('yfcmf_version'),
+            'version' => '1.0.0',
             'domain' => $_SERVER['HTTP_HOST'],
         );
         $vars = http_build_query($params);
@@ -824,6 +822,7 @@ function get_menu_tree($id)
 
 /**
  * 查询文章列表，支持分页或不分页
+ * @author rainfer <81818832@qq.com>
  * @param string $tag 查询标签，以字符串方式传入,例："cid:1,2;field:news_title,news_content;limit:0,8;order:news_time desc,news_hits desc;where:n_id>5;"<br>
  *  ids:调用指定id的一个或多个数据,如 1,2,3<br>
  *    cid:数据所在分类,可调出一个或多个分类数据,如 1,2,3 默认值为全部,在当前分类为:'.$cid.'<br>

@@ -3,7 +3,19 @@
 class Route
 {
 
-    public  function route_rule()
+    public function route_array()
+    {
+        $routes = $this->get_route();
+        $route_array = [];
+        if (is_array($routes)) {
+            foreach ($routes as $key => $route) {
+                $route_array[$route[0]] = [$route[1], ['ext' => 'html'], []];
+            }
+        }
+        return $route_array;
+    }
+
+    public function route_rule()
     {
         $routes = $this->get_route();
         if (is_array($routes)) {
@@ -13,39 +25,39 @@ class Route
         }
     }
 
-    private  function get_route()
+    private function get_route()
     {
         $routes = \think\Cache::get('routes');
-		if(empty($routes) && config('url_route_on')){
-			switch (config('url_route_mode')) {
-				// 标准模式
-				case null:
-				case '1':
-					$rules = [
-					];
-					foreach ($rules as $key => $rule) {
-						$routes[] = [$key, $rule, 'post|get', [], []];
-					}
-					\think\Cache::set('routes', $routes);
-					break;
-				// 高级模式
-				case '2':
-					// 内容模块
-					$rules = [
-					];
-					if(file_exists(ROOT_PATH.'data/install.lock')){
-						$data=\think\Db::name("route")->where("status=1")->order("listorder asc")->column('full_url','url');
-						$data=array_merge($rules,$data);
-						foreach ($data as $key => $rule) {
-						$routes[] = [$key, $rule, 'post|get', [], []];
-						}	
-					}
-					\think\Cache::set('routes', $routes);
-					break;
-				default:
-					break;
-			}			
-		}
+        if (empty($routes) && config('url_route_on')) {
+            switch (config('url_route_mode')) {
+                // 标准模式
+                case null:
+                case '1':
+                    $rules = [
+                    ];
+                    foreach ($rules as $key => $rule) {
+                        $routes[] = [$key, $rule, 'post|get', [], []];
+                    }
+                    \think\Cache::set('routes', $routes);
+                    break;
+                // 高级模式
+                case '2':
+                    // 内容模块
+                    $rules = [
+                    ];
+                    if (file_exists(ROOT_PATH . 'data/install.lock')) {
+                        $data = \think\Db::name("route")->where("status=1")->order("listorder asc")->column('full_url', 'url');
+                        $data = array_merge($rules, $data);
+                        foreach ($data as $key => $rule) {
+                            $routes[] = [$key, $rule, 'post|get', [], []];
+                        }
+                    }
+                    \think\Cache::set('routes', $routes);
+                    break;
+                default:
+                    break;
+            }
+        }
         return $routes;
     }
 
@@ -64,7 +76,7 @@ class Route
         }
     }
 
-    private  function single_route($single, &$routes)
+    private function single_route($single, &$routes)
     {
         if ($single) {
             foreach ($single as $id => $path) {

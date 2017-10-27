@@ -1,10 +1,8 @@
 <?php
 // +----------------------------------------------------------------------
-// | YFCMF [ WE CAN DO IT MORE SIMPLE ]
+// | Copyright (c) 2016 http://www.meetoyou.com, All rights reserved.
 // +----------------------------------------------------------------------
-// | Copyright (c) 2015-2016 http://www.rainfer.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Author: rainfer <81818832@qq.com>
+// | Author: wjf <1937832819@qq.com> 2017-10-08
 // +----------------------------------------------------------------------
 namespace app\install\controller;
 
@@ -188,7 +186,7 @@ class Index extends Controller
             //显示模板
             echo $this->fetch(':step4');
             //运行sql
-            execute_sql($db, "yfcmf.sql", $table_prefix);
+            execute_sql($db, "wjfcms.sql", $table_prefix);
             //更新配置信息
             update_site_configs($db, $table_prefix);
             //创建管理员

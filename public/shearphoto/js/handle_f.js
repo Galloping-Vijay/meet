@@ -1,6 +1,6 @@
 window.ShearPhoto.MINGGE(function() {
     var relativeUrl= SHEAR.PATH_RES+"/shearphoto";//by rainfer,相对路径
-    var avatarUrl= SHEAR.PATH_AVATAR;//by rainfer,头像路径
+    var avatarUrl= SHEAR.PATH_AVATAR;//byxxx,头像路径
     relativeUrl = relativeUrl.replace(/(^\s*)|(\s*$)/g, "");//去掉相对路径的所有空格
     relativeUrl === "" || (relativeUrl += "/");//在相对地址后面加斜框，不需要用户自己加
     var publicRelat= document.getElementById("relat");     //"relat"对像
@@ -8,7 +8,7 @@ window.ShearPhoto.MINGGE(function() {
     var Shear = new ShearPhoto;
     Shear.config({
         relativeUrl:relativeUrl,  //取回相对路径
-        avatarUrl:avatarUrl,//by rainfer,头像路径
+        avatarUrl:avatarUrl,//by xxx,头像路径
         traverse:true,//可选 true,false 。 是否在拖动或拉伸时允许历遍全图（是否让大图动呢）,
         translate3d:false,  //是否开启3D移动，CPU加速。可选true  false。默认关闭的
         HTML5:true,//可选 true,false  是否使用HTML5进行切图

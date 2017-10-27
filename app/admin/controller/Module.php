@@ -10,6 +10,7 @@
 namespace app\admin\controller;
 
 use app\admin\model\Module as ModuleModel;
+use app\common\lib\ValidateBasic;
 
 class Module extends Base
 {
@@ -21,8 +22,11 @@ class Module extends Base
     //模块列表
     public function lists()
     {
-        $module = ModuleModel::all();
+        $ModuleModel = new ModuleModel();
+        $module = $ModuleModel->paginate(15);
+        $page = $module->render();
         $this->assign('module', $module);
+        $this->assign('page', $page);
         return $this->fetch();
     }
 
@@ -36,6 +40,13 @@ class Module extends Base
             $moduleList = $model::module_list();
             if (!in_array($data['module_name'], $moduleList)) {
                 $this->error('不存在此模块!');
+            }
+            $rule = [
+                ['module_name', 'require|unique:module', '模块标识必须|模块标识必须唯一'],
+            ];
+            $validate = new ValidateBasic($rule);
+            if (!$validate->check($data)) {
+                $this->error($validate->getError());
             }
             if ($model->plus($data)) {
                 $this->success('操作成功', Url('admin/Module/lists'));
@@ -57,6 +68,13 @@ class Module extends Base
         if ($this->request->isPost()) {
             $data = input('post.', [], 'trim');
             $data['module_name'] = strtolower($data['module_name']);
+            $rule = [
+                ['module_name', 'require|unique:module', '模块标识必须|模块标识必须唯一'],
+            ];
+            $validate = new ValidateBasic($rule);
+            if (!$validate->check($data)) {
+                $this->error($validate->getError());
+            }
             $moduleList = $info::module_list();
             if (!in_array($data['module_name'], $moduleList)) {
                 $this->error('不存在此模块!');
@@ -69,18 +87,6 @@ class Module extends Base
         }
         $this->assign('info', $info);
         return $this->fetch();
-    }
-
-    //修改主题
-    public function sel()
-    {
-        $id = input('id');
-        $model = new ModuleModel;
-        if ($model->sel_module($id)) {
-            $this->success('操作成功', Url('admin/Module/lists'));
-        } else {
-            $this->error('操作失败');
-        }
     }
 
     //删除模块

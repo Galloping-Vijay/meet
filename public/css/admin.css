@@ -1,0 +1,9 @@
+.sidebar-module{
+    background-color: #438eb9;
+    font-size: large;
+    margin: 7px;
+}
+.sidebar-module a{
+    text-decoration:none;
+    color: #ffffff;
+}

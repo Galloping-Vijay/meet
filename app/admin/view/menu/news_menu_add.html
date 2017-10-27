@@ -41,7 +41,7 @@
 					<div id="menu_l" class="form-group {neq name="menu_l" value=""}none{/neq}">
 						<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 选择语言： </label>
 						<div class="col-sm-9">
-							<select name="menu_l"  class="col-sm-3 selector" >
+							<select name="menu_l"  class="col-sm-3 selector" required>
 								<option value="">请选择语言</option>
 								<option value="zh-cn" {if condition="$menu_l eq 'zh-cn'"}selected{/if}>中文</option>
 								<option value="en-us" {if condition="$menu_l eq 'en-us'"}selected{/if}>英语</option>
@@ -79,12 +79,6 @@
 					<div class="form-group">
 						<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 菜单类型： </label>
 						<div class="col-sm-9">
-							<div class="radio">
-								<label>
-									<input name="menu_type" id="type5" type="radio" class="ace" value="5"/>
-									<span class="lbl"> 只作为导航，不带模板</span>
-								</label>
-							</div>
 							<div class="radio">
 								<label>
 									<input name="menu_type" type="radio" class="ace" id="type1" value="1" checked="checked" />
@@ -125,16 +119,7 @@
 											</span>
 						</div>
 					</div>
-					<div class="form-group" id="nav_url">
-						<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> URL地址： </label>
-						<div class="col-sm-9">
-							<input type="text" name="menu_url" id="menu_url" placeholder="URL地址" class="col-xs-10 col-sm-5" />
-							<span class="help-inline col-xs-12 col-sm-5">
-														<span class="middle">正确格式：模块/控制器/方法(可根据路由自由配置格式)</span>
-													</span>
-						</div>
-					</div>
-					<!--<div class="form-group" id="model">
+					<div class="form-group" id="model">
 						<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 使用模型选择： </label>
 						<div class="col-sm-9">
 							<select name="menu_modelid"  class="col-sm-3 selector">
@@ -144,7 +129,7 @@
 								{/foreach}
 							</select>
 						</div>
-					</div>-->
+					</div>
 
 					<div class="form-group" id="listtpl">
 						<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 列表页(单页)模板选择： </label>
@@ -229,7 +214,7 @@
 						</div>
 					</div>
 
-					<input type="hidden" name="mid" value="{$mid}" />
+
 					<div class="clearfix form-actions">
 						<div class="col-md-offset-3 col-md-9">
 							<button class="btn btn-info" type="submit">
@@ -251,25 +236,21 @@
 {/block}
 {block name="scripts"}
     <script>
-        $('#address,#model,#menu_content,#single,#pic_list,#nav_url').hide();//默认隐藏
+        $('#address,#model,#menu_content,#single,#pic_list').hide();//默认隐藏
         $('#type2').click(function(){
             $('#address').show();
-            $('#menu_content,#pic_list,#single,#listtpl,#newstpl,#model,#nav_url').hide();
-        });
-        $('#type5').click(function(){
-            $('#nav_url').show();
-            $('#menu_content,#pic_list,#single,#listtpl,#newstpl,#model,#address').hide();
+            $('#menu_content,#pic_list,#single,#listtpl,#newstpl,#model').hide();
         });
         $('#type1').click(function(){
-            $('#address,#menu_content,#pic_list,#single,#model,#nav_url').hide();
+            $('#address,#menu_content,#pic_list,#single,#model').hide();
             $('#listtpl,#newstpl').show();
         });
         $('#type3').click(function(){
-            $('#address,#menu_content,#pic_list,#single,#nav_url').hide();
+            $('#address,#menu_content,#pic_list,#single').hide();
             $('#listtpl,#newstpl,#model').show();
         });
         $('#type4').click(function(){
-            $('#address,#newstpl,#model,#nav_url').hide();
+            $('#address,#newstpl,#model').hide();
             $('#single，#listtpl,#menu_content,#pic_list').show();
         });
         //语言

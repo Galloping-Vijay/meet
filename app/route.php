@@ -15,7 +15,9 @@ $route_more = [
         'blog' => 'blog',
 
     ],
-    'baidu_verify_5BvCfjWUag'=>'index/tools/baiduVerify',
+    'baidu_verify_5BvCfjWUag' => 'index/tools/baiduVerify',
+    'vip' => 'index/effects/vip',
+    'fall' => 'index/effects/fall',
 ];
 $route = array_merge($route_more, $route_array);
 return $route;

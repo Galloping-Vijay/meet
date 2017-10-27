@@ -16,8 +16,7 @@ class Test extends Base
 {
     public function index()
     {
-        $bb =['default_module' => 'admin'];
-        //sys_config_setbyarr($bb);
+        pr(11);
 
     }
 

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | YFCMF [ WE CAN DO IT MORE SIMPLE ]
+// | Menu.菜单管理
 // +----------------------------------------------------------------------
-// | Copyright (c) 2015-2016 http://www.rainfer.cn All rights reserved.
+// | Copyright (c) 2016 http://www.meetoyou.com, All rights reserved.
 // +----------------------------------------------------------------------
-// | Author: rainfer <81818832@qq.com>
+// | Author: wjf <1937832819@qq.com> 2017-10-09
 // +----------------------------------------------------------------------
 namespace app\admin\controller;
 

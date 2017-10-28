@@ -1,11 +1,5 @@
 <?php
-// +----------------------------------------------------------------------
-// | YFCMF [ WE CAN DO IT MORE SIMPLE ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2015-2016 http://www.rainfer.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Author: rainfer <81818832@qq.com>
-// +----------------------------------------------------------------------
+
 namespace addons\team;
 
 use think\Addons;
@@ -20,7 +14,7 @@ class Team extends Addons
         'title' => '团队&贡献者',
         'description' => '后台首页团队&贡献者显示',
         'status' => 0,
-        'author' => 'rainfer',
+        'author' => '魏佳君',
         'version' => '0.1',
         'admin'=>'0'
     ];

@@ -1692,7 +1692,6 @@ p.your-para {
     right: 1%;
     bottom: 1%;
     width: 40px;
-    border: 1px solid #eee;
     font-size: 24px;
     z-index: 1040;
     -webkit-backface-visibility: hidden;

@@ -21,12 +21,12 @@ class Index extends Base
     public function index()
     {
         $model = new News();
-        $where['news_flag'] = ['like','%a%'];
-        $order = ['n_id'=> 'desc'];
+        $where['news_flag'] = ['like', '%a%'];
+        $order = ['n_id' => 'desc'];
         //推荐
-        $data = $model::getWhereNews($where,3,$order,false);
-        $this->assign('active',1);
-        $this->assign('data',$data);
+        $data = $model::getWhereNews($where, 3, $order, false);
+        $this->assign('active', 1);
+        $this->assign('data', $data);
         return $this->fetch();
     }
 
@@ -36,17 +36,14 @@ class Index extends Base
      */
     public function hot()
     {
-        $this->assign('active',2);
+        $news = new News();
+        $phpWhere['cat_id'] = ['eq', 1];
+        $phpWhere['news_open'] = 1;
+        $phpOrder = ['news_hits' => 'desc', 'news_like' => 'desc', 'n_id' => 'desc'];
+        $phpCode = $news::getWhereNews($phpWhere, 3, $phpOrder, false);
+        $this->assign('active', 2);
+        $this->assign('phpCode', $phpCode);
         return $this->fetch();
     }
 
-    /**
-     * 分类
-     * @return mixed
-     */
-    public function cat()
-    {
-        $this->assign('active',2);
-        return $this->fetch();
-    }
 }

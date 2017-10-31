@@ -1700,6 +1700,32 @@ p.your-para {
 .footer-scrollup i{
     padding: 25%;
 }
+span.btn_1 {
+    display: block;
+    overflow: hidden;
+    text-align: left;
+    text-shadow: none;
+    text-transform: uppercase;
+    border: none;
+    background: none;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    font-size: 14px;
+    line-height: 14px;
+    font-weight: bold;
+    left: 0px;
+    box-shadow: none;
+    position: relative;
+    z-index: 1;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    color: #adadad;
+    border-bottom: 3px solid #adadad;
+    padding: 0 0 14px 0;
+}
 .qrcode-annotation {
     margin: 2%;
     text-align: center;

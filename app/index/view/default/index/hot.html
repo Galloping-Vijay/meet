@@ -33,18 +33,18 @@
     <div class="container">
         <div class="about_box1">
             <h1 class="m_4">
-                we care about your happiness
+                PHP是世界上最好的语言
             </h1>
             <p class="m_5">
-                In pede maliquet sit amet euismod in auctor ut ligula
+                PHP is one of the best language in the world
             </p>
             <div class="about_grid1">
                 <div class="col-md-4 box1">
                     <img src="{$wjf_theme_path}public/images/pic1.jpg" class="img-responsive" alt=""/>
                 </div>
                 <div class="col-md-8 box2">
-                    <h3><a href="#">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper </a></h3>
-                    <p>Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum.</p>
+                    <h3><a href="{:url('/index/cat/info',['cat_id'=>1])}">编程语言不是为程序员而生的，而是为解决问题而生的。PHP 恰恰偏向实用。即使我会Python 和go ，我还是会选择PHP 开发WEB ，因为方便，快速，实用。</a></h3>
+                    <p>PHP具有简单易懂的语法、没有奇怪的黑魔法、既能面向过程，又能面向对象、安装后各种扩展集一身、包括但不限于mysql、json、mbstr等，方便至极。一言不合，一个页面就html和PHP混写，甚至最新版本都内置了小型webserver，连apache和nginx都不用上、一分钟搭建博客论坛问你怕不怕、国外Ci、laravel、kohana、zf等框架层出不穷、国内tp社区棒、语言创建者积极上进优化、语言bug全世界的程序员和你一起修复。最重要的是大小公司都用、找工作不愁啊！</p>
                 </div>
                 <div class="clearfix"> </div>
             </div>
@@ -54,99 +54,101 @@
 <div class="facts">
     <div class="container">
         <h2 class="m_6">
-            Our Advantages
+            实用的PHP开发经验
         </h2>
         <p class="m_5">
-            In pede maliquet sit amet euismod in auctor ut ligula
+            The most practical experience in PHP development
         </p>
         <div class="about_grid2">
+            {volist name="phpCode" id="vo" $key}
             <div class="col-md-4 box_5">
                 <div class="put-left-abs">
-                    <p class="text_6 color_1">1.</p>
+                    <p class="text_6 color_1">{$key+1}.</p>
                 </div>
                 <div class="caption">
-                    <h3>dolore magna</h3>
+                    <h3>{$vo.news_title}</h3>
                     <p>
-                        Et laoreet dolore magna aliquam erat volutpat. Ut wisi enim adinim ven iam, quis nost rud
+                        {$vo.news_scontent}
                     </p>
-                    <a href="#" title="more" class="btn_1 " target="_self">more</a>
+                    <a href="{:url('/index/article/info',['id'=>$vo['n_id']])}" title="more" class="btn_1 " target="_self">more</a>
                 </div>
             </div>
-            <div class="col-md-4 box_5">
-                <div class="put-left-abs">
-                    <p class="text_6 color_1">2.</p>
-                </div>
-                <div class="caption">
-                    <h3>aspernatur aut</h3>
-                    <p>
-                        Et laoreet dolore magna aliquam erat volutpat. Ut wisi enim adinim ven iam, quis nost rud
-                    </p>
-                    <a href="#" title="more" class="btn_1 " target="_self">more</a>
-                </div>
-            </div>
-            <div class="col-md-4 box_5">
-                <div class="put-left-abs">
-                    <p class="text_6 color_1">3.</p>
-                </div>
-                <div class="caption">
-                    <h3>praising pain</h3>
-                    <p>
-                        Et laoreet dolore magna aliquam erat volutpat. Ut wisi enim adinim ven iam, quis nost rud
-                    </p>
-                    <a href="#" title="more" class="btn_1 " target="_self">more</a>
-                </div>
-            </div>
+            {/volist}
         </div>
     </div>
 </div>
 <div class="grid_3">
     <div class="container">
         <h2 class="m_6">
-            Our Team
+            其他技术相关文章
         </h2>
         <p class="m_5">
-            In pede maliquet sit amet euismod in auctor ut ligula
+            Other technical related articles
         </p>
         <div class="about-grids">
             <div class="col-sm-3 about-grid">
-                <a href="{$wjf_theme_path}public/images/pic2.jpg" title="name" rel="title2">
+                <a href="/app/index/view/default/public/images/html5.jpg" title="name" rel="title2">
                     <div class="view view-first">
-                        <img src="{$wjf_theme_path}public/images/pic2.jpg" class="img-responsive" alt=""/>
+                        <img src="/app/index/view/default/public/images/html5.jpg" class="img-responsive" alt=""/>
                     </div>
                 </a>
-                <h4><a href="#">Duis autem</a></h4>
-                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna.</p>
-                <a href="#" title="more" class="btn_1 " target="_self">more</a>
+                {Wjf:get model="admin/News" field="n_id,news_title,news_scontent" news_open="1" cat_id ="2" limit="1" order='news_hits desc,n_id desc' cache='300'}
+                {foreach $data as $key=>$val}
+                <h4>
+                    <span style="cursor:pointer" onclick="window.location='{:url(\'/index/article/info\',[\'id\'=>$val[\'n_id\']])}'">{$val.news_title}</span>
+                </h4>
+                <p>{$val.news_scontent}</p>
+                <span style="cursor:pointer" onclick="window.location='{:url(\'/index/cat/info/cat_id/2\')}'" class="btn_1 " >more</span>
+                {/foreach}
+                {/Wjf:get}
             </div>
             <div class="col-sm-3 about-grid">
-                <a href="{$wjf_theme_path}public/images/pic2.jpg" title="name" rel="title2">
+                <a href="/app/index/view/default/public/images/linux.jpg" title="name" rel="title2">
                     <div class="view view-first">
-                        <img src="{$wjf_theme_path}public/images/pic2.jpg" class="img-responsive" alt=""/>
+                        <img src="/app/index/view/default/public/images/linux.jpg" class="img-responsive" alt=""/>
                     </div>
                 </a>
-                <h4><a href="#">Duis autem</a></h4>
-                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna.</p>
-                <a href="#" title="more" class="btn_1 " target="_self">more</a>
+                {Wjf:get model="admin/News" field="n_id,news_title,news_scontent" news_open="1" cat_id ="3" limit="1" order='news_hits desc,n_id desc' cache='300'}
+                {foreach $data as $key=>$val}
+                <h4>
+                    <span style="cursor:pointer" onclick="window.location='{:url(\'/index/article/info\',[\'id\'=>$val[\'n_id\']])}'">{$val.news_title}</span>
+                </h4>
+                <p>{$val.news_scontent}</p>
+                <span style="cursor:pointer" onclick="window.location='{:url(\'/index/cat/info/cat_id/3\')}'" class="btn_1 " >more</span>
+                {/foreach}
+                {/Wjf:get}
             </div>
             <div class="col-sm-3 about-grid">
-                <a href="{$wjf_theme_path}public/images/pic2.jpg" title="name" rel="title2">
+                <a href="/app/index/view/default/public/images/python.png" title="name" rel="title2">
                     <div class="view view-first">
-                        <img src="{$wjf_theme_path}public/images/pic2.jpg" class="img-responsive" alt=""/>
+                        <img src="/app/index/view/default/public/images/python.png" class="img-responsive" alt=""/>
                     </div>
                 </a>
-                <h4><a href="#">Duis autem</a></h4>
-                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna.</p>
-                <a href="#" title="more" class="btn_1 " target="_self">more</a>
+                {Wjf:get model="admin/News" field="n_id,news_title,news_scontent" news_open="1" cat_id ="4" limit="1" order='news_hits desc,n_id desc' cache='300'}
+                {foreach $data as $key=>$val}
+                <h4>
+                    <span style="cursor:pointer" onclick="window.location='{:url(\'/index/article/info\',[\'id\'=>$val[\'n_id\']])}'">{$val.news_title}</span>
+                </h4>
+                <p>{$val.news_scontent}</p>
+                <span style="cursor:pointer" onclick="window.location='{:url(\'/index/cat/info/cat_id/4\')}'" class="btn_1 " >more</span>
+                {/foreach}
+                {/Wjf:get}
             </div>
             <div class="col-sm-3 about-grid">
-                <a href="{$wjf_theme_path}public/images/pic2.jpg" title="name" rel="title2">
+                <a href="" title="name" rel="title2">
                     <div class="view view-first">
-                        <img src="{$wjf_theme_path}public/images/pic2.jpg" class="img-responsive" alt=""/>
+                        <img src="/app/index/view/default/public/images/others.jpg" class="img-responsive" alt=""/>
                     </div>
                 </a>
-                <h4><a href="#">Duis autem</a></h4>
-                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna.</p>
-                <a href="#" title="more" class="btn_1 " target="_self">more</a>
+                {Wjf:get model="admin/News" field="n_id,news_title,news_scontent" news_open="1" cat_id ="6" limit="1" order='news_hits desc,n_id desc' cache='300'}
+                {foreach $data as $key=>$val}
+                <h4>
+                    <span style="cursor:pointer" onclick="window.location='{:url(\'/index/article/info\',[\'id\'=>$val[\'n_id\']])}'">{$val.news_title}</span>
+                </h4>
+                <p>{$val.news_scontent}</p>
+                <span style="cursor:pointer" onclick="window.location='{:url(\'/index/cat/info/cat_id/6\')}'" class="btn_1 " >more</span>
+                {/foreach}
+                {/Wjf:get}
             </div>
             <div class="clearfix"> </div>
         </div>

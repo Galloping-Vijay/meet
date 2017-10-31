@@ -41,7 +41,7 @@
                 </p>
                 <div class="container">
                     {foreach $newsList as $key=>$val}
-                    <a href="{:url('/live/article/info',['id'=>$val['n_id']])}">
+                    <a href="{:url('/index/article/info',['id'=>$val['n_id']])}">
                         <div class="row info-one">
                             <div class="info-one-img">
                                 <img src="{$val.news_img}" alt="文章大图">

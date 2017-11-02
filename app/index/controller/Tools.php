@@ -14,6 +14,6 @@ class Tools extends Base
     //百度站长认证
     public function baiduVerify()
     {
-        return $this->fetch('tools/baidu_verify_5BvCfjWUag');
+        return $this->fetch('tools/baidu_verify_MZ1QlgcMwh');
     }
 }

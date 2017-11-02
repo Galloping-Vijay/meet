@@ -15,7 +15,7 @@ $route_more = [
         'blog' => 'blog',
 
     ],
-    'baidu_verify_5BvCfjWUag' => 'index/tools/baiduVerify',
+    'baidu_verify_MZ1QlgcMwh' => 'index/tools/baiduVerify',
     'vip' => 'index/effects/vip',
     'fall' => 'index/effects/fall',
 ];

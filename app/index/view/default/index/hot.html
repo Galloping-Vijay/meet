@@ -11,7 +11,7 @@
         <div class="top-nav">
             <div class="top-header">
                 <div class="logo">
-                    <a href="index.html"><img src="{$wjf_theme_path}public/images/logo.png" alt=""/></a>
+                    <a href="/index.html"><img src="{$wjf_theme_path}public/images/logo.png" alt=""/></a>
                 </div>
             </div>
             {include file="public:nav" /}
@@ -43,7 +43,7 @@
                     <img src="{$wjf_theme_path}public/images/pic1.jpg" class="img-responsive" alt=""/>
                 </div>
                 <div class="col-md-8 box2">
-                    <h3><a href="{:url('/index/cat/info',['cat_id'=>1])}">编程语言不是为程序员而生的，而是为解决问题而生的。PHP 恰恰偏向实用。即使我会Python 和go ，我还是会选择PHP 开发WEB ，因为方便，快速，实用。</a></h3>
+                    <h3><a href="{:url('/cat/info/1')}">编程语言不是为程序员而生的，而是为解决问题而生的。PHP 恰恰偏向实用。即使我会Python 和go ，我还是会选择PHP 开发WEB ，因为方便，快速，实用。</a></h3>
                     <p>PHP具有简单易懂的语法、没有奇怪的黑魔法、既能面向过程，又能面向对象、安装后各种扩展集一身、包括但不限于mysql、json、mbstr等，方便至极。一言不合，一个页面就html和PHP混写，甚至最新版本都内置了小型webserver，连apache和nginx都不用上、一分钟搭建博客论坛问你怕不怕、国外Ci、laravel、kohana、zf等框架层出不穷、国内tp社区棒、语言创建者积极上进优化、语言bug全世界的程序员和你一起修复。最重要的是大小公司都用、找工作不愁啊！</p>
                 </div>
                 <div class="clearfix"> </div>
@@ -70,7 +70,7 @@
                     <p>
                         {$vo.news_scontent}
                     </p>
-                    <a href="{:url('/index/article/info',['id'=>$vo['n_id']])}" title="more" class="btn_1 " target="_self">more</a>
+                    <a href="{:url('/article/info/'.$vo['n_id'])}" title="more" class="btn_1 " target="_self">more</a>
                 </div>
             </div>
             {/volist}
@@ -95,10 +95,10 @@
                 {Wjf:get model="admin/News" field="n_id,news_title,news_scontent" news_open="1" cat_id ="2" limit="1" order='news_hits desc,n_id desc' cache='300'}
                 {foreach $data as $key=>$val}
                 <h4>
-                    <span style="cursor:pointer" onclick="window.location='{:url(\'/index/article/info\',[\'id\'=>$val[\'n_id\']])}'">{$val.news_title}</span>
+                    <span style="cursor:pointer" onclick="window.location='{:url(\'/article/info/\'\.$val[\'n_id\'])}'">{$val.news_title}</span>
                 </h4>
                 <p>{$val.news_scontent}</p>
-                <span style="cursor:pointer" onclick="window.location='{:url(\'/index/cat/info/cat_id/2\')}'" class="btn_1 " >more</span>
+                <span style="cursor:pointer" onclick="window.location='{:url(\'/cat/info/2\')}'" class="btn_1 " >more</span>
                 {/foreach}
                 {/Wjf:get}
             </div>
@@ -111,10 +111,10 @@
                 {Wjf:get model="admin/News" field="n_id,news_title,news_scontent" news_open="1" cat_id ="3" limit="1" order='news_hits desc,n_id desc' cache='300'}
                 {foreach $data as $key=>$val}
                 <h4>
-                    <span style="cursor:pointer" onclick="window.location='{:url(\'/index/article/info\',[\'id\'=>$val[\'n_id\']])}'">{$val.news_title}</span>
+                    <span style="cursor:pointer" onclick="window.location='{:url(\'/article/info/\'\.$val[\'n_id\'])}'">{$val.news_title}</span>
                 </h4>
                 <p>{$val.news_scontent}</p>
-                <span style="cursor:pointer" onclick="window.location='{:url(\'/index/cat/info/cat_id/3\')}'" class="btn_1 " >more</span>
+                <span style="cursor:pointer" onclick="window.location='{:url(\'/cat/info/3\')}'" class="btn_1 " >more</span>
                 {/foreach}
                 {/Wjf:get}
             </div>
@@ -127,10 +127,10 @@
                 {Wjf:get model="admin/News" field="n_id,news_title,news_scontent" news_open="1" cat_id ="4" limit="1" order='news_hits desc,n_id desc' cache='300'}
                 {foreach $data as $key=>$val}
                 <h4>
-                    <span style="cursor:pointer" onclick="window.location='{:url(\'/index/article/info\',[\'id\'=>$val[\'n_id\']])}'">{$val.news_title}</span>
+                    <span style="cursor:pointer" onclick="window.location='{:url(\'/article/info/\'\.$val[\'n_id\'])}'">{$val.news_title}</span>
                 </h4>
                 <p>{$val.news_scontent}</p>
-                <span style="cursor:pointer" onclick="window.location='{:url(\'/index/cat/info/cat_id/4\')}'" class="btn_1 " >more</span>
+                <span style="cursor:pointer" onclick="window.location='{:url(\'/cat/info/4\')}'" class="btn_1 " >more</span>
                 {/foreach}
                 {/Wjf:get}
             </div>
@@ -143,10 +143,10 @@
                 {Wjf:get model="admin/News" field="n_id,news_title,news_scontent" news_open="1" cat_id ="6" limit="1" order='news_hits desc,n_id desc' cache='300'}
                 {foreach $data as $key=>$val}
                 <h4>
-                    <span style="cursor:pointer" onclick="window.location='{:url(\'/index/article/info\',[\'id\'=>$val[\'n_id\']])}'">{$val.news_title}</span>
+                    <span style="cursor:pointer" onclick="window.location='{:url(\'/article/info/\'\.$val[\'n_id\'])}'">{$val.news_title}</span>
                 </h4>
                 <p>{$val.news_scontent}</p>
-                <span style="cursor:pointer" onclick="window.location='{:url(\'/index/cat/info/cat_id/6\')}'" class="btn_1 " >more</span>
+                <span style="cursor:pointer" onclick="window.location='{:url(\'/cat/info/6\')}'" class="btn_1 " >more</span>
                 {/foreach}
                 {/Wjf:get}
             </div>

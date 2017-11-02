@@ -114,7 +114,7 @@
         icon: code,
         time: wait + '000', //2秒关闭（如果不配置，默认是3秒）
     }, function () {
-        self.location = "http://www.meetoyou.com";
+        self.location = "<?php echo 'http://'.$_SERVER['HTTP_HOST'];?>";
     });
 </script>
 </body>

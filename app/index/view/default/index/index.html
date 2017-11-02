@@ -53,7 +53,7 @@
             <h4>0{$key+1}/</h4>
             <h5>{$vo.news_title}</h5>
             <p>{$vo.news_scontent}</p>
-            <a href="{:url('/index/article/info',['id'=>$vo['n_id']])}" class="btn_2" title="Error sit">more &raquo;</a>
+            <a href="{:url('/article/info/'.$vo['n_id'])}" class="btn_2" title="Error sit">more &raquo;</a>
         </div>
         {/volist}
         <div class="clearfix"></div>

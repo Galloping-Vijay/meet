@@ -11,7 +11,7 @@
         <div class="top-nav">
             <div class="top-header">
                 <div class="logo">
-                    <a href="index.html"><img src="{$wjf_theme_path}public/images/logo.png" alt=""/></a>
+                    <a href="/index.html"><img src="{$wjf_theme_path}public/images/logo.png" alt=""/></a>
                 </div>
             </div>
             {include file="public:nav" /}
@@ -41,7 +41,7 @@
             {foreach name="catList" item="val" key="k"}
             {if $k==1 || $k%4==0}<div class="gallery-bottom">{/if}
             <div class="col-md-3 bottom-gallery">
-                <a href="{:Url('info',['cat_id'=>$val.cat_id])}" rel="title" class="b-link-stripe b-animate-go  thickbox">
+                <a href="{:Url('/cat/info/'.$val['cat_id'])}" rel="title" class="b-link-stripe b-animate-go  thickbox">
                     <img class="img-responsive" src="{$val.cat_img}" style="height: 120px;padding: 3%;"/>
                     <div class="b-wrapper">
                         <div  class="b-animate b-from-left">

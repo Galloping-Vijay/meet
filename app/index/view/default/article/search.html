@@ -11,7 +11,7 @@
         <div class="top-nav">
             <div class="top-header">
                 <div class="logo">
-                    <a href="index.html"><img src="{$wjf_theme_path}public/images/logo.png" alt=""/></a>
+                    <a href="/index.html"><img src="{$wjf_theme_path}public/images/logo.png" alt=""/></a>
                 </div>
             </div>
             {include file="public:nav" /}
@@ -42,7 +42,7 @@
                 <div class="container">
                     {foreach $newsList as $key=>$val}
                     <dl class="faq-list">
-                        <a href="{:url('/index/article/info',array('id'=>$val['n_id']))}">
+                        <a href="{:url('/article/info/'.$val['n_id'])}">
                             <dt class="faq-list_h">
                                 <h4>{$val.news_title}</h4>
                             </dt>

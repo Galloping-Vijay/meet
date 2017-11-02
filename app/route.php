@@ -15,17 +15,28 @@ $route_more = [
         'blog' => 'blog',
 
     ],
+    /** start index模块路由  */
     //首页
     '' => ['index/index', ['ext' => ''], []],
-   //主页面
+    //主页面
     'hot' => ['index/index/hot', ['ext' => 'html'], []],
-    'cat' => ['index/cat/index', ['ext' => 'html'], []],
+    '[cat]' => [
+        '$' => ['index/cat/index', ['ext' => 'html'], []],
+        'info/<cat_id>$' => ['index/cat/info', ['ext' => 'html'], ['cat_id' => '\d+']],
+    ],
+    '[article]' => [
+        '$' => ['index/article/index', ['ext' => 'html'], []],
+        'info/<id>$' => ['index/article/info', ['ext' => 'html'], ['id' => '\d+']],
+        'search$' => ['index/article/search', ['ext' => 'html'], ['id' => '\d+']],
+    ],
+
     //小功能
     'vip' => 'index/effects/vip',
     'fall' => 'index/effects/fall',
     //工具
     'robots.txt' => ['index/tools/robots', ['ext' => 'txt'], []],
     'baidu_verify_MZ1QlgcMwh' => 'index/tools/baiduVerify',
+    /** end index模块路由  */
 ];
 $route = array_merge($route_more, $route_array);
 return $route;

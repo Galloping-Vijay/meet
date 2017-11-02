@@ -160,7 +160,7 @@ $configs = [
     // +----------------------------------------------------------------------
 
     // 异常页面的模板文件
-    'exception_tmpl' => ROOT_PATH . 'public/default_jump/error.html',
+    'exception_tmpl' => ROOT_PATH . 'public/default_jump/fault.html',
 
     // 错误显示信息,非调试模式有效
     'error_message' => '页面错误！请稍后再试～',

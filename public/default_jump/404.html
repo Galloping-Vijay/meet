@@ -16,21 +16,40 @@
 </head>
 <body class="about page">
 <div class="wrap">
-    {include file="public:nav" /}
+    <nav class="nav1">
+        <a id="menu-toggle" class="anchor-link" href="#"><img src="{$wjf_theme_path}public/images/nav.png" alt=""/></a>
+        <ul class="simple-toggle" id="menu">
+            <!-- logo -->
+            <li class="logo"><a href="/index.html"><img src="{$wjf_theme_path}public/images/logo.png" alt=""/></a></li>
+            <!-- logo -->
+            {Wjf:get model="admin/Menu" field="id,menu_name,menu_url" menu_moduleid="1" menu_open ="1"}
+            {foreach $data as $k=>$v}
+            <li class="active"><a href="{$v.menu_url}">{$v.menu_name}</a></li>
+            {/foreach}
+            {/Wjf:get}
+        </ul>
+    </nav>
+</div>
+<div class="container">
+    <div class="jumbotron">
+        <h1>悦遇博客！</h1>
+        <p>记录生活 记录成长</p>
+        <p><a href="http://{$_SERVER['HTTP_HOST']}" class="btn btn-primary btn-lg" role="button">
+            站点首页</a>
+        </p>
+    </div>
 </div>
 {include file="public:footer"/}
 </div>
-{include file="public:scripts"/}
 <script>
-    var massage = "WJFCMS提示: <br/><strong>没有找到该页面哦!</strong>";
-    var code = "{:$code}";
-    var wait = "{:$wait}";
-    var url = "{:$url}";
+    var massage = "WJFCMS提示: <br/><strong>页面被吃掉了!</strong>";
+    var code = "404";
+    var wait = 100;
     layer.msg(massage, {
         icon: code,
         time: wait + '000', //2秒关闭（如果不配置，默认是3秒）
     }, function () {
-        self.location = url;
+        self.location = "http://{$_SERVER['HTTP_HOST']}";
     });
 </script>
 </body>

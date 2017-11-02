@@ -46,4 +46,8 @@ class Index extends Base
         return $this->fetch();
     }
 
+    public function about(){
+        throw new \think\exception\HttpException(404, '页面不存在');
+    }
+
 }

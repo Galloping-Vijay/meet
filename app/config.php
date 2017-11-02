@@ -168,6 +168,12 @@ $configs = [
     'show_error_msg' => false,
     // 异常处理handle类 留空使用 \think\exception\Handle
     'exception_handle' => '',
+    'http_exception_template'    =>  [
+        // 定义404错误的重定向页面地址
+        404 => ROOT_PATH . 'public/default_jump/404.html',
+        // 还可以定义其它的HTTP status
+        500 =>  ROOT_PATH . 'public/default_jump/500.html',
+    ],
 
     // +----------------------------------------------------------------------
     // | 日志设置

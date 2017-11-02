@@ -15,9 +15,17 @@ $route_more = [
         'blog' => 'blog',
 
     ],
-    'baidu_verify_MZ1QlgcMwh' => 'index/tools/baiduVerify',
+    //首页
+    '' => ['index/index', ['ext' => ''], []],
+   //主页面
+    'hot' => ['index/index/hot', ['ext' => 'html'], []],
+    'cat' => ['index/cat/index', ['ext' => 'html'], []],
+    //小功能
     'vip' => 'index/effects/vip',
     'fall' => 'index/effects/fall',
+    //工具
+    'robots.txt' => ['index/tools/robots', ['ext' => 'txt'], []],
+    'baidu_verify_MZ1QlgcMwh' => 'index/tools/baiduVerify',
 ];
 $route = array_merge($route_more, $route_array);
 return $route;

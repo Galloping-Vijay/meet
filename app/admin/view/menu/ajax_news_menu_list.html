@@ -13,7 +13,8 @@
 				<span class="label label-lg label-pink">可发布栏目</span>
 				{/if}
 			{/case}
-			{default /}<span class="label label-lg label-primary">单页栏目</span>
+			{case value="4"}<span class="label label-lg label-yellow">单页栏目</span>{/case}
+			{default /}<span class="label label-lg label-primary">链接导航栏</span>
 			{/switch}
 		</td>
 		<td style=padding-left:{if condition='$v.leftpin neq 0'}{$v.leftpin}{/if}px; >{$v.lefthtml}{$v.menu_name}</span></td>

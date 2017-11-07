@@ -19,7 +19,6 @@ class We extends WeBase
 		parent::_initialize();
 		$config=config('we_options');
 		if(!empty($config)) $this->options=array_merge($this->options,$config);
-		pr($this->options);
 	}
 	//微信设置显示
 	public function wesys()

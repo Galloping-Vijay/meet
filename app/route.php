@@ -35,7 +35,7 @@ $route_more = [
     'fall' => 'index/effects/fall',
     //工具
     'robots.txt' => ['index/tools/robots', ['ext' => 'txt'], []],
-    'baidu_verify_MZ1QlgcMwh' => 'index/tools/baiduVerify',
+    'baidu_verify_Yop4oJAMy0' => ['index/tools/baiduVerify', ['ext' => 'html'], []],
     /** end index模块路由  */
 ];
 $route = array_merge($route_more, $route_array);

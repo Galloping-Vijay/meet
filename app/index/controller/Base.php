@@ -10,7 +10,6 @@
 namespace app\index\controller;
 
 use app\common\controller\FrontBase;
-use think\Db;
 
 class Base extends FrontBase
 {

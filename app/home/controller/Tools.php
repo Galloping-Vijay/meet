@@ -9,6 +9,7 @@
 
 namespace app\home\controller;
 
+use app\home\lib\Base;
 
 class Tools extends Base
 {

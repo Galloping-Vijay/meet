@@ -9,6 +9,8 @@
 
 namespace app\home\controller;
 
+use app\home\lib\Base;
+
 class Index extends Base
 {
     public function index()

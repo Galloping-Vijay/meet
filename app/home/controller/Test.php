@@ -9,7 +9,7 @@
 
 namespace app\home\controller;
 
-use app\admin\model\Module;
+use app\home\lib\Base;
 use EasyWeChat\Message\Text;
 
 class Test extends Base

@@ -4,10 +4,10 @@
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016 http://www.abc3210.com, All rights reserved.
 // +----------------------------------------------------------------------
-// | Author: wjf <1937832819@qq.com> 2017/11/30
+// | Author: wjf <1937832819@qq.com> 2017/12/12
 // +----------------------------------------------------------------------
 
-namespace app\home\controller;
+namespace app\home\lib;
 
 use app\common\controller\FrontBase;
 

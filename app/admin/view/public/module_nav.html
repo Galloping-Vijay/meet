@@ -1,8 +1,8 @@
-{Wjf:get model="admin/Module" field="id,module_url,module_title" module_status="1" order='id desc' cache='300'}
+{Wjf:get model="admin/AuthRule" status="1" pid="0" field="id,title,name" order='id desc' }
 {foreach $data as $key=>$val}
 <li class="green">
-    <a href="/{$val['module_url']}" target="">
-        {$val.module_title}
+    <a href="/{$val['name']}" target="">
+        {$val.title}
     </a>
 </li>
 {/foreach}

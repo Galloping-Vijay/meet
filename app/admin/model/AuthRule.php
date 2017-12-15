@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | AuthRule.权限认证
+// | AuthRule.后台菜单
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016 http://www.meetoyou.com, All rights reserved.
 // +----------------------------------------------------------------------
-// | Author: wjf <1937832819@qq.com> 2017-10-09
+// | Author: wjf <1937832819@qq.com> 2017-10-10
 // +----------------------------------------------------------------------
 
 namespace app\admin\model;
@@ -18,7 +18,7 @@ use app\admin\controller\Auth;
  */
 class AuthRule extends Model
 {
-    protected $not_check_id = [1, 2];//不检测权限的管理员id
+    protected $not_check_id = [1];//不检测权限的管理员id
     protected $not_check_url = ['admin/Index/index', 'admin/Sys/clear', 'admin/Index/lang'];//不检测权限的url
 
     /**
@@ -139,8 +139,15 @@ class AuthRule extends Model
             } else {
                 $controller = ucfirst($name);
             }
-            if (has_controller($module, $controller)) {
-                $rst = $module . '/' . $controller;
+            if (strpos($controller, '.')) {
+                $cont = explode('.', $controller);
+                if (has_controller($module, $cont[1])) {
+                    $rst = $module . '/' . $controller;
+                }
+            } else {
+                if (has_controller($module, $controller)) {
+                    $rst = $module . '/' . $controller;
+                }
             }
         } elseif ($level == 2) {
             $rst = $name;
@@ -150,8 +157,14 @@ class AuthRule extends Model
                 $controller = ucfirst($arr[1]);
                 $action = $arr[2];
             } elseif ($count == 2) {
-                $controller = ucfirst($arr[0]);
-                $action = $arr[1];
+                if (strpos($arr[1], '.')) {
+                    $module = strtolower($arr[0]);
+                    $controller = ucfirst($arr[1]);
+                    $action = 'index';
+                } else {
+                    $controller = ucfirst($arr[0]);
+                    $action = $arr[1];
+                }
             } else {
                 return $rst;
             }
@@ -159,8 +172,15 @@ class AuthRule extends Model
                 //判断$action是否含?
                 $arr = explode('?', $action);
                 $_action = (count($arr) == 1) ? $action : $arr[0];
-                if (has_action($module, $controller, $_action) == 2) {
-                    $rst = $module . '/' . $controller . '/' . $action;
+                if (strpos($controller, '.')) {
+                    $cont = explode('.', $controller);
+                    if (has_action($module, $cont[1], $_action) == 2) {
+                        $rst = $module . '/' . $controller . '/' . $action;
+                    }
+                } else {
+                    if (has_action($module, $controller, $_action) == 2) {
+                        $rst = $module . '/' . $controller . '/' . $action;
+                    }
                 }
             }
         }
@@ -169,16 +189,18 @@ class AuthRule extends Model
 
     /**
      * 获取权限菜单
-     * @param int $module_id 模块id,默认为系统总后台,不属于任何模块
+     * Author: wjf <1937832819@qq.com>
+     * @param int $pid 导航菜单,全站导航菜单id为8
+     * @param bool $iscache
      * @return array|mixed
      */
-    public function get_admin_menus($module_id = 0)
+    public function get_admin_menus($pid = 8, $iscache = true)
     {
         $uid = session('admin_auth.aid');
-        $menus = cache('menus_admin_' . $module_id . $uid);
+        $menus = cache('menus_admin_' . $uid);
+        if ($iscache == false) $menus = [];
         if ($menus) return $menus;
         $where['status'] = 1;
-        $where['module_id'] = $module_id;
         if (!in_array($uid, $this->not_check_id)) {
             $auth_ids_list = cache('auth_ids_list_' . $uid);
             if (empty($auth_ids_list)) {
@@ -192,8 +214,8 @@ class AuthRule extends Model
         $data = self::where($where)->order('sort')->select();
         $tree = new \Tree();
         $tree->init($data, ['child' => '_child', 'parentid' => 'pid']);
-        $menus = $tree->get_arraylist($data);
-        cache('menus_admin_' . $module_id . $uid, $menus);
+        $menus = $tree->get_arraylist($data, $pid);
+        cache('menus_admin_' . $uid, $menus);
         return $menus;
     }
 

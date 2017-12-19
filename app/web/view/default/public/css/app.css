@@ -14,8 +14,16 @@
 .hm-description{
 	margin: .5em 0;
 }
+/*主内容区*/
+.mui-content h5{
+	background-color:#efeff4;
+	line-height: 30px;
+	text-align: center;
+}
+/*结束*/
 
 .hm-description>li {
 	font-size: 14px;
 	color: #8f8f94;
 }
+.red{color: red}

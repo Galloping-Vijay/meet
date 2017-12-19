@@ -1,37 +1,20 @@
 <?php
 // +----------------------------------------------------------------------
-// | Index.
+// | User.用户控制器
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016 http://www.abc3210.com, All rights reserved.
 // +----------------------------------------------------------------------
-// | Author: wjf <1937832819@qq.com> 2017/12/18
+// | Author: wjf <1937832819@qq.com> 2017/12/19
 // +----------------------------------------------------------------------
 
 namespace app\web\controller;
 
 use app\web\lib\Base;
 
-class Index extends Base
+class User extends Base
 {
-    //列表页
+    //用户主页
     public function index()
-    {
-        return $this->fetch();
-    }
-
-    //微圈
-    public function circle()
-    {
-        return $this->fetch();
-    }
-
-    //板块
-    public function table()
-    {
-        return $this->fetch();
-    }
-
-    public function ceshi()
     {
         return $this->fetch();
     }

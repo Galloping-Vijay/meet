@@ -1,47 +1,107 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Hello 手机站</title>
+    <title>微圈</title>
     {include file="public:head" /}
 </head>
 <body>
+<!--导航-->
+{include file="public:nav" /}
 <div class="mui-content">
-
-    <ul class="mui-table-view mui-table-view-chevron">
-        <li class="mui-table-view-cell mui-media">
-            <a class="mui-navigate-right">
-                <img class="mui-media-object mui-pull-left" src="../images/cbd.jpg">
-                <div class="mui-media-body">
-                    CBD
-                    <p class='mui-ellipsis'>烤炉模式的城，到黄昏，如同打翻的调色盘一般.</p>
-                </div>
-            </a>
-        </li>
-        <li class="mui-table-view-cell mui-media">
-            <a class='mui-navigate-right' href="javascript:;">
-                <img class="mui-media-object mui-pull-left" src="../images/yuantiao.jpg">
-                <div class="mui-media-body">
-                    远眺
-                    <p class='mui-ellipsis'>静静的看这个世界，最后终于疯了</p>
-                </div>
-            </a>
-        </li>
-        <li class="mui-table-view-cell mui-media">
-            <a class="mui-navigate-right">
-                <img class="mui-media-object mui-pull-left" src="../images/shuijiao.jpg">
-                <div class="mui-media-body">
-                    幸福
-                    <p class='mui-ellipsis'>能和心爱的人一起睡觉，是件幸福的事情；可是，打呼噜怎么办？</p>
-                </div>
-            </a>
-        </li>
-    </ul>
+    <!--轮播开始-->
+    {include file="public:slider" /}
+    <!-- 轮播结束-->
+    <div class="mui-scroll" id="refreshContainer">
+        <!--数据列表-->
+        <ul class="mui-table-view mui-table-view-chevron">
+            <li class="mui-table-view-cell mui-media">
+                <a class="mui-navigate-right">
+                    <img class="mui-media-object mui-pull-left" src="{$wjf_theme_path}public/images/cbd.jpg">
+                    <div class="mui-media-body">
+                        CBD
+                        <p class='mui-ellipsis'>烤炉模式的城，到黄昏，如同打翻的调色盘一般.</p>
+                    </div>
+                </a>
+            </li>
+            <li class="mui-table-view-cell mui-media">
+                <a class='mui-navigate-right' href="javascript:;">
+                    <img class="mui-media-object mui-pull-left" src="{$wjf_theme_path}public/images/yuantiao.jpg">
+                    <div class="mui-media-body">
+                        远眺
+                        <p class='mui-ellipsis'>静静的看这个世界，最后终于疯了</p>
+                    </div>
+                </a>
+            </li>
+            <li class="mui-table-view-cell mui-media">
+                <a class="mui-navigate-right">
+                    <img class="mui-media-object mui-pull-left" src="{$wjf_theme_path}public/images/shuijiao.jpg">
+                    <div class="mui-media-body">
+                        幸福
+                        <p class='mui-ellipsis'>能和心爱的人一起睡觉，是件幸福的事情；可是，打呼噜怎么办？</p>
+                    </div>
+                </a>
+            </li>
+            <li class="mui-table-view-cell mui-media">
+                <a class="mui-navigate-right">
+                    <img class="mui-media-object mui-pull-left" src="{$wjf_theme_path}public/images/cbd.jpg">
+                    <div class="mui-media-body">
+                        CBD
+                        <p class='mui-ellipsis'>烤炉模式的城，到黄昏，如同打翻的调色盘一般.</p>
+                    </div>
+                </a>
+            </li>
+            <li class="mui-table-view-cell mui-media">
+                <a class='mui-navigate-right' href="javascript:;">
+                    <img class="mui-media-object mui-pull-left" src="{$wjf_theme_path}public/images/yuantiao.jpg">
+                    <div class="mui-media-body">
+                        远眺
+                        <p class='mui-ellipsis'>静静的看这个世界，最后终于疯了</p>
+                    </div>
+                </a>
+            </li>
+            <li class="mui-table-view-cell mui-media">
+                <a class="mui-navigate-right">
+                    <img class="mui-media-object mui-pull-left" src="{$wjf_theme_path}public/images/shuijiao.jpg">
+                    <div class="mui-media-body">
+                        幸福
+                        <p class='mui-ellipsis'>能和心爱的人一起睡觉，是件幸福的事情；可是，打呼噜怎么办？</p>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
 </div>
 {include file="public:footer" /}
-</body>
+<script src="__PUBLIC__/mui/js/mui.pullToRefresh.js"></script>
+<script src="__PUBLIC__/mui/js/mui.pullToRefresh.material.js"></script>
 <script>
     mui.init({
-        swipeBack:true //启用右滑关闭功能
+        pullRefresh : {
+            container:"#refreshContainer",//待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
+            up : {
+                height:50,//可选.默认50.触发上拉加载拖动距离
+                auto:true,//可选,默认false.自动上拉加载一次
+                contentrefresh : "正在加载...",//可选，正在加载状态时，上拉加载控件上显示的标题内容
+                contentnomore:'没有更多数据了',//可选，请求完毕若没有更多数据时显示的提醒内容；
+                callback:pullupRefreshAjax //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+            }
+        }
     });
+    function pullupRefreshAjax() {
+        var self = this;
+        mui.ajax('/', {
+            data: {},
+            dataType:'json',
+            type:'get',
+            timeout:10000,
+            success:function(data, textStatus, xhr) {
+                self.endPullupToRefresh(true);
+            },
+            error:function(xhr, type, errorThrown) {
+                self.endPullupToRefresh(false);
+            }
+        });
+    }
 </script>
+</body>
 </html>

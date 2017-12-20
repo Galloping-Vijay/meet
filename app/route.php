@@ -10,14 +10,9 @@
 $Route = new \Route;
 $route_array = $Route->route_array();
 $route_more = [
-    //也可以这里添加路由规则
-    '__domain__' => [
-        'blog' => 'blog',
-
-    ],
     /** start index模块路由  */
     //首页
-    '' => ['index/index', ['ext' => ''], []],
+    '' => ['index/index/index', ['ext' => ''], []],
     //主页面
     'hot' => ['index/index/hot', ['ext' => 'html'], []],
     '[cat]' => [

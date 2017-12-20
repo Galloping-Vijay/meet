@@ -29,7 +29,7 @@ class Tools extends Base
      */
     public function robots()
     {
-        $data =[
+        $data = [
             '*' => "User-agent: * \nDisallow: /index.php?*"
         ];
         $httpHost = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '*';
@@ -39,5 +39,11 @@ class Tools extends Base
         $response->content($robots);
         Config::set('app_trace', false);
         return $response;
+    }
+
+    //微信公众号JS接口安全域名设置
+    public function wexinJs()
+    {
+        return $this->fetch();
     }
 }

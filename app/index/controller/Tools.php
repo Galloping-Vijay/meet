@@ -44,6 +44,11 @@ class Tools extends Base
     //微信公众号JS接口安全域名设置
     public function wexinJs()
     {
-        return $this->fetch();
+        $data = 'hy4A51K4J7dyrXRu';
+        $response = Response::create();
+        $response->header('Content-type', 'text/plain');
+        $response->content($data);
+        Config::set('app_trace', false);
+        return $response;
     }
 }

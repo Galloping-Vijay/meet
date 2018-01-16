@@ -63,7 +63,7 @@ class Index extends WeBase
                                         break;
                                     default:
                                         $text = new Text();
-                                        return $text->reply($message->Content);
+                                        return $text->reply('你好啊,小遇');
                                         break;
                                 }
                             }
@@ -115,7 +115,7 @@ class Index extends WeBase
                                 break;
                             default:
                                 $text = new Text();
-                                return $text->reply($message->Content);
+                                return $text->reply('你好啊,小遇');
                                 break;
                         }
                     }

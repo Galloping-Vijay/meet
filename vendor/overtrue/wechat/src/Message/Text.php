@@ -68,6 +68,11 @@ class Text extends AbstractMessage
         $tuling = new Tuling();
         $data = $tuling->config($params)->reply();
 
-        return !empty($data) ? $data : '亲，不明白您说什么';
+        if (!isset($data['results'])) {
+            $text = '亲，不明白您说什么';
+        } else {
+            $text = $data['results'][0]['values']['text'];
+        }
+        return $text;
     }
 }

@@ -54,22 +54,20 @@ class Text extends AbstractMessage
     //自动回复功能
     public function reply($content = '')
     {
-        $config = [
-            'userid' => $this->userid,
-            'info' => $content
+        $params = [
+            'reqType' => 0,
+            'perception' => [
+                'inputText' => [
+                    'text' => $content
+                ]
+            ],
+            'userInfo' => [
+                'userId' => $this->userid
+            ]
         ];
         $tuling = new Tuling();
-        $conf = $tuling->config($config);
+        $data = $tuling->config($params)->reply();
 
-        $curl = new Curl();
-        $data = $curl->post($tuling->app_url(), $conf);
-
-        if ($data) {
-            $data = json_decode($data, true);
-            return $data['text'];
-        } else {
-            return '亲，不明白您说什么';
-        }
-
+        return !empty($data) ? $data : '亲，不明白您说什么';
     }
 }

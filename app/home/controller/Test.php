@@ -23,7 +23,7 @@ class Test extends Base
     public function ceshi()
     {
         $text = new Text();
-        $data = $text->reply('测试一下');
+        $data = $text->reply('成语接龙');
         pr($data);
     }
 }

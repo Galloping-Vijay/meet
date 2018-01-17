@@ -9,13 +9,13 @@
         <!--左侧顶端按钮-->
         <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
             <div class="sidebar-shortcuts-large sidebar-module">
-                <span>首站菜单</span>
+                <span>WEB菜单</span>
             </div>
         </div>
         <!--左侧顶端按钮（手机）-->
         <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
             <div class="sidebar-shortcuts-large sidebar-module">
-                <span>首站菜单</span>
+                <span>WEB菜单</span>
             </div>
         </div>
     </div>
@@ -24,8 +24,7 @@
         <!--一级菜单遍历开始-->
         {foreach name="menus" item="v"}
         {if condition="!empty($v['_child'])"}
-        <li class="{if condition=" (count($menus_curr) egt 1) AND ($menus_curr[0] eq $v[
-        'id'])"}open{/if}">
+        <li class="{if condition=" (count($menus_curr) egt 1) AND ($menus_curr[0] eq $v['id'])"}open{/if}">
         <a href="javascript:void(0);" class="dropdown-toggle">
             <i class="menu-icon fa {$v.css}"></i>
             <span class="menu-text">{$v.title}</span>

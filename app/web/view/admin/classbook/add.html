@@ -1,0 +1,134 @@
+{extend name="web@admin/public/base" /}
+{block name="main-content"}
+<div class="page-content">
+
+    <!--主题-->
+    <div class="page-header">
+        <h1>
+            您当前操作
+            <small>
+                <i class="ace-icon fa fa-angle-double-right"></i>
+                添加用户信息
+            </small>
+        </h1>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <form class="form-horizontal ajaxForm2" name="add" method="post" action="{:url('web/admin.classbook/add')}">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 用户名：  </label>
+                    <div class="col-sm-10">
+                        <input type="text" name="name" id="name" placeholder="用户名" class="col-xs-10 col-sm-4" />
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 手机号码：  </label>
+                    <div class="col-sm-10">
+                        <input type="text" name="tel" id="tel" placeholder="输入手机号码" class="col-xs-10 col-sm-4" required/>
+                        <span class="lbl">&nbsp;&nbsp;<span class="red">*</span>只能填写数字</span>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group" id="pic_list">
+                    <label  class="col-sm-2 control-label no-padding-right" for="form-field-1"> 头像 </label>
+                    <div class="col-sm-9">
+                        <input type="hidden" name="pic" id="checkpic" value="__PUBLIC__/img/no_img.jpg">
+                        <a href="javascript:;" class="file" title="点击选择所要上传的图片">
+                            <input type="file" name="file0" id="file0" multiple="multiple">
+                            选择上传文件
+                        </a>
+                        &nbsp;&nbsp;<a href="javascript:;" onclick="return backpic('__PUBLIC__/img/no_img.jpg');" title="还原修改前的图片" class="file">
+                        撤销上传
+                    </a>
+                        <div><img src="__PUBLIC__/img/no_img.jpg" height="70" id="img0"></div>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 所在地：  </label>
+                    <div class="col-sm-10">
+                        <input type="text" name="address" id="address" placeholder="所在地" class="col-xs-10 col-sm-4" />
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 性别：  </label>
+                    <div class="col-sm-10">
+                        <label>
+                            <input name="sex" type="radio" value="1" class="ace" />
+                            <span class="lbl"> 男 </span>&nbsp;&nbsp;
+                        </label>
+                        <label>
+                            <input name="sex" type="radio" value="2" class="ace" />
+                            <span class="lbl"> 女 </span>
+                        </label>
+                        <label>
+                            <input name="sex" type="radio" value="0" checked class="ace" />
+                            <span class="lbl"> 保密 </span>
+                        </label>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 签名：  </label>
+                    <div class="col-sm-10">
+                        <textarea  name="signature" cols="20" rows="4" class="col-xs-10 col-sm-4 limited"   id="form-field-12"  maxlength="125"></textarea>
+                        <span class="help-inline">&nbsp;&nbsp;还可以输入125个字符</span>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 备注：  </label>
+                    <div class="col-sm-10">
+                        <textarea  name="remork" cols="20" rows="4" class="col-xs-10 col-sm-4 limited"   id="form-field-13"  maxlength="125"></textarea>
+
+                        <span class="help-inline">&nbsp;&nbsp;还可以输入125个字符</span>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 联系邮箱：  </label>
+                    <div class="col-sm-10">
+                        <input type="email" name="email" id="email" placeholder="输入联系邮箱" value="1@qq.com" class="col-xs-10 col-sm-4" required/>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 是否审核： </label>
+                    <div class="col-sm-10" style="padding-top:5px;">
+                        <input name="status" id="status" value="1" class="ace ace-switch ace-switch-4 btn-flat" type="checkbox" />
+                        <span class="lbl">&nbsp;&nbsp;默认关闭</span>
+                    </div>
+                </div>
+                <div class="space-4"></div>
+
+                <div class="clearfix form-actions">
+                    <div class="col-md-offset-3 col-md-9">
+                        <button class="btn btn-info" type="submit">
+                            <i class="ace-icon fa fa-check bigger-110"></i>
+                            保存
+                        </button>
+
+                        &nbsp; &nbsp; &nbsp;
+                        <button class="btn" type="reset">
+                            <i class="ace-icon fa fa-undo bigger-110"></i>
+                            重置
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div><!-- /.page-content -->
+{/block}
+{block name="scripts"}
+<script type="text/javascript" src="__PUBLIC__/others/region.js"></script>
+{/block}

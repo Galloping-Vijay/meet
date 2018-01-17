@@ -357,7 +357,7 @@ function has_controller($module, $controller)
 /**
  * 是否存在方法
  * @param string $module 模块
- * @param string $controller 待判定控制器名
+ * @param string $controller 待判定控制器名(首字母大写)
  * @param string $action 待判定控制器名
  * @return number 方法结果，0不存在控制器 1存在控制器但是不存在方法 2存在控制和方法
  */

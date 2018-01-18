@@ -21,7 +21,7 @@ class Classbook extends AdminBase
     public function index()
     {
         $model = new ClassBooks();
-        $list = $model->paginate(15);
+        $list = $model->paginate(3);
         // 获取分页显示
         $page = $list->render();
         // 模板变量赋值
@@ -38,11 +38,11 @@ class Classbook extends AdminBase
             //处理图片
             $file = request()->file('file0');
             if ($file) {
-                $imgInfo = $this->fileUpload($file, [], '/web/admin.Classbook/add.html');
+                $imgInfo = $this->fileUpload($file, [], '/web/admin.Classbook/add');
                 $data['pic'] = $imgInfo['img_one'];
             }
-            if ($model->data($data)->save()) {
-                $this->success('添加成功', Url('/web/admin.Classbook/index.html'));
+            if ($model->allowField(true)->save($data)) {
+                $this->success('添加成功', Url('/web/admin.Classbook/index'));
             } else {
                 $this->error('添加失败');
             }
@@ -52,25 +52,36 @@ class Classbook extends AdminBase
 
     public function edit()
     {
-        $id = $this->request->param();
-        $info = ClassBooks::get($id);
-        if (request()->isPost()) {
+        if (request()->isPost() || request()->isAjax()) {
             $data = $this->request->param();
-            if($data['oldpic'] != $data['pic']){
+            $info = ClassBooks::get($data['id']);
+            if ($info['pic'] != $data['pic']) {
                 //处理图片
                 $file = request()->file('file0');
                 if ($file) {
-                    $imgInfo = $this->fileUpload($file, [], '/web/admin.Classbook/add.html');
+                    $imgInfo = $this->fileUpload($file, [], '/web/admin.Classbook/add');
                     $data['pic'] = $imgInfo['img_one'];
                 }
             }
-            if ($info->data($data)->save()) {
-                $this->success('操作成功', Url('/web/admin.Classbook/index.html'));
+            if ($info->allowField(true)->save($data)) {
+                $this->success('操作成功', Url('/web/admin.Classbook/index'));
             } else {
                 $this->error('操作失败');
             }
         }
+        $id = $this->request->param();
+        $info = ClassBooks::get($id);
         $this->assign('info', $info);
         return $this->fetch();
+    }
+
+    public function del()
+    {
+        $info = ClassBooks::get(input('id'));
+        if ($info->delete() === false) {
+            $this->error("删除失败！", url('/web/admin.Classbook/index'));
+        } else {
+            $this->success('操作成功', Url('/web/admin.Classbook/index'));
+        }
     }
 }

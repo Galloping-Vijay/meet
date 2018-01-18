@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>通讯录</title>
+    {include file="public:head" /}
+</head>
+<body>
+<!--导航-->
+{include file="classbook:nav" /}
+<div class="mui-content">
+    <!--轮播开始-->
+    {include file="public:slider" /}
+    <!-- 轮播结束-->
+    <div class="mui-scroll" id="refreshContainer">
+        <!--数据列表-->
+        <ul class="mui-table-view">
+
+        </ul>
+        <div class="mui-content-padded" style="text-align: center" >
+        <p>上拉加载更多</p>
+    </div>
+    </div>
+</div>
+<input type="hidden" id="pageId" value="1">
+{include file="public:footer" /}
+<script src="__PUBLIC__/mui/js/mui.pullToRefresh.js"></script>
+<script src="__PUBLIC__/mui/js/mui.pullToRefresh.material.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.1.min.js"></script>
+<script>
+    mui.init({
+        pullRefresh: {
+            container: "#refreshContainer",//待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
+            up: {
+                height: 50,//可选.默认50.触发上拉加载拖动距离
+                auto: true,//可选,默认false.自动上拉加载一次
+                contentrefresh: "正在加载...",//可选，正在加载状态时，上拉加载控件上显示的标题内容
+                contentnomore: '没有更多数据了',//可选，请求完毕若没有更多数据时显示的提醒内容；
+                callback: pullupRefreshAjax //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+            }
+        }
+    });
+
+    function pullupRefreshAjax() {
+        var self = this;
+        var pageId = $('#pageId').val();
+        console.log(pageId);
+        mui.ajax('/web/classbook/ajaxList', {
+            data: {page: pageId},
+            dataType: 'json',
+            type: 'get',
+            timeout: 10000,
+            success: function (data, textStatus, xhr) {
+                console.log(data.code);
+                if (data.code == 0) {
+                    $('.mui-content-padded').attr('hidden','hidden');
+                    self.endPullupToRefresh(true);
+                } else {
+                    console.log(data.data);
+                    var nxet = parseInt(data.current_page)+1;
+                    $('#pageId').val(nxet);
+                    var res = data.data;
+                    for (var i = 0; i < res.length; i++) {
+                        html = '<li class="mui-table-view-cell mui-media"><a href="tel:' + res[i]['tel'] + '"><img class="mui-media-object mui-pull-left" src="' + res[i]['pic'] + '"><div class="mui-media-body">\n' + res[i]['name'] + '&nbsp;&nbsp;' + res[i]['address'] + '&nbsp;&nbsp;' + res[i]['tel'] + '<p class="mui-ellipsis">备注:' + res[i]['remork'] + '</p></div></a></li>';
+                        $('.mui-pull-bottom-pocket').before(html);
+                    }
+                    self.endPullupToRefresh(false);
+                }
+            },
+            error: function (xhr, type, errorThrown) {
+                self.endPullupToRefresh(true);
+            }
+        });
+    }
+</script>
+</body>
+</html>

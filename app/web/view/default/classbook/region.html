@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>通讯录</title>
+    {include file="public:head" /}
+    <script src="__PUBLIC__/js/echarts.js"></script>
+</head>
+<body>
+<!--导航-->
+{include file="classbook:nav" /}
+<div class="mui-content">
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="width: 98%;height:400px;    margin-top:7%;"></div>
+</div>
+{include file="public:footer" /}
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+
+    option = {
+        title : {
+            text: '人员分布图',
+            subtext: '纯属虚构',
+            x:'center'
+        },
+        tooltip : {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+//        legend: {
+//            orient: 'vertical',
+//            left: 'left',
+//            data: ['长汀','厦门','龙岩','深圳','上海']
+//        },
+        series : [
+            {
+                name: '分布图',
+                type: 'pie',
+                radius : '55%',
+                center: ['50%', '60%'],
+                data:[
+                    {value:254, name:'长汀'},
+                    {value:310, name:'厦门'},
+                    {value:234, name:'龙岩'},
+                    {value:135, name:'深圳'},
+                    {value:1548, name:'上海'}
+                ],
+                itemStyle: {
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+</body>
+</html>

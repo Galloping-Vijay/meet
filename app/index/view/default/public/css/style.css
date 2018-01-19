@@ -1740,6 +1740,13 @@ span.btn_1 {
 .brown{
     color: brown;
 }
+
+.more-article{
+    margin: 3%;
+}
+.more-article a{
+    color: darkgray;
+}
 /*结束 文章页面样式*/
 /*开始 右导航样式*/
 .cat-info-right {

@@ -2,7 +2,7 @@
 <head>
     <title>{$site_seo_title} {$site_name}</title>
     {include file="public:head" /}
-    <link rel="stylesheet" type="text/css" href="__PUBLIC__/timeline/jquery.eeyellow.Timeline.css" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/timeline/jquery.eeyellow.Timeline.css"/>
     <meta name="description" content="{$site_seo_description}">
 </head>
 <body>
@@ -17,7 +17,7 @@
             </div>
             {include file="public:nav" /}
             <script type="text/javascript">
-                $(document).ready(function() {
+                $(document).ready(function () {
 
                     $('#menu-toggle').click(function () {
                         $('#menu').toggleClass('open');
@@ -35,32 +35,12 @@
         <div class="about_grid1">
             <div class="col-md-8 box">
                 <div class="VivaTimeline">
-                    <dl>
-                        {foreach name="newsList" item="val"}
-                        <dd class="pos-{:parity($key)} clearfix">
-                            <div class="circ"></div>
-                            <div class="time">{:date('F d',$val['news_time'])}</div>
-                            <div class="events">
-                                <div class="events-header">{$val.news_title}</div>
-                                <a href="{:url('/article/info/'.$val['n_id'])}">
-                                    <div class="events-body">
-                                        <div class="row">
-                                            <div class="col-md-6 pull-left">
-                                                <img class="events-object img-responsive img-rounded" src="{$val.news_img|default='__PUBLIC__/img/news.jpg'}" />
-                                            </div>
-                                            <div class="events-desc">
-                                                {$val.news_scontent}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                                <div class="events-footer">
-                                    <span>{$val.news_time|date="Y-m-d",###} By {$val->user->member_list_nickname}</span>&nbsp;&nbsp;
-                                </div>
-                            </div>
-                        </dd>
-                        {/foreach}
+                    <dl id="art_news">
+
                     </dl>
+                    <div class="more-article text-center"><a href="javascript:;">加载更多</a>
+                        <input type="hidden" id="pageid" value="1">
+                    </div>
                 </div>
             </div>
             {include file="public:rightslider" /}
@@ -78,6 +58,92 @@
             carouselTime: 3000
         });
     });
+</script>
+<script type="text/javascript">
+    $(function () {
+        ajaxPost();
+        $('.more-article').click(function () {
+            ajaxPost();
+        });
+
+        //ajax请求函数
+        function ajaxPost() {
+            var p = $('#pageid').val();
+//            /console.log(p);
+            var s = '';
+            $.ajax({
+                type: 'post',
+                url: '/index/article/ajaxNews',
+                data: {page: p},
+                dataType: 'json',
+                success: function (data) {
+                    //console.log(data[0]['data']);
+                    $.each(data['0']['data'], function (key, val) {
+                        var k = parseInt(key);
+                        s += '<dd class="pos-' + place(k) + ' clearfix">';
+                        s += '<div class="circ"></div>';
+                        s += ' <div class="time">' + getCurrentDate(val.news_time, 2) + '</div>';
+                        s += '<div class="events">';
+                        s += '<div class="events-header">' + val.news_title + '</div>';
+                        s += '<a href="">';
+                        s += '<div class="events-body">';
+                        s += '<div class="row" style="display: block;">';
+                        s += '<div class="col-md-6 pull-left">';
+                        s += '<img class="events-object img-responsive img-rounded" src="' + imgShow(val.news_img) + '" />';
+                        s += '</div>';
+                        s += '<div class="events-desc">';
+                        s += val.news_scontent;
+                        s += '</div>';
+                        s += '</div>';
+                        s += '</div>';
+                        s += '</a>';
+                        s += '<div class="events-footer">';
+                        s += '<span>' + getCurrentDate(val.news_time, 1) + '  By  ' + val.news_source + '</span>&nbsp;&nbsp;';
+                        s += '</div>';
+                        s += '</div>';
+                        s += '</dd>';
+                    });
+                    $("#art_news").append(s);
+                    s = '';
+                },
+            });
+        };
+
+        function place(key) {
+            var position = '';
+            if (key % 2 == 0) {
+                position = 'left';
+            } else {
+                position = 'right';
+            }
+            return position;
+        }
+
+        function imgShow(str) {
+            if (str === null || str === undefined || str === '') {
+                str = '__PUBLIC__/img/news.jpg';
+            }
+            return str;
+        }
+
+        function getCurrentDate(sn, num) {
+            var date = new Date(parseInt(sn) * 1000);
+            var monthArray = new Array
+            ("January", "February", "March", "April", "May", "June", "July", "August",
+                "September", "October", "November", "December");
+            month = date.getMonth();
+            day = date.getDate();
+            if (day.toString().length == 1) {
+                day = "0" + day.toString();
+            }
+            //document.write(monthArray[month]+" "+day+", "+date.getFullYear());
+            if (num === 1) {
+                return monthArray[month] + " " + day + ", " + date.getFullYear();
+            }
+            return monthArray[month] + " " + day;
+        }
+    });
+
 </script>
 </body>
 </html>

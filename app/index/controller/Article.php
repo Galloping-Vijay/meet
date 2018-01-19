@@ -24,11 +24,23 @@ class Article extends Base
     public function index()
     {
         $news = new News();
-        $newsList = $news::getWhereNews([],20,['news_time'=>'desc']);
+        $newsList = $news::getWhereNews([], 10, ['news_time' => 'desc']);
         $page = $newsList->render();
         $this->assign('newsList', $newsList);
         $this->assign('page', $page);
         return $this->fetch();
+    }
+
+    public function ajaxNews()
+    {
+        $newsList = News::getWhereNews([], 10, ['news_time' => 'desc']);
+        return json(
+            [
+                'code' => 1,
+                'msg' => '请求成功',
+                $newsList
+            ]
+        );
     }
 
     public function info()

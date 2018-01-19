@@ -23,24 +23,32 @@ class Article extends Base
     //文章集
     public function index()
     {
-        $news = new News();
-        $newsList = $news::getWhereNews([], 10, ['news_time' => 'desc']);
-        $page = $newsList->render();
-        $this->assign('newsList', $newsList);
-        $this->assign('page', $page);
         return $this->fetch();
     }
 
+    /**
+     * 文章api接口
+     * Author: vijay <1937832819@qq.com>
+     * @return \think\response\Json
+     */
     public function ajaxNews()
     {
         $newsList = News::getWhereNews([], 10, ['news_time' => 'desc']);
-        return json(
-            [
+        if ($newsList->isEmpty() === true || !$this->request->isPost() || !$this->request->isAjax()) {
+            $data = [
+                'code' => 0,
+                'msg' => '没有数据',
+                'data' => ''
+            ];
+        } else {
+            $data = [
                 'code' => 1,
                 'msg' => '请求成功',
                 $newsList
-            ]
-        );
+            ];
+        }
+        return json($data);
+
     }
 
     public function info()

@@ -1747,6 +1747,11 @@ span.btn_1 {
 .more-article a{
     color: darkgray;
 }
+#art_news .events-header{
+    word-wrap: break-word;
+    padding: 2%;
+    text-align: left;
+}
 #art_news .events-desc{
     word-wrap: break-word;
     text-overflow: ellipsis;

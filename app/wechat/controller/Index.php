@@ -64,7 +64,7 @@ class Index extends WeBase
                                         break;
                                     default:
                                         $text = new Text();
-                                        return $text->reply('你好啊,小遇');
+                                        return $text->reply('你好啊,小味精');
                                         break;
                                 }
                             } else {
@@ -72,8 +72,6 @@ class Index extends WeBase
                                 return $text->reply('你好啊,小味精');
                                 break;
                             }
-
-                            break;
                         case 'unsubscribe':
                             # code...
                             //取消关注
@@ -121,7 +119,7 @@ class Index extends WeBase
                                 break;
                             default:
                                 $text = new Text();
-                                return $text->reply('你好啊,小遇');
+                                return $text->reply('你好啊,小味精');
                                 break;
                         }
                     }

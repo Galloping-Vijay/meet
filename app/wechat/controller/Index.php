@@ -20,18 +20,19 @@ class Index extends WeBase
     public function _initialize()
     {
         //parent::_initialize();
-		//微信平台
-        $config=config('we_options');
-        if(!empty($config)) $this->options=array_merge($this->options,$config);
+        //微信平台
+        $config = config('we_options');
+        if (!empty($config)) $this->options = array_merge($this->options, $config);
         $this->app = new Application($this->options);
-        config('app_debug',false);
-        config('app_trace',false);
-        if(input('echostr') && $this->checkSignature()){
+        config('app_debug', false);
+        config('app_trace', false);
+        if (input('echostr') && $this->checkSignature()) {
             //验证token
             return input('echostr');
         }
     }
-	public function index()
+
+    public function index()
     {
         //消息处理
         $this->app->server->setMessageHandler(function ($message) {
@@ -41,24 +42,24 @@ class Index extends WeBase
                     switch ($message->Event) {
                         case 'subscribe':
                             # code...
-                            $we_reply_list=Db::name('we_reply')->where('we_reply_key','subscribe')->find();
-                            if($we_reply_list){
+                            $we_reply_list = Db::name('we_reply')->where('we_reply_key', 'subscribe')->find();
+                            if ($we_reply_list) {
                                 switch ($we_reply_list['we_reply_type']) {
                                     case 'text'://回复文本
                                         $text = new Text(['content' => $we_reply_list['we_replytext_content']]);
                                         return $text;
                                         break;
                                     case 'image'://回复图片
-                                        $new= new Image(['media_id' => $we_reply_list['we_replyimage_mediaid']]);
+                                        $new = new Image(['media_id' => $we_reply_list['we_replyimage_mediaid']]);
                                         return $new;
                                         break;
                                     case 'voice'://回复语音
-                                        $new=new Voice(['media_id' => $we_reply_list['we_replyvoice_mediaid']]);
+                                        $new = new Voice(['media_id' => $we_reply_list['we_replyvoice_mediaid']]);
                                         return $new;
                                         break;
                                     case 'news'://回复图文消息
-                                        $news=json_decode($we_reply_list['we_replynews'],true);
-                                        $new=new News($news);
+                                        $news = json_decode($we_reply_list['we_replynews'], true);
+                                        $new = new News($news);
                                         return $new;
                                         break;
                                     default:
@@ -66,7 +67,12 @@ class Index extends WeBase
                                         return $text->reply('你好啊,小遇');
                                         break;
                                 }
+                            } else {
+                                $text = new Text();
+                                return $text->reply('你好啊,小味精');
+                                break;
                             }
+
                             break;
                         case 'unsubscribe':
                             # code...
@@ -90,27 +96,27 @@ class Index extends WeBase
                     break;
                 case 'text':
                     # 文字消息...
-                    $we_reply_list=Db::name('we_reply')->where('we_reply_key','like','%'.$message->Content.'%')->find();
-                    if (empty($we_reply_list)){
+                    $we_reply_list = Db::name('we_reply')->where('we_reply_key', 'like', '%' . $message->Content . '%')->find();
+                    if (empty($we_reply_list)) {
                         $text = new Text();
                         return $text->reply($message->Content);
-                    }else{
+                    } else {
                         switch ($we_reply_list['we_reply_type']) {
                             case 'text'://回复文本
                                 $text = new Text(['content' => $we_reply_list['we_replytext_content']]);
                                 return $text;
                                 break;
                             case 'image'://回复图片
-                                $new= new Image(['media_id' => $we_reply_list['we_replyimage_mediaid']]);
+                                $new = new Image(['media_id' => $we_reply_list['we_replyimage_mediaid']]);
                                 return $new;
                                 break;
                             case 'voice'://回复语音
-                                $new=new Voice(['media_id' => $we_reply_list['we_replyvoice_mediaid']]);
+                                $new = new Voice(['media_id' => $we_reply_list['we_replyvoice_mediaid']]);
                                 return $new;
                                 break;
                             case 'news'://回复图文消息
-                                $news=json_decode($we_reply_list['we_replynews'],true);
-                                $new=new News($news);
+                                $news = json_decode($we_reply_list['we_replynews'], true);
+                                $new = new News($news);
                                 return $new;
                                 break;
                             default:
@@ -142,20 +148,21 @@ class Index extends WeBase
             }
         });
         $this->app->server->serve()->send();
-	}
+    }
+
     private function checkSignature()
     {
-        $signature =input('signature');
+        $signature = input('signature');
         $timestamp = input('timestamp');
         $nonce = input('nonce');
         $token = $this->options['token'];
         $tmpArr = array($token, $timestamp, $nonce);
         sort($tmpArr, SORT_STRING);
-        $tmpStr = implode( $tmpArr );
-        $tmpStr = sha1( $tmpStr );
-        if( $tmpStr == $signature ){
+        $tmpStr = implode($tmpArr);
+        $tmpStr = sha1($tmpStr);
+        if ($tmpStr == $signature) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }

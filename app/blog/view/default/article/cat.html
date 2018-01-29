@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <title>分类名称 - 站点名称</title>
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+    {include file="public:head" /}
+    <div class="tpt-wp tpt-pat-75 cl">
+        <div class="tpt-ml-7">
+            <ul class="main">
+                <li class="cl">
+                    <div class="tpt-ml-3 cl">
+                        <div class="main_left">
+                            <if condition="0 eq 1">
+                                <div class="mod-angle tpt-none-768">
+                                    热
+                                </div>
+                            </if>
+                            <if condition="0 eq 1"><a title="" href=""><else/>
+                                <a title="" href=""></if>
+                            <if condition="0 neq ''">
+                                <img src="" alt="">
+                                <else />
+                                <img src="" alt="暂无缩略图">
+                            </if>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="tpt-mr-7">
+                        <div class="main_right cl">
+                            <h2><if condition="0 eq 1"><a title="" href=""><else/>
+                                <a title="" href=""></if>标题</a></h2>
+                            <p>
+                                <span><i class="iconfont">&#xe6a3;</i>作者</span><span class="pipe"></span><span><i class="iconfont">&#xe7e5;</i>栏目</span><span class="pipe"></span><span><i class="iconfont">&#xe6c0;</i>100</span><span class="pipe"></span><span class="tpt-none-768"><i class="iconfont">&#xe64d;</i>2016-12-03 20:18:23</span>
+                            </p>
+                            <p class="tpt-none-768">
+
+                                如果长达数小时沉浸在 VR 世界里，除了老生常谈的晕动症问题，本文作者 Tobias van Schneider 还体验到了一种名为“现实丧失感”的症状。如果长如果长达数小时沉...
+
+                            </p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="pages"></div>
+        </div>
+        <div class="tpt-mr-3">
+            {include file="public:right" /}
+        </div>
+    </div>
+    {include file="public:footer" /}
+</head>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <title>首页 - 悦遇博客</title>
+    <meta name="keywords" content="悦遇博客"/>
+    <meta name="description" content="悦遇博客"/>
+    {include file="public:head" /}
+    <div class="tpt-wp tpt-pat-75 cl">
+        <div class="tpt-ml-7">
+            <div class="tpt-banner cl">
+                {Wjf:get model="admin/News" limit="3" order="cat_order desc,cat_id asc" status="1" field="cat_id,cat_name"}
+                {volist name="data" id="vo"}
+                {/volist}
+                {/Wjf:get}
+                <div class="tpt-ml-6">
+                    <div class="tpt-a">
+                        <a href="/" title="/"><img src="" alt="/"></a>
+                        <h2><a href="/" title="">标题</a></h2>
+                    </div>
+                </div>
+                <div class="tpt-mr-4">
+                    <ul class="tpt-b">
+                        <li><a href="/" title=""><img src="" alt=""></a>
+                            <h2><a href="" title=""></a></h2>
+                        </li>
+                        <li><a href="" title=""><img src="" alt=""></a>
+                            <h2><a href="" title=""></a></h2>
+                        </li>
+                        <ul>
+                        </ul>
+                    </ul>
+                </div>
+            </div>
+            <ul class="main">
+                <volist name="tptg" id="vo">
+                    <li class="cl">
+                        <div class="tpt-ml-3 cl">
+                            <div class="main_left">
+                                <if condition="1 eq 1">
+                                    <div class="mod-angle tpt-none-768">
+                                        热
+                                    </div>
+                                </if>
+                                <if condition="1 eq 1"><a title="标题" href="/"><else/>
+                                    <a title="/" href="/"></if>
+                                <if condition="1 neq ''">
+                                    <img src="/" alt="">
+                                    <else />
+                                    <img src="" alt="暂无缩略图">
+                                </if>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="tpt-mr-7">
+                            <div class="main_right cl">
+                                <h2><if condition="0 eq 1"><a title="" href=""><else/>
+                                    <a title="" href=""></if>标题</a></h2>
+                                <p>
+                                    <span><i class="iconfont">&#xe6a3;</i>作者</span><span class="pipe"></span><span><i class="iconfont">&#xe7e5;</i>名智能家居</span><span class="pipe"></span><span><i class="iconfont">&#xe6c0;</i>100</span><span class="pipe"></span><span class="tpt-none-768"><i class="iconfont">&#xe64d;</i>2018-1-8 15:50:20</span>
+                                </p>
+                                <p class="tpt-none-768">
+
+                                    谷歌的故事一切还要从说起三年前大会上推出纸盒眼镜你可以自己拼装把手机放进去观看度的视频或是玩一款小游戏当时所有人都以为谷歌在跟大家开玩笑后来...
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                </volist>
+            </ul>
+            <div class="pages"></div>
+        </div>
+        <div class="tpt-mr-3">
+            {include file="public:right" /}
+        </div>
+    </div>
+    {include file="public:footer" /}
+</head>
+</html>

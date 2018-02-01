@@ -54,19 +54,8 @@ class Text extends AbstractMessage
     //自动回复功能
     public function reply($content = '')
     {
-        $params = [
-            'reqType' => 0,
-            'perception' => [
-                'inputText' => [
-                    'text' => $content
-                ]
-            ],
-            'userInfo' => [
-                'userId' => $this->userid
-            ]
-        ];
         $tuling = new Tuling();
-        $data = $tuling->config($params)->reply();
+        $data = $tuling->param($content)->reply();
 
         if (!isset($data['results'])) {
             $text = '亲，不明白您说什么';

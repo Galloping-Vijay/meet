@@ -18,8 +18,7 @@ class Tuling
     protected $app_url = 'http://openapi.tuling123.com/openapi/api/v2';
     //官方文档
     //http://doc.tuling123.com/openapi2/263611
-
-    protected $config = [];
+    protected $param = [];
     /**
      * 错误信息
      * @var string
@@ -28,17 +27,47 @@ class Tuling
 
     /**
      * 设置参数
-     * @param array $config
+     * Author: vijay <1937832819@qq.com>
+     * @param int $reqType
+     * @param null $str
+     * @param int $uid
      * @return $this|bool
      */
-    public function config($config = [])
+    public function param($str = null, $reqType = 0, $uid = 12345)
     {
-        if (empty($config) || !is_array($config)) {
+        if (is_null($str)) {
             $this->setError('参数错误');
             return false;
         }
-        $config['userInfo']['apiKey'] = $this->api_key;
-        $this->config = $config;
+        if ($reqType == 0) {
+            $perception = [
+                'inputText' => [
+                    'text' => $str
+                ]];
+        } elseif ($reqType == 1) {
+            $perception = [
+                'inputImage' => [
+                    'url' => $str
+                ]
+            ];
+        } elseif ($reqType == 2) {
+            $perception = [
+                'inputMedia' => [
+                    'url' => $str
+                ]
+            ];
+        } else {
+            $this->setError('参数错误');
+            return false;
+        }
+        $this->param = [
+            'reqType' => $reqType,
+            'perception' => $perception,
+            'userInfo' => [
+                'userId' => $uid,
+                'apiKey' => $this->api_key
+            ]
+        ];
         return $this;
     }
 
@@ -69,9 +98,8 @@ class Tuling
     public function reply()
     {
         $curl = new Curl();
-        $data = $curl->post($this->app_url, json_encode($this->config));
+        $data = $curl->post($this->app_url, json_encode($this->param));
         if ($data) {
-            $data = json_decode($data, true);
             return $data;
         } else {
             $this->setError('获取失败');

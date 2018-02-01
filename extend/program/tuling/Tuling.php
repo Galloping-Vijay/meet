@@ -100,7 +100,7 @@ class Tuling
         $curl = new Curl();
         $data = $curl->post($this->app_url, json_encode($this->param));
         if ($data) {
-            return $data;
+            return json_decode($data, true);
         } else {
             $this->setError('获取失败');
             return '亲，不明白您说什么';

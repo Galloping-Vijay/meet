@@ -130,9 +130,10 @@ class Index extends WeBase
                     $imageUrl = Tuling::handle()->images($message->PicUrl);
                     //微信返回数据
                     $result = $this->app->material->uploadImage($imageUrl);
-                    $result = json_encode($result, true);
+                    /*$result = json_encode($result, true);
                     $media_id = $result['media_id'];
-                    return new Image(['media_id' => $media_id]);
+                    return new Image(['media_id' => $media_id]);*/
+                    return $result;
                     # 图片消息...
                     break;
                 case 'voice':

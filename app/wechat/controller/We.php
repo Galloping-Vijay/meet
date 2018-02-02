@@ -619,8 +619,6 @@ class We extends WeBase
     {
         $mats_type=input('mats_type');
         $mats_name=input('mats_name');
-
-        pr('img');
         if($mats_type=='news'){
             $mediaId='';
             $show_cover_pic=input('show_cover_pic',0,'intval');
@@ -678,6 +676,7 @@ class We extends WeBase
                 $info = $file->rule('uniqid')->move(ROOT_PATH . config('upload_path') . DS . date('Y-m-d'));
                 if($info) {
                     $file_url=ROOT_PATH.config('upload_path'). '/' . date('Y-m-d') . '/' . $info->getFilename();
+                    pr($info);
                     //上传微信
                     $material = $this->app->material;
                     switch ($mats_type){

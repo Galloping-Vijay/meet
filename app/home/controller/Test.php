@@ -11,19 +11,31 @@ namespace app\home\controller;
 
 use app\home\lib\Base;
 use EasyWeChat\Message\Text;
+use program\tuling\Tuling;
 
 class Test extends Base
 {
     public function index()
     {
-        pr(11);
+        $params = [
+            'reqType' => 0,
+            'perception' => [
+                'inputText' => [
+                    'text' => 'zheshi'
+                ]
+            ],
+            'userInfo' => [
+                'userId' => 32
+            ]
+        ];
+        return json_encode($params);
 
     }
 
     public function ceshi()
     {
-        $text = new Text();
-        $data = $text->reply('成语接龙');
-        pr($data);
+        $text = new Tuling();
+        $data = $text->param('http://www.suckseed.cn/public/images/newLogo.png', 1)->reply();
+        return $data;
     }
 }

@@ -678,7 +678,6 @@ class We extends WeBase
                     $file_url=ROOT_PATH.config('upload_path'). '/' . date('Y-m-d') . '/' . $info->getFilename();
                     //上传微信
                     $material = $this->app->material;
-                    pr($material);
                     switch ($mats_type){
                         case 'voice':
                             $result = $material->uploadVoice($file_url);
@@ -694,6 +693,8 @@ class We extends WeBase
                             break;
                          default :
                              $result = $material->uploadImage($file_url,input('video_title'),input('video_introduction'));
+                             echo '没记过吗';
+                             pr($result);
                              $mediaId = $result->media_id;
                              $url = $result->url;
                              break;

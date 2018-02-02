@@ -29,6 +29,10 @@ class Download
         return self::$handle;
     }
 
+    /**
+     * @param $url
+     * @return string
+     */
     public function downloadImage($url)
     {
         $ch = curl_init();
@@ -40,6 +44,12 @@ class Download
         return $this->saveAsImage($url, $file, $this->path());
     }
 
+    /**
+     * @param $url
+     * @param $file
+     * @param $path
+     * @return string
+     */
     private function saveAsImage($url, $file, $path)
     {
         $filename = pathinfo($url, PATHINFO_BASENAME);
@@ -50,7 +60,10 @@ class Download
         return $imgPath;
     }
 
-    private function path()
+    /**
+     * @return string
+     */
+    public function path()
     {
         $dir = ROOT_PATH . config('upload_path') . '/figure/';
         if (!file_exists($dir)) {

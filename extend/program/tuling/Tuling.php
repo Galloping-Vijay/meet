@@ -144,6 +144,11 @@ class Tuling
         return $text;
     }
 
+    /**
+     * 图片回复功能
+     * @param null $picUrl
+     * @return string
+     */
     public function images($picUrl = null)
     {
         if (is_null($picUrl)) {

@@ -630,6 +630,7 @@ class We extends WeBase
                     //上传微信
                     $material = $this->app->material;
                     $result = $material->uploadThumb($file_url,input('video_title'),input('video_introduction'));
+                    pr($result);
                     $mediaId = $result->media_id;
                     if($mediaId){
                     }else{

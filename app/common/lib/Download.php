@@ -1,6 +1,6 @@
 <?php
 // +----------------------------------------------------------------------
-// | DownloadImage.
+// | Download.
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016 http://www.abc3210.com, All rights reserved.
 // +----------------------------------------------------------------------
@@ -11,6 +11,23 @@ namespace app\common\lib;
 
 class Download
 {
+    /**
+     * 实例
+     * @var null
+     */
+    protected static $handle = null;
+
+    /**
+     * 获取操作句柄
+     * @return Download|null
+     */
+    public static function handle()
+    {
+        if (is_null(self::$handle)) {
+            self::$handle = new self();
+        }
+        return self::$handle;
+    }
 
     public function downloadImage($url)
     {
@@ -20,16 +37,17 @@ class Download
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
         $file = curl_exec($ch);
         curl_close($ch);
-
-        $this->saveAsImage($url, $file, $this->path());
+        return $this->saveAsImage($url, $file, $this->path());
     }
 
     private function saveAsImage($url, $file, $path)
     {
         $filename = pathinfo($url, PATHINFO_BASENAME);
-        $resource = fopen($path . $filename, 'a');
+        $imgPath = $path . $filename;
+        $resource = fopen($imgPath, 'a');
         fwrite($resource, $file);
         fclose($resource);
+        return $imgPath;
     }
 
     private function path()

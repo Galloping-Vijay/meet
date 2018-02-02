@@ -8,6 +8,7 @@
 // +----------------------------------------------------------------------
 namespace app\wechat\controller;
 
+use app\common\lib\Download;
 use program\tuling\Tuling;
 use think\Db;
 use EasyWeChat\Message\Text;
@@ -129,16 +130,14 @@ class Index extends WeBase
                 case 'image':
                     //图灵返回的图片结果
                     $imageUrl = Tuling::handle()->images($message->PicUrl);
+                    //上传文件并返回路径
+                    $path = Download::handle()->downloadImage($imageUrl);
                     //微信临时素材返回数据
                     $material = $apps->material_temporary;
-                    $result = $material->uploadImage($imageUrl);
-                    /*$result = json_encode($result, true);
+                    $result = $material->uploadImage($path);
+                    $result = json_encode($result, true);
                     $media_id = $result['media_id'];
                     return new Image(['media_id' => $media_id]);
-                    return $imageUrl;
-
-                    $new = new Image(['media_id' => 'ru8RI6kSPk6pxo7p4cZwB0EOermb_2vSkcqZK4HmSJnDbTu79SFeA5DAMj6_07Fv']);
-                    return $new;
                     # 图片消息...
                     break;
                 case 'voice':

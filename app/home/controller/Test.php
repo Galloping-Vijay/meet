@@ -39,6 +39,7 @@ class Test extends Base
         pr($data);*/
         $url = 'http://turing-chat.oss.tuling123.com/9282213c5f3163c03e907ee6efcc8d51.jpg';
         $up = new Download();
-        $up->downloadImage($url);
+        $name = $up->downloadImage($url);
+        echo $name;
     }
 }

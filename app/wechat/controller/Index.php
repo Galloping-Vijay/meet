@@ -38,7 +38,7 @@ class Index extends WeBase
     {
         $apps = $this->app;
         //消息处理
-        $this->app->server->setMessageHandler(function ($message) use ($apps) {
+        $this->app->server->setMessageHandler(function ($message) use (&$apps) {
             switch ($message->MsgType) {
                 case 'event':
                     # 事件消息...
@@ -128,18 +128,15 @@ class Index extends WeBase
                     }
                     break;
                 case 'image':
+                    # 图片消息...
                     //图灵返回的图片结果
                     $imageUrl = Tuling::handle()->images($message->PicUrl);
                     //上传文件并返回路径
                     $path = Download::handle()->downloadImage($imageUrl);
-                    return  $path;
-                    /*//微信临时素材返回数据
+                    //微信临时素材返回数据
                     $material = $apps->material_temporary;
                     $result = $material->uploadImage($path);
-                    $result = json_encode($result, true);
-                    $media_id = $result['media_id'];
-                    return new Image(['media_id' => $media_id]);*/
-                    # 图片消息...
+                    return new Image(['media_id' => $result->media_id]);
                     break;
                 case 'voice':
                     # 语音消息...

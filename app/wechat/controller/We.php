@@ -691,8 +691,13 @@ class We extends WeBase
                             $result = $material->uploadThumb($file_url,input('video_title'),input('video_introduction'));
                             $mediaId = $result->media_id;
                             break;
+                        case 'image':
+                            $result = $material->uploadImage($file_url);
+                            pr($result);
+                            $mediaId = $result->media_id;
+                            $url = $result->url;
+                            break;
                          default :
-                             pr('没记过吗');
                              $result = $material->uploadImage($file_url,input('video_title'),input('video_introduction'));
                              $mediaId = $result->media_id;
                              $url = $result->url;

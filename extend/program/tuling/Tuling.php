@@ -20,10 +20,27 @@ class Tuling
     //http://doc.tuling123.com/openapi2/263611
     protected $param = [];
     /**
+     * 实例
+     * @var null
+     */
+    protected static $handle = null;
+    /**
      * 错误信息
      * @var string
      */
     protected $error = '';
+
+    /**
+     * 获取操作句柄
+     * @return null|Tuling
+     */
+    public static function handle()
+    {
+        if (is_null(self::$handle)) {
+            self::$handle = new self();
+        }
+        return self::$handle;
+    }
 
     /**
      * 设置参数
@@ -107,8 +124,16 @@ class Tuling
         }
     }
 
+    /**
+     * 文本回复
+     * @param string $content
+     * @return string
+     */
     public function text($content = '')
     {
+        if (empty($content)) {
+            $content = '你好啊';
+        }
         $data = $this->param($content)->reply();
 
         if (!isset($data['results'])) {

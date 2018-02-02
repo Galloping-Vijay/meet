@@ -64,13 +64,13 @@ class Index extends WeBase
                                         return $new;
                                         break;
                                     default:
-                                        $text = new Text();
-                                        return $text->reply('你好啊,小味精');
+                                        $text = Tuling::handle()->text('你好啊');
+                                        return $text;
                                         break;
                                 }
                             } else {
-                                $text = new Text();
-                                return $text->reply('你好啊,小味精');
+                                $text = Tuling::handle()->text('你好啊');
+                                return $text;
                                 break;
                             }
                         case 'unsubscribe':
@@ -97,8 +97,8 @@ class Index extends WeBase
                     # 文字消息...
                     $we_reply_list = Db::name('we_reply')->where('we_reply_key', 'like', '%' . $message->Content . '%')->find();
                     if (empty($we_reply_list)) {
-                        $text = new Tuling();
-                        return $text->text($message->Content);
+                        $text = Tuling::handle()->text($message->Content);
+                        return $text;
                     } else {
                         switch ($we_reply_list['we_reply_type']) {
                             case 'text'://回复文本
@@ -119,8 +119,8 @@ class Index extends WeBase
                                 return $new;
                                 break;
                             default:
-                                $text = new Tuling();
-                                return $text->text('你好啊,小味精');
+                                $text = Tuling::handle()->text('你好啊');
+                                return $text;
                                 break;
                         }
                     }

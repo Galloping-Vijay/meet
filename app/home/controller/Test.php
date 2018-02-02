@@ -34,8 +34,7 @@ class Test extends Base
 
     public function ceshi()
     {
-        $text = new Tuling();
-        $data = $text->param('http://www.suckseed.cn/public/images/newLogo.png', 1)->reply();
-        return $data;
+        $data = Tuling::handle()->param('你好啊', 0)->reply();
+        pr($data);
     }
 }

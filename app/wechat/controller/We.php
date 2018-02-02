@@ -692,9 +692,7 @@ class We extends WeBase
                             $mediaId = $result->media_id;
                             break;
                         case 'image':
-                            pr($file_url);
                             $result = $material->uploadImage($file_url);
-                            pr($result);
                             $mediaId = $result->media_id;
                             $url = $result->url;
                             break;

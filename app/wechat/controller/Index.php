@@ -8,7 +8,6 @@
 // +----------------------------------------------------------------------
 namespace app\wechat\controller;
 
-use EasyWeChat\Material\Material;
 use program\tuling\Tuling;
 use think\Db;
 use EasyWeChat\Message\Text;

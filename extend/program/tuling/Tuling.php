@@ -106,4 +106,16 @@ class Tuling
             return '亲，不明白您说什么';
         }
     }
+
+    public function text($content = '')
+    {
+        $data = $this->param($content)->reply();
+
+        if (!isset($data['results'])) {
+            $text = '亲，不明白您说什么';
+        } else {
+            $text = $data['results'][0]['values']['text'];
+        }
+        return $text;
+    }
 }

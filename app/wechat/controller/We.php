@@ -619,6 +619,8 @@ class We extends WeBase
     {
         $mats_type=input('mats_type');
         $mats_name=input('mats_name');
+
+        pr('img');
         if($mats_type=='news'){
             $mediaId='';
             $show_cover_pic=input('show_cover_pic',0,'intval');
@@ -692,7 +694,6 @@ class We extends WeBase
                             $mediaId = $result->media_id;
                             break;
                          default :
-                             pr('img');
                              $result = $material->uploadImage($file_url,input('video_title'),input('video_introduction'));
                              $mediaId = $result->media_id;
                              $url = $result->url;

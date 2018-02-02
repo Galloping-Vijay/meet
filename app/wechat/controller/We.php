@@ -698,7 +698,7 @@ class We extends WeBase
                             $url = $result->url;
                             break;
                          default :
-                             $result = $material->uploadImage($file_url,input('video_title'),input('video_introduction'));
+                             $result = $material->uploadMedia($mats_type,$file_url);
                              $mediaId = $result->media_id;
                              $url = $result->url;
                              break;

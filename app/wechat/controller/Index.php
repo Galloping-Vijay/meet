@@ -132,12 +132,13 @@ class Index extends WeBase
                     $imageUrl = Tuling::handle()->images($message->PicUrl);
                     //上传文件并返回路径
                     $path = Download::handle()->downloadImage($imageUrl);
-                    //微信临时素材返回数据
+                    return  $path;
+                    /*//微信临时素材返回数据
                     $material = $apps->material_temporary;
                     $result = $material->uploadImage($path);
                     $result = json_encode($result, true);
                     $media_id = $result['media_id'];
-                    return new Image(['media_id' => $media_id]);
+                    return new Image(['media_id' => $media_id]);*/
                     # 图片消息...
                     break;
                 case 'voice':

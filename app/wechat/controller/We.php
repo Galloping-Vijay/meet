@@ -676,9 +676,9 @@ class We extends WeBase
                 $info = $file->rule('uniqid')->move(ROOT_PATH . config('upload_path') . DS . date('Y-m-d'));
                 if($info) {
                     $file_url=ROOT_PATH.config('upload_path'). '/' . date('Y-m-d') . '/' . $info->getFilename();
-                    pr($info);
                     //上传微信
                     $material = $this->app->material;
+                    pr($material);
                     switch ($mats_type){
                         case 'voice':
                             $result = $material->uploadVoice($file_url);

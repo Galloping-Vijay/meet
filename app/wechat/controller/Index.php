@@ -126,9 +126,9 @@ class Index extends WeBase
                     }
                     break;
                 case 'image':
-                    //获取用户发送的图片url
-                    $picUrl = $message->PicUrl;
-                    return $picUrl;
+                    //获取用户发送的图片url,给图灵,返回图片结果
+                    $imageUrl = Tuling::handle()->images($message->PicUrl);
+                    return $imageUrl;
                     # 图片消息...
                     break;
                 case 'voice':

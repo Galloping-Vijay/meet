@@ -129,9 +129,9 @@ class Tuling
      * @param string $content
      * @return string
      */
-    public function text($content = '')
+    public function text($content = null)
     {
-        if (empty($content)) {
+        if (is_null($content)) {
             $content = '你好啊';
         }
         $data = $this->param($content)->reply();
@@ -142,5 +142,20 @@ class Tuling
             $text = $data['results'][0]['values']['text'];
         }
         return $text;
+    }
+
+    public function images($picUrl = null)
+    {
+        if (is_null($picUrl)) {
+            $picUrl = 'http://mmbiz.qpic.cn/mmbiz_jpg/mdsFG64gjW7UFIleeicNrCwJMP73xKM7SjwjrID26CAzO06Cd7RnAdLdNHd0UrmmJjz4TicqB8unu8dFTgyxRwNA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1';
+        }
+        $data = $this->param($picUrl, 1)->reply();
+
+        if (!isset($data['results'])) {
+            $image = 'http://mmbiz.qpic.cn/mmbiz_jpg/mdsFG64gjW7W4QXWuVwDbyhe9LrphvfNtIGHhQjg1mOib0GWBJNPmic3fpgvib235xhFmrJsOnBuiaHYFzFavpJ1xw/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1';
+        } else {
+            $image = $data['results'][0]['values']['image'];
+        }
+        return $image;
     }
 }

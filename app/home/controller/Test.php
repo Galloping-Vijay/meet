@@ -34,7 +34,7 @@ class Test extends Base
 
     public function ceshi()
     {
-        $data = Tuling::handle()->param('你好啊', 0)->reply();
+        $data = Tuling::handle()->images('http://mmbiz.qpic.cn/mmbiz_jpg/mdsFG64gjW7UFIleeicNrCwJMP73xKM7SjwjrID26CAzO06Cd7RnAdLdNHd0UrmmJjz4TicqB8unu8dFTgyxRwNA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1');
         pr($data);
     }
 }

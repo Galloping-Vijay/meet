@@ -128,15 +128,15 @@ class Index extends WeBase
                     break;
                 case 'image':
                     //图灵返回的图片结果
-                    //$imageUrl = Tuling::handle()->images($message->PicUrl);
-                    //微信返回数据
-                    /*$material = new Material();
-                    $result = $material->uploadImage($imageUrl);*/
+                    $imageUrl = Tuling::handle()->images($message->PicUrl);
+                    //微信临时素材返回数据
+                    $material = $apps->material_temporary;
+                    $result = $material->uploadImage($imageUrl);
                     /*$result = json_encode($result, true);
                     $media_id = $result['media_id'];
                     return new Image(['media_id' => $media_id]);
                     return $imageUrl;
-                    */
+
                     $new = new Image(['media_id' => 'ru8RI6kSPk6pxo7p4cZwB0EOermb_2vSkcqZK4HmSJnDbTu79SFeA5DAMj6_07Fv']);
                     return $new;
                     # 图片消息...

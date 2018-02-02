@@ -628,9 +628,9 @@ class We extends WeBase
                 if($info) {
                     $file_url=ROOT_PATH.config('upload_path'). '/' . date('Y-m-d') . '/' . $info->getFilename();
                     //上传微信
-                    //$material = $this->app->material;
+                    $material = $this->app->material;
                     // 临时素材
-                    $material = $this->app->material_temporary;
+                    //$material = $this->app->material_temporary;
                     $result = $material->uploadThumb($file_url,input('video_title'),input('video_introduction'));
                     $mediaId = $result->media_id;
                     if($mediaId){
@@ -679,9 +679,9 @@ class We extends WeBase
                 if($info) {
                     $file_url=ROOT_PATH.config('upload_path'). '/' . date('Y-m-d') . '/' . $info->getFilename();
                     //上传微信
-                    //$material = $this->app->material;
+                    $material = $this->app->material;
                     // 临时素材
-                    $material = $this->app->material_temporary;
+                    //$material = $this->app->material_temporary;
                     switch ($mats_type){
                         case 'voice':
                             $result = $material->uploadVoice($file_url);

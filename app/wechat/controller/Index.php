@@ -125,6 +125,9 @@ class Index extends WeBase
                     }
                     break;
                 case 'image':
+                    //获取用户发送的图片url
+                    $picUrl = $message->PicUrl;
+                    return $picUrl;
                     # 图片消息...
                     break;
                 case 'voice':

@@ -130,7 +130,7 @@ class Index extends WeBase
                     //图灵返回的图片结果
                     $imageUrl = Tuling::handle()->images($message->PicUrl);
                     //微信返回数据
-                    $result = $apps->material->uploadImage($imageUrl);
+                    $result = $apps->server->material->uploadImage($imageUrl);
                     /*$result = json_encode($result, true);
                     $media_id = $result['media_id'];
                     return new Image(['media_id' => $media_id]);*/

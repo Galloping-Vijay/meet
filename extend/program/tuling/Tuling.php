@@ -149,7 +149,7 @@ class Tuling
     /**
      * 图片回复功能
      * @param null $picUrl
-     * @return string
+     * @return array
      */
     public function images($picUrl = null)
     {
@@ -157,12 +157,28 @@ class Tuling
             $picUrl = 'http://mmbiz.qpic.cn/mmbiz_jpg/mdsFG64gjW7UFIleeicNrCwJMP73xKM7SjwjrID26CAzO06Cd7RnAdLdNHd0UrmmJjz4TicqB8unu8dFTgyxRwNA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1';
         }
         $data = $this->param($picUrl, 1)->reply();
-
         if (!isset($data['results'])) {
-            $image = 'http://mmbiz.qpic.cn/mmbiz_jpg/mdsFG64gjW7W4QXWuVwDbyhe9LrphvfNtIGHhQjg1mOib0GWBJNPmic3fpgvib235xhFmrJsOnBuiaHYFzFavpJ1xw/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1';
+            $res = [
+                'resultType' => 'image',
+                'content' => 'http://mmbiz.qpic.cn/mmbiz_jpg/mdsFG64gjW7W4QXWuVwDbyhe9LrphvfNtIGHhQjg1mOib0GWBJNPmic3fpgvib235xhFmrJsOnBuiaHYFzFavpJ1xw/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1'
+            ];
+        } elseif ($data['results'][0]['resultType'] == 'image') {
+            $res = [
+                'resultType' => 'image',
+                'content' => $data['results'][0]['values']['image']
+            ];
+        } elseif ($data['results'][0]['resultType'] == 'text') {
+            $res = [
+                'resultType' => 'text',
+                'content' => $data['results'][0]['values']['text']
+            ];
         } else {
-            $image = $data['results'][0]['values']['image'];
+            $res = [
+                'resultType' => 'text',
+                'content' => '不知道你想表达什么'
+            ];
         }
-        return $image;
+
+        return $res;
     }
 }

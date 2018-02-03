@@ -99,9 +99,25 @@ class Index extends WeBase
                     # 文字消息...
                     $we_reply_list = Db::name('we_reply')->where('we_reply_key', 'like', '%' . $message->Content . '%')->find();
                     if (empty($we_reply_list)) {
-                        //$text = Tuling::handle()->text($message->Content);
-                        //$text = new Text(['content' => $message->Content]);
-                        return (string)$message->Content;
+                        if (!preg_match('/(http:|https:)\/\/[\w.]+[\w\/]*[\w.]*\??[\w=&\+\%]*/is', $message->Content)) {
+                            $text = Tuling::handle()->text($message->Content);
+                            return $text;
+                        } else {
+                            //图灵返回的图片结果
+                            $res = Tuling::handle()->images('www.meetoyou.com');
+                            if ($res['resultType'] == 'image') {
+                                //上传文件并返回路径
+                                $path = Download::handle()->downloadImage($res['content']);
+                                //微信临时素材返回数据
+                                $material = $apps->material_temporary;
+                                $result = $material->uploadImage($path);
+                                return new Image(['media_id' => $result->media_id]);
+                            } else {
+                                return $res['content'];
+                            }
+                            break;
+                        }
+
                     } else {
                         switch ($we_reply_list['we_reply_type']) {
                             case 'text'://回复文本
@@ -131,13 +147,17 @@ class Index extends WeBase
                 case 'image':
                     # 图片消息...
                     //图灵返回的图片结果
-                    $imageUrl = Tuling::handle()->images($message->PicUrl);
-                    //上传文件并返回路径
-                    $path = Download::handle()->downloadImage($imageUrl);
-                    //微信临时素材返回数据
-                    $material = $apps->material_temporary;
-                    $result = $material->uploadImage($path);
-                    return new Image(['media_id' => $result->media_id]);
+                    $res = Tuling::handle()->images($message->PicUrl);
+                    if ($res['resultType'] == 'image') {
+                        //上传文件并返回路径
+                        $path = Download::handle()->downloadImage($res['content']);
+                        //微信临时素材返回数据
+                        $material = $apps->material_temporary;
+                        $result = $material->uploadImage($path);
+                        return new Image(['media_id' => $result->media_id]);
+                    } else {
+                        return $res['content'];
+                    }
                     break;
                 case 'voice':
                     # 语音消息...

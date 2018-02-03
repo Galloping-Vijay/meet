@@ -23,21 +23,22 @@ class Test extends Base
 
     public function tl()
     {
-        $path = RUNTIME_PATH;
-        pr($path);
+        /* $path = RUNTIME_PATH;
+         pr($path);*/
         //http://turing-chat.oss.tuling123.com/9282213c5f3163c03e907ee6efcc8d51.jpg
-        /*$str = '斗图';
+        $str = 'www.meetoyou.com';
         $type = 0;
-        $data = Tuling::handle()->param($str, $type)->reply();
-        pr($data, 1);*/
-        $url = 'http://turing-chat.oss.tuling123.com/9cb44e1ed86054c8f247df2298eef464.png';
+        $data = Tuling::handle()->images($str);
+        pr($data, 1);
+        /*$url = 'http://turing-chat.oss.tuling123.com/9cb44e1ed86054c8f247df2298eef464.png';
         $up = new Download();
         $name = $up->downloadImage($url);
-        echo $name;
+        echo $name;*/
         /*$curl = new Curl();
         $img = $curl->get($url);
         $filename = pathinfo($img, PATHINFO_BASENAME);
         pr($filename);*/
+
     }
 
 }

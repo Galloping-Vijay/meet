@@ -100,10 +100,9 @@ class Index extends WeBase
                     $we_reply_list = Db::name('we_reply')->where('we_reply_key', 'like', '%' . $message->Content . '%')->find();
                     if (empty($we_reply_list)) {
                         if (!preg_match('/(http:|https:)\/\/[\w.]+[\w\/]*[\w.]*\??[\w=&\+\%]*/is', $message->Content)) {
-                            $text = Tuling::handle()->text($message->Content);
-                            return 'url';
+                            //$text = Tuling::handle()->text($message->Content);
+                            return $message->Content;
                         } else {
-                            return '未知';
                             //图灵返回的图片结果
                             $res = Tuling::handle()->images('www.meetoyou.com');
                             if ($res['resultType'] == 'image') {

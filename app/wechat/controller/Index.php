@@ -129,6 +129,7 @@ class Index extends WeBase
                     break;
                 case 'image':
                     # 图片消息...
+                    return $message->PicUrl;
                     //图灵返回的图片结果
                     $imageUrl = Tuling::handle()->images($message->PicUrl);
                     //上传文件并返回路径

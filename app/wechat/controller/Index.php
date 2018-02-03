@@ -99,9 +99,9 @@ class Index extends WeBase
                     # 文字消息...
                     $we_reply_list = Db::name('we_reply')->where('we_reply_key', 'like', '%' . $message->Content . '%')->find();
                     if (empty($we_reply_list)) {
-                        if (!preg_match('/(http:|https:)\/\/[\w.]+[\w\/]*[\w.]*\??[\w=&\+\%]*/is', $message->Content)) {
-                            //$text = Tuling::handle()->text($message->Content);
-                            return $message->Content;
+                        if (!preg_match('/(http:|https:)\/\/[\w.]+[\w\/]*[\w.]*\??[\w=&\+\%]*/is', $message->Content) && $message->Content !="【收到不支持的消息类型，暂无法显示】") {
+                            $text = Tuling::handle()->text($message->Content);
+                            return $text;
                         } else {
                             //图灵返回的图片结果
                             $res = Tuling::handle()->images('www.meetoyou.com');

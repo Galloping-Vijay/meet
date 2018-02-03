@@ -99,8 +99,8 @@ class Index extends WeBase
                     # 文字消息...
                     $we_reply_list = Db::name('we_reply')->where('we_reply_key', 'like', '%' . $message->Content . '%')->find();
                     if (empty($we_reply_list)) {
-                        $text = Tuling::handle()->text($message->Content);
-                        return $text;
+                        //$text = Tuling::handle()->text($message->Content);
+                        return $message->Content;
                     } else {
                         switch ($we_reply_list['we_reply_type']) {
                             case 'text'://回复文本
@@ -129,7 +129,6 @@ class Index extends WeBase
                     break;
                 case 'image':
                     # 图片消息...
-                    return $message->PicUrl;
                     //图灵返回的图片结果
                     $imageUrl = Tuling::handle()->images($message->PicUrl);
                     //上传文件并返回路径

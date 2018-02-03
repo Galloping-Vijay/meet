@@ -11,6 +11,7 @@ namespace app\index\controller;
 
 use app\admin\model\News;
 use think\Request;
+use app\index\lib\Base;
 
 class Article extends Base
 {

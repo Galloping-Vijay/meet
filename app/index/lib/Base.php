@@ -1,13 +1,13 @@
 <?php
 // +----------------------------------------------------------------------
-// | Base.index基类控制器
+// | Base.
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016 http://www.meetoyou.com, All rights reserved.
+// | Copyright (c) 2016 http://www.abc3210.com, All rights reserved.
 // +----------------------------------------------------------------------
-// | Author: wjf <1937832819@qq.com> 2017-10-08
+// | Author: wjf <1937832819@qq.com> 2018/2/3
 // +----------------------------------------------------------------------
 
-namespace app\index\controller;
+namespace app\index\lib;
 
 use app\common\controller\FrontBase;
 

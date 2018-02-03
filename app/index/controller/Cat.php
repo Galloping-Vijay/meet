@@ -12,6 +12,7 @@ namespace app\index\controller;
 use app\admin\model\News;
 use think\Request;
 use app\admin\model\Cat as CatModel;
+use app\index\lib\Base;
 
 class Cat extends Base
 {

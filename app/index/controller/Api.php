@@ -9,6 +9,8 @@
 
 namespace app\index\controller;
 
+use app\index\lib\Base;
+
 class Api extends Base
 {
 

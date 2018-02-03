@@ -11,6 +11,7 @@ namespace app\index\controller;
 
 use think\captcha\Captcha;
 use think\Db;
+use app\index\lib\Base;
 
 class Unify extends Base
 {

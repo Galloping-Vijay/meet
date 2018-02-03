@@ -10,6 +10,7 @@
 namespace app\index\controller;
 
 use app\admin\model\News;
+use app\index\lib\Base;
 
 class Index extends Base
 {

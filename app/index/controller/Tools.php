@@ -11,6 +11,7 @@ namespace app\index\controller;
 
 use think\Config;
 use think\Response;
+use app\index\lib\Base;
 
 class Tools extends Base
 {

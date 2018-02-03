@@ -138,8 +138,10 @@ class Tuling
 
         if (!isset($data['results'])) {
             $text = '亲，不明白您说什么';
-        } else {
+        } elseif ($data['results'][0]['resultType'] == 'text') {
             $text = $data['results'][0]['values']['text'];
+        } else {
+            $text = '亲，不明白您说什么';
         }
         return $text;
     }

@@ -8,28 +8,28 @@
     <div class="tpt-wp tpt-pat-75 cl">
         <div class="tpt-ml-7">
             <div class="tpt-banner cl">
-                {Wjf:get model="admin/News" limit="3" order="cat_order desc,cat_id asc" status="1" field="cat_id,cat_name"}
+                {Wjf:get model="admin/News" limit="3" order="listorder desc,n_id asc" news_open="1" field="n_id,news_title,news_img" limit="3"}
                 {volist name="data" id="vo"}
-                {/volist}
-                {/Wjf:get}
+                {if $i==1}
                 <div class="tpt-ml-6">
                     <div class="tpt-a">
-                        <a href="/" title="/"><img src="" alt="/"></a>
-                        <h2><a href="/" title="">标题</a></h2>
+                        <a href="/blog/article/index/n_id/{$vo.n_id}.html" title="{$vo.news_title}"><img src="{$vo.news_img|default=''}" alt="图片"></a>
+                        <h2><a href="/blog/article/index/n_id/{$vo.n_id}.html" title="{$vo.news_title}">{$vo.news_title}</a></h2>
                     </div>
                 </div>
                 <div class="tpt-mr-4">
                     <ul class="tpt-b">
-                        <li><a href="/" title=""><img src="" alt=""></a>
-                            <h2><a href="" title=""></a></h2>
+                {else/}
+                        <li><a href="/blog/article/index/n_id/{$vo.n_id}.html" title="{$vo.news_title}"><img src="{$vo.news_img|default=''}" alt="图片"></a>
+                            <h2><a href="/blog/article/index/n_id/{$vo.n_id}.html" title="{$vo.news_title}">{$vo.news_title}</a></h2>
                         </li>
-                        <li><a href="" title=""><img src="" alt=""></a>
-                            <h2><a href="" title=""></a></h2>
-                        </li>
+                {/if}
+                {/volist}
                         <ul>
                         </ul>
                     </ul>
                 </div>
+                {/Wjf:get}
             </div>
             <ul class="main">
                 <volist name="tptg" id="vo">

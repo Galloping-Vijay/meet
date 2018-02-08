@@ -157,9 +157,13 @@ class Tuling
         $type = $data['results'][0]['resultType'];
         switch ($type) {
             case'text':
+                $text = $data['results'][0]['values']['text'];
+                if (iconv_strlen($text) > 500) {
+                    $text = mb_substr($data['results'][0]['values']['text'], 0, 500) . '...';
+                }
                 $res = [
                     'resultType' => 'text',
-                    'content' => $data['results'][0]['values']['text']
+                    'content' => $text
                 ];
                 break;
             case'image':

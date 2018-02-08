@@ -45,9 +45,9 @@ class Tuling
     /**
      * 设置参数
      * Author: vijay <1937832819@qq.com>
-     * @param int $reqType
-     * @param null $str
-     * @param int $uid
+     * @param null $str 回复内容
+     * @param int $reqType 0为文本 1为图片
+     * @param int $uid 用户id
      * @return $this|bool
      */
     public function param($str = null, $reqType = 0, $uid = 12345)
@@ -56,6 +56,11 @@ class Tuling
             $this->setError('参数错误');
             return false;
         }
+        //如果是url或者微信表情包,强制回复图片
+        if (preg_match('/(http:|https:)\/\/[\w.]+[\w\/]*[\w.]*\??[\w=&\+\%]*/is', $str) || $str == "【收到不支持的消息类型，暂无法显示】") {
+            $reqType = 1;
+        }
+
         if ($reqType == 0) {
             $perception = [
                 'inputText' => [
@@ -120,65 +125,62 @@ class Tuling
             return json_decode($data, true);
         } else {
             $this->setError('获取失败');
-            return '亲，不明白您说什么';
+            return '亲，换个方式问我吧';
         }
     }
 
     /**
-     * 文本回复
-     * @param string $content
-     * @return string
-     */
-    public function text($content = null)
-    {
-        if (is_null($content)) {
-            $content = '你好啊';
-        }
-        $data = $this->param($content)->reply();
-
-        if (!isset($data['results'])) {
-            $text = '亲，不明白您说什么';
-        } elseif ($data['results'][0]['resultType'] == 'text') {
-            $text = $data['results'][0]['values']['text'];
-        } else {
-            $text = '亲，不明白您说什么';
-        }
-        return $text;
-    }
-
-    /**
-     * 图片回复功能
-     * @param null $picUrl
+     *通用接口
      * @return array
      */
-    public function images($picUrl = null)
+    public function answer()
     {
-        if (is_null($picUrl)) {
-            $picUrl = 'http://mmbiz.qpic.cn/mmbiz_jpg/mdsFG64gjW7UFIleeicNrCwJMP73xKM7SjwjrID26CAzO06Cd7RnAdLdNHd0UrmmJjz4TicqB8unu8dFTgyxRwNA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1';
-        }
-        $data = $this->param($picUrl, 1)->reply();
-        if (!isset($data['results'])) {
-            $res = [
-                'resultType' => 'image',
-                'content' => 'http://mmbiz.qpic.cn/mmbiz_jpg/mdsFG64gjW7W4QXWuVwDbyhe9LrphvfNtIGHhQjg1mOib0GWBJNPmic3fpgvib235xhFmrJsOnBuiaHYFzFavpJ1xw/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1'
-            ];
-        } elseif ($data['results'][0]['resultType'] == 'image') {
-            $res = [
-                'resultType' => 'image',
-                'content' => $data['results'][0]['values']['image']
-            ];
-        } elseif ($data['results'][0]['resultType'] == 'text') {
+        $curl = new Curl();
+        $data = $curl->post($this->app_url, json_encode($this->param));
+        if (!isset($data) || empty($data)) {
+            $this->setError('获取失败');
             $res = [
                 'resultType' => 'text',
-                'content' => $data['results'][0]['values']['text']
+                'content' => '亲，换个方式问我吧'
             ];
-        } else {
-            $res = [
-                'resultType' => 'text',
-                'content' => '不知道你想表达什么'
-            ];
+            return $res;
         }
 
+        $data = json_decode($data, true);
+        if (!isset($data['results'])) {
+            $res = [
+                'resultType' => 'text',
+                'content' => '亲，换个方式问我吧'
+            ];
+            return $res;
+        }
+        $type = $data['results'][0]['resultType'];
+        switch ($type) {
+            case'text':
+                $res = [
+                    'resultType' => 'text',
+                    'content' => $data['results'][0]['values']['text']
+                ];
+                break;
+            case'image':
+                $res = [
+                    'resultType' => 'image',
+                    'content' => $data['results'][0]['values']['image']
+                ];
+                break;
+            case'url':
+                $res = [
+                    'resultType' => 'text',
+                    'content' => $data['results'][0]['values']['url']
+                ];
+                break;
+            default:
+                $res = [
+                    'resultType' => 'text',
+                    'content' => '亲，换个方式问我吧'
+                ];
+                break;
+        }
         return $res;
     }
 }

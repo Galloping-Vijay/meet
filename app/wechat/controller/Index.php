@@ -66,13 +66,13 @@ class Index extends WeBase
                                         return $new;
                                         break;
                                     default:
-                                        $text = Tuling::handle()->text('你好啊');
-                                        return $text;
+                                        $res = Tuling::handle()->param('你好啊')->answer();
+                                        return $res['content'];
                                         break;
                                 }
                             } else {
-                                $text = Tuling::handle()->text('你好啊');
-                                return $text;
+                                $res = Tuling::handle()->param('你好啊')->answer();
+                                return $res['content'];
                                 break;
                             }
                         case 'unsubscribe':
@@ -99,23 +99,19 @@ class Index extends WeBase
                     # 文字消息...
                     $we_reply_list = Db::name('we_reply')->where('we_reply_key', 'like', '%' . $message->Content . '%')->find();
                     if (empty($we_reply_list)) {
-                        if (!preg_match('/(http:|https:)\/\/[\w.]+[\w\/]*[\w.]*\??[\w=&\+\%]*/is', $message->Content) && $message->Content !="【收到不支持的消息类型，暂无法显示】") {
-                            $text = Tuling::handle()->text($message->Content);
-                            return $text;
-                        } else {
-                            //图灵返回的图片结果
-                            $res = Tuling::handle()->images('www.meetoyou.com');
-                            if ($res['resultType'] == 'image') {
+                        $res = Tuling::handle()->param($message->Content)->answer();
+                        switch ($res['resultType']) {
+                            case 'text':
+                                return $res['content'];
+                                break;
+                            case 'image':
                                 //上传文件并返回路径
                                 $path = Download::handle()->downloadImage($res['content']);
                                 //微信临时素材返回数据
                                 $material = $apps->material_temporary;
                                 $result = $material->uploadImage($path);
                                 return new Image(['media_id' => $result->media_id]);
-                            } else {
-                                return $res['content'];
-                            }
-                            break;
+                                break;
                         }
 
                     } else {
@@ -138,8 +134,8 @@ class Index extends WeBase
                                 return $new;
                                 break;
                             default:
-                                $text = Tuling::handle()->text('你好啊');
-                                return $text;
+                                $res = Tuling::handle()->param('你好啊')->answer();
+                                return $res['content'];
                                 break;
                         }
                     }
@@ -147,7 +143,7 @@ class Index extends WeBase
                 case 'image':
                     # 图片消息...
                     //图灵返回的图片结果
-                    $res = Tuling::handle()->images($message->PicUrl);
+                    $res = Tuling::handle()->param($message->PicUrl, 1)->answer();
                     if ($res['resultType'] == 'image') {
                         //上传文件并返回路径
                         $path = Download::handle()->downloadImage($res['content']);

@@ -26,9 +26,10 @@ class Test extends Base
         /* $path = RUNTIME_PATH;
          pr($path);*/
         //http://turing-chat.oss.tuling123.com/9282213c5f3163c03e907ee6efcc8d51.jpg
-        $str = 'www.meetoyou.com';
+        $str = '【收到不支持的消息类型，暂无法显示】';
         $type = 0;
-        $data = Tuling::handle()->images($str);
+
+        $data = Tuling::handle()->param($str, $type)->answer();
         pr($data, 1);
         /*$url = 'http://turing-chat.oss.tuling123.com/9cb44e1ed86054c8f247df2298eef464.png';
         $up = new Download();

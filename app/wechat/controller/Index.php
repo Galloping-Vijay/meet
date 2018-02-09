@@ -99,7 +99,8 @@ class Index extends WeBase
                     # 文字消息...
                     $we_reply_list = Db::name('we_reply')->where('we_reply_key', 'like', '%' . $message->Content . '%')->find();
                     if (empty($we_reply_list)) {
-                        $text = new Text(['content' => $message->FromUserName]);
+                        $userInfo = $apps->user->get($message->FromUserName);
+                        $text = new Text(['content' => $userInfo->nickname]);
 
                         return $text;
                         /*$res = Tuling::handle()->param($message->Content)->answer();

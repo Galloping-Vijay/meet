@@ -39,6 +39,9 @@ class Index extends WeBase
         $apps = $this->app;
         //消息处理
         $this->app->server->setMessageHandler(function ($message) use (&$apps) {
+            //有用户交互事件就保存用户信息
+            $user = $apps->user->get($message->FromUserName);
+
             switch ($message->MsgType) {
                 case 'event':
                     # 事件消息...
@@ -99,20 +102,22 @@ class Index extends WeBase
                     # 文字消息...
                     $we_reply_list = Db::name('we_reply')->where('we_reply_key', 'like', '%' . $message->Content . '%')->find();
                     if (empty($we_reply_list)) {
-                        $res = Tuling::handle()->param($message->Content)->answer();
+                        $userInfo = '昵称:' . $user->nickname . '-openid:' . $user->openid . '-头像:' . $user->headimgurl;
+                        return $userInfo;
+                        /* $res = Tuling::handle()->param($message->Content)->answer();
                         switch ($res['resultType']) {
-                            case 'text':
-                                return $res['content'];
-                                break;
-                            case 'image':
-                                //上传文件并返回路径
-                                $path = Download::handle()->downloadImage($res['content']);
-                                //微信临时素材返回数据
-                                $material = $apps->material_temporary;
-                                $result = $material->uploadImage($path);
-                                return new Image(['media_id' => $result->media_id]);
-                                break;
-                        }
+                             case 'text':
+                                 return $res['content'];
+                                 break;
+                             case 'image':
+                                 //上传文件并返回路径
+                                 $path = Download::handle()->downloadImage($res['content']);
+                                 //微信临时素材返回数据
+                                 $material = $apps->material_temporary;
+                                 $result = $material->uploadImage($path);
+                                 return new Image(['media_id' => $result->media_id]);
+                                 break;
+                         }*/
 
                     } else {
                         switch ($we_reply_list['we_reply_type']) {

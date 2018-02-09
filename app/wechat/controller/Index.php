@@ -99,8 +99,12 @@ class Index extends WeBase
                     # 文字消息...
                     $we_reply_list = Db::name('we_reply')->where('we_reply_key', 'like', '%' . $message->Content . '%')->find();
                     if (empty($we_reply_list)) {
-                        $token  = $apps->access_token->getToken();
-                        $text = new Text(['content' => $token]);
+
+                        $user = $apps->user->get($message->FromUserName);
+                        if (!isset($user)) {
+                            $user['nickname'] = '无法获取';
+                        }
+                        $text = new Text(['content' => $user['nickname']]);
 
                         return $text;
                         /*$res = Tuling::handle()->param($message->Content)->answer();

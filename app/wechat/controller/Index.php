@@ -100,6 +100,7 @@ class Index extends WeBase
                     $we_reply_list = Db::name('we_reply')->where('we_reply_key', 'like', '%' . $message->Content . '%')->find();
                     if (empty($we_reply_list)) {
                         $text = new Text(['content' => $message->FromUserName]);
+
                         return $text;
                         /*$res = Tuling::handle()->param($message->Content)->answer();
                         switch ($res['resultType']) {

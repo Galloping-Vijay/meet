@@ -99,15 +99,7 @@ class Index extends WeBase
                     # 文字消息...
                     $we_reply_list = Db::name('we_reply')->where('we_reply_key', 'like', '%' . $message->Content . '%')->find();
                     if (empty($we_reply_list)) {
-
-                        $user = $apps->user->get($message->FromUserName);
-                        if (!isset($user)) {
-                            $user['nickname'] = '无法获取';
-                        }
-                        $text = new Text(['content' => $user['nickname']]);
-
-                        return $text;
-                        /*$res = Tuling::handle()->param($message->Content)->answer();
+                        $res = Tuling::handle()->param($message->Content)->answer();
                         switch ($res['resultType']) {
                             case 'text':
                                 return $res['content'];
@@ -120,7 +112,7 @@ class Index extends WeBase
                                 $result = $material->uploadImage($path);
                                 return new Image(['media_id' => $result->media_id]);
                                 break;
-                        }*/
+                        }
 
                     } else {
                         switch ($we_reply_list['we_reply_type']) {

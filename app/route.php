@@ -31,7 +31,10 @@ $route_more = [
     //工具
     'robots.txt' => ['index/tools/robots', ['ext' => 'txt'], []],
     'baidu_verify_Yop4oJAMy0' => ['index/tools/baiduVerify', ['ext' => 'html'], []],
-    'MP_verify_hy4A51K4J7dyrXRu.txt'=>['index/tools/wexinJs',['ext' => 'txt']]
+    'MP_verify_hy4A51K4J7dyrXRu.txt'=>['index/tools/wexinJs',['ext' => 'txt']],
+    //api接口
+     'v<version>/:controller/:action$' => ['api/:controller/:action', ['ext' => 'html'], ['id' => '\d+']],
+    'v<version>/:controller$' => ['api/:controller/index', ['ext' => 'html'], ['id' => '\d+']],
     /** end index模块路由  */
 ];
 $route = array_merge($route_more, $route_array);

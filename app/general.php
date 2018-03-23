@@ -143,3 +143,29 @@ function send_http_status($code)
         header('Status:' . $code . ' ' . $_status[$code]);
     }
 }
+
+/**
+ *  根据参数生成签名
+ * @param array $params
+ * @return string
+ */
+function generateSingStr($params = [])
+{
+    if (empty($params)) {
+        return '参数不能为空';
+    }
+    //待签名字符串
+    $str = '';
+    //先将参数以其参数名的字典序升序进行排序
+    ksort($params);
+    //遍历排序后的参数数组中的每一个key/value对
+    foreach ($params as $k => $v) {
+        //为key/value对生成一个key=value格式的字符串，并拼接到待签名字符串后面
+        $str .= "{$k}={$v}";
+    }
+    $str = strtolower($str);
+    //将签名密钥拼接到签名字符串最后面
+    $str .= $this->key;
+    //通过md5算法为签名字符串生成一个md5签名，该签名就是我们要追加的sign参数值
+    return md5($str);
+}

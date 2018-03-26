@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+    <title>即时聊天</title>
+    <link rel="stylesheet" type="text/css" href="{$wjf_theme_path}public/css/im/default.css">
+    <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Open+Sans'>
+    <link rel="stylesheet" type="text/css" href="{$wjf_theme_path}public/css/im/styles.css">
+    <!--[if IE]>
+    <script src="http://libs.baidu.com/html5shiv/3.7/html5shiv.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+<div class="demo">
+    <svg class="sidebar" viewBox="0 0 300 500">
+        <path class="s-path" fill="#fff" d="M0,0 50,0 a0,250 0 1,1 0,500 L0,500" />
+    </svg>
+    <div class="static">
+        <div class="static__text">只要你主动 我们就有故事</div>
+    </div>
+    <div class="sidebar-content">
+        <div class="contact">
+            <img src="{$wjf_theme_path}public/images/im/1.png" alt="" class="contact__photo" />
+            <span class="contact__name">王思聪</span>
+            <span class="contact__status online"></span>
+        </div>
+        <div class="contact">
+            <img src="{$wjf_theme_path}public/images/im/2.png" alt="" class="contact__photo" />
+            <span class="contact__name">赵丽颖</span>
+            <span class="contact__status online"></span>
+        </div>
+        <div class="contact">
+            <img src="{$wjf_theme_path}public/images/im/3.png" alt="" class="contact__photo" />
+            <span class="contact__name">陈伟霆</span>
+            <span class="contact__status online"></span>
+        </div>
+        <div class="contact">
+            <img src="{$wjf_theme_path}public/images/im/4.png" alt="" class="contact__photo" />
+            <span class="contact__name">杨幂</span>
+            <span class="contact__status online"></span>
+        </div>
+        <div class="contact">
+            <img src="{$wjf_theme_path}public/images/im/5.png" alt="" class="contact__photo" />
+            <span class="contact__name">高圆圆</span>
+            <span class="contact__status online"></span>
+        </div>
+        <div class="contact">
+            <img src="{$wjf_theme_path}public/images/im/6.png" alt="" class="contact__photo" />
+            <span class="contact__name">刘德华</span>
+            <span class="contact__status online"></span>
+        </div>
+        <div class="contact">
+            <img src="{$wjf_theme_path}public/images/im/7.png" alt="" class="contact__photo" />
+            <span class="contact__name">魏金峰</span>
+            <span class="contact__status"></span>
+        </div>
+        <div class="contact">
+            <img src="{$wjf_theme_path}public/images/im/8.png" alt="" class="contact__photo" />
+            <span class="contact__name">马云</span>
+            <span class="contact__status"></span>
+        </div>
+        <div class="contact">
+            <img src="{$wjf_theme_path}public/images/im/9.png" alt="" class="contact__photo" />
+            <span class="contact__name">李彦宏</span>
+            <span class="contact__status"></span>
+        </div>
+        <div class="contact">
+            <img src="{$wjf_theme_path}public/images/im/1.png" alt="" class="contact__photo" />
+            <span class="contact__name">张小龙</span>
+            <span class="contact__status"></span>
+        </div>
+        <div class="search">
+            <img src="{$wjf_theme_path}public/images/im/t8TeL1S.png" alt="" class="search__img" />
+            <input type="text" class="search__input" placeholder="Search" />
+        </div>
+    </div>
+    <div class="chat">
+        <span class="chat__back"></span>
+        <span class="chat__status">status</span>
+        <div class="chat__person">
+            <span class="chat__online active"></span>
+            <span class="chat__name">Huehue Huehue</span>
+        </div>
+        <div class="chat__messages">
+            <div class="chat__msgRow">
+                <div class="chat__message mine">你真棒</div>
+            </div>
+            <div class="chat__msgRow">
+                <div class="chat__message notMine">Wow!</div>
+            </div>
+            <div class="chat__msgRow">
+                <div class="chat__message notMine">你也一样</div>
+            </div>
+            <div class="chat__msgRow">
+                <div class="chat__message mine">
+                    ......
+                </div>
+            </div>
+        </div>
+        <form method="post" action="{:url('index/Unify/addmsg')}">
+            <input type="text" class="chat__input" placeholder="Your message" />
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript" src='{$wjf_theme_path}public/js/im/stopExecutionOnTimeout.js?t=1'></script>
+<script type="text/javascript" src='__PUBLIC__/js/jquery-1.11.1.min.js'></script>
+<script type="text/javascript" src="{$wjf_theme_path}public/js/im/main.js"></script>
+<script>
+    function req(){
+        $.ajax({
+            type: "get",
+            url: "{:U('ajaxData')}",
+            data: {},
+            dataType: 'json',
+            success: function (data) {
+                if (data.code > 0) {
+
+                } else {
+
+                }
+            }
+        });
+    }
+    //重复执行某个方法 setInterval重复执行
+    var t1 = window.setInterval(req,2000);
+    //去掉定时器的方法
+    window.clearInterval(t1);
+</script>
+</body>
+</html>
